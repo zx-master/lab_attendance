@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.zx.lab_attendance.dao.PerandrolesMapper">
+  <resultMap id="BaseResultMap" type="com.zx.lab_attendance.entity.Perandroles">
+    <id column="perandroles_id" jdbcType="INTEGER" property="perandrolesId" />
+    <result column="permissions_id" jdbcType="VARCHAR" property="permissionsId" />
+    <result column="role_id" jdbcType="VARCHAR" property="roleId" />
+  </resultMap>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from perandroles
+    where perandroles_id = #{perandrolesId,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.zx.lab_attendance.entity.Perandroles">
+    insert into perandroles (perandroles_id, permissions_id, role_id
+      )
+    values (#{perandrolesId,jdbcType=INTEGER}, #{permissionsId,jdbcType=VARCHAR}, #{roleId,jdbcType=VARCHAR}
+      )
+  </insert>
+  <update id="updateByPrimaryKey" parameterType="com.zx.lab_attendance.entity.Perandroles">
+    update perandroles
+    set permissions_id = #{permissionsId,jdbcType=VARCHAR},
+      role_id = #{roleId,jdbcType=VARCHAR}
+    where perandroles_id = #{perandrolesId,jdbcType=INTEGER}
+  </update>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select perandroles_id, permissions_id, role_id
+    from perandroles
+    where perandroles_id = #{perandrolesId,jdbcType=INTEGER}
+  </select>
+  <select id="selectAll" resultMap="BaseResultMap">
+    select perandroles_id, permissions_id, role_id
+    from perandroles
+  </select>
+</mapper>

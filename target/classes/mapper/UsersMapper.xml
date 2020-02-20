@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.zx.lab_attendance.dao.UsersMapper">
+  <resultMap id="BaseResultMap" type="com.zx.lab_attendance.entity.Users">
+    <id column="user_id" jdbcType="VARCHAR" property="userId" />
+    <result column="user_number" jdbcType="VARCHAR" property="userNumber" />
+    <result column="email" jdbcType="VARCHAR" property="email" />
+    <result column="password" jdbcType="VARCHAR" property="password" />
+    <result column="classordepartment" jdbcType="VARCHAR" property="classordepartment" />
+    <result column="phone" jdbcType="VARCHAR" property="phone" />
+    <result column="tssign" jdbcType="INTEGER" property="tssign" />
+    <result column="username" jdbcType="VARCHAR" property="username" />
+    <result column="majorId" jdbcType="INTEGER" property="majorId" />
+    <association property="major" select="com.zx.lab_attendance.dao.MajorMapper.selectByPrimaryKey" column="majorId"></association>
+
+    <collection property="roleList" ofType="com.zx.lab_attendance.entity.Role">
+      <result column="role_id" jdbcType="INTEGER" property="roleId"></result>
+      <result column="role_name" jdbcType="VARCHAR" property="roleName"></result>
+
+      <collection property="permissionsList" ofType="com.zx.lab_attendance.entity.Permissions">
+        <result column="permissions_id" jdbcType="INTEGER" property="permissionsId"></result>
+        <result column="permissions" jdbcType="VARCHAR" property="permissions"></result>
+      </collection>
+    </collection>
+
+
+
+
+  </resultMap>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
+    delete from users
+    where user_id = #{userId,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insert" parameterType="com.zx.lab_attendance.entity.Users">
+    insert into users (user_id, user_number, email, 
+      `password`, classordepartment, phone, 
+      tssign, username,majorId)
+    values (#{userId,jdbcType=VARCHAR}, #{userNumber,jdbcType=VARCHAR}, #{email,jdbcType=VARCHAR},
+      #{password,jdbcType=VARCHAR}, #{classordepartment,jdbcType=VARCHAR}, #{phone,jdbcType=VARCHAR}, 
+      #{tssign,jdbcType=INTEGER}, #{username,jdbcType=VARCHAR},#{majorId,jdbcType=INTEGER})
+  </insert>
+  <update id="updateByPrimaryKey" parameterType="com.zx.lab_attendance.entity.Users">
+    update users
+    set user_number = #{userNumber,jdbcType=VARCHAR},
+      email = #{email,jdbcType=VARCHAR},
+      `password` = #{password,jdbcType=VARCHAR},
+      classordepartment = #{classordepartment,jdbcType=VARCHAR},
+      phone = #{phone,jdbcType=VARCHAR},
+      tssign = #{tssign,jdbcType=INTEGER},
+      username =  #{username,jdbcType=VARCHAR},
+      majorId = #{majorId,jdbcType=INTEGER}
+    where user_id = #{userId,jdbcType=VARCHAR}
+  </update>
+  <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
+    select user_id, user_number, email, `password`, classordepartment, phone, tssign ,username,majorId
+    from users
+    where user_id = #{usernumber,jdbcType=VARCHAR}
+  </select>
+
+  <select id="selectUserByUserNum" parameterType="java.lang.String" resultMap="BaseResultMap">
+    select u.user_id, u.user_number, u.email, u.password, u.classordepartment, u.phone, u.tssign ,u.username,u.majorId ,r.role_name,r.role_id,p.permissions_id,p.permissions
+    from users u
+    left join userandrole ur on u.user_id = ur.user_id
+    left join role r on r.role_id = ur.role_id
+    left join perandroles pr on r.role_id = pr.role_id
+    left join permissions p on p.permissions_id = pr.permissions_id
+    where user_number = #{usernumber,jdbcType=VARCHAR}
+  </select>
+
+  <select id="selectAll" resultMap="BaseResultMap">
+    select u.user_id, u.user_number, u.email, u.password, u.classordepartment, u.phone, u.tssign ,u.username ,u.majorId,r.role_name,r.role_id,p.permissions_id,p.permissions
+    from users u
+    left join userandrole ur on u.user_id = ur.user_id
+    left join role r on r.role_id = ur.role_id
+    left join perandroles pr on r.role_id = pr.role_id
+    left join permissions p on p.permissions_id = pr.permissions_id
+  </select>
+
+  <select id="selectByCourseId" parameterType="java.lang.String" resultMap="BaseResultMap">
+    select user_id, user_number, email, `password`, classordepartment, phone, tssign ,username,u.majorId
+    from users
+    where classordepartment = #{courseId,jdbcType=VARCHAR}
+  </select>
+
+  <select id="selectByAllStudent" resultMap="BaseResultMap">
+    select user_id, user_number, email, `password`, classordepartment, phone, tssign ,username,majorId
+    from users
+    where tssign = 2
+  </select>
+
+</mapper>

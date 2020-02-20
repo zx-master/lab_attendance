@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.zx.lab_attendance.dao.MajorMapper">
+  <resultMap id="BaseResultMap" type="com.zx.lab_attendance.entity.Major">
+    <id column="majorId" jdbcType="INTEGER" property="majorId" />
+    <result column="majorName" jdbcType="VARCHAR" property="majorName" />
+  </resultMap>
+
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select majorId, majorName
+    from major
+    where majorId = #{majorId,jdbcType=INTEGER}
+  </select>
+
+  <select id="selectAll" resultMap="BaseResultMap">
+  select majorId, majorName
+  from major
+</select>
+
+</mapper>
