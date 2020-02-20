@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.zx.lab_attendance.dao.ApplylabMapper">
+  <resultMap id="BaseResultMap" type="com.zx.lab_attendance.entity.Applylab">
+    <id column="applylab_id" jdbcType="VARCHAR" property="applylabId" />
+    <result column="apply_userid" jdbcType="VARCHAR" property="applyUserid" />
+    <result column="laboratory_number" jdbcType="VARCHAR" property="laboratoryNumber" />
+    <result column="using" jdbcType="VARCHAR" property="using" />
+    <result column="approver" jdbcType="VARCHAR" property="approver" />
+    <result column="using_start" jdbcType="TIMESTAMP" property="usingStart" />
+    <result column="using_end" jdbcType="TIMESTAMP" property="usingEnd" />
+  </resultMap>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
+    delete from applylab
+    where applylab_id = #{applylabId,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insert" parameterType="com.zx.lab_attendance.entity.Applylab">
+    insert into applylab (applylab_id, apply_userid, laboratory_number, 
+      `using`, approver, using_start, 
+      using_end)
+    values (#{applylabId,jdbcType=VARCHAR}, #{applyUserid,jdbcType=VARCHAR}, #{laboratoryNumber,jdbcType=VARCHAR}, 
+      #{using,jdbcType=VARCHAR}, #{approver,jdbcType=VARCHAR}, #{usingStart,jdbcType=TIMESTAMP}, 
+      #{usingEnd,jdbcType=TIMESTAMP})
+  </insert>
+  <update id="updateByPrimaryKey" parameterType="com.zx.lab_attendance.entity.Applylab">
+    update applylab
+    set apply_userid = #{applyUserid,jdbcType=VARCHAR},
+      laboratory_number = #{laboratoryNumber,jdbcType=VARCHAR},
+      `using` = #{using,jdbcType=VARCHAR},
+      approver = #{approver,jdbcType=VARCHAR},
+      using_start = #{usingStart,jdbcType=TIMESTAMP},
+      using_end = #{usingEnd,jdbcType=TIMESTAMP}
+    where applylab_id = #{applylabId,jdbcType=VARCHAR}
+  </update>
+  <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
+    select applylab_id, apply_userid, laboratory_number, `using`, approver, using_start, 
+    using_end
+    from applylab
+    where applylab_id = #{applylabId,jdbcType=VARCHAR}
+  </select>
+  <select id="selectAll" resultMap="BaseResultMap">
+    select applylab_id, apply_userid, laboratory_number, `using`, approver, using_start, 
+    using_end
+    from applylab
+  </select>
+</mapper>

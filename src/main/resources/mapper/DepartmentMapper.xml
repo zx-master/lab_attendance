@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.zx.lab_attendance.dao.DepartmentMapper">
+  <resultMap id="BaseResultMap" type="com.zx.lab_attendance.entity.Department">
+    <id column="department_id" jdbcType="VARCHAR" property="departmentId" />
+    <result column="department_describe" jdbcType="VARCHAR" property="departmentDescribe" />
+  </resultMap>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
+    delete from department
+    where department_id = #{departmentId,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insert" parameterType="com.zx.lab_attendance.entity.Department">
+    insert into department (department_id, department_describe)
+    values (#{departmentId,jdbcType=VARCHAR}, #{departmentDescribe,jdbcType=VARCHAR})
+  </insert>
+  <update id="updateByPrimaryKey" parameterType="com.zx.lab_attendance.entity.Department">
+    update department
+    set department_describe = #{departmentDescribe,jdbcType=VARCHAR}
+    where department_id = #{departmentId,jdbcType=VARCHAR}
+  </update>
+  <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
+    select department_id, department_describe
+    from department
+    where department_id = #{departmentId,jdbcType=VARCHAR}
+  </select>
+  <select id="selectAll" resultMap="BaseResultMap">
+    select department_id, department_describe
+    from department
+  </select>
+</mapper>

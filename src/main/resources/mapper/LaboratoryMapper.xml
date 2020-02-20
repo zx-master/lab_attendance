@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.zx.lab_attendance.dao.LaboratoryMapper">
+  <resultMap id="BaseResultMap" type="com.zx.lab_attendance.entity.Laboratory">
+    <id column="laboratory_id" jdbcType="VARCHAR" property="laboratoryId" />
+    <result column="laboratory_number" jdbcType="VARCHAR" property="laboratoryNumber" />
+    <result column="capacity" jdbcType="INTEGER" property="capacity" />
+    <result column="machinesign" jdbcType="INTEGER" property="machinesign" />
+  </resultMap>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
+    delete from laboratory
+    where laboratory_id = #{laboratoryId,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insert" parameterType="com.zx.lab_attendance.entity.Laboratory">
+    insert into laboratory (laboratory_id, laboratory_number, capacity, 
+      machinesign)
+    values (#{laboratoryId,jdbcType=VARCHAR}, #{laboratoryNumber,jdbcType=VARCHAR}, #{capacity,jdbcType=INTEGER}, 
+      #{machinesign,jdbcType=INTEGER})
+  </insert>
+  <update id="updateByPrimaryKey" parameterType="com.zx.lab_attendance.entity.Laboratory">
+    update laboratory
+    set laboratory_number = #{laboratoryNumber,jdbcType=VARCHAR},
+      capacity = #{capacity,jdbcType=INTEGER},
+      machinesign = #{machinesign,jdbcType=INTEGER}
+    where laboratory_id = #{laboratoryId,jdbcType=VARCHAR}
+  </update>
+  <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
+    select laboratory_id, laboratory_number, capacity, machinesign
+    from laboratory
+    where laboratory_id = #{laboratoryId,jdbcType=VARCHAR}
+  </select>
+  <select id="selectAll" resultMap="BaseResultMap">
+    select laboratory_id, laboratory_number, capacity, machinesign
+    from laboratory
+  </select>
+</mapper>

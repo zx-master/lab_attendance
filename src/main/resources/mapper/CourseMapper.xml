@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.zx.lab_attendance.dao.CourseMapper">
+  <resultMap id="BaseResultMap" type="com.zx.lab_attendance.entity.Course">
+    <id column="course_id" jdbcType="VARCHAR" property="courseId" />
+    <result column="course_name" jdbcType="VARCHAR" property="courseName" />
+    <result column="course_code" jdbcType="VARCHAR" property="courseCode" />
+    <result column="course_teacher" jdbcType="VARCHAR" property="courseTeacher" />
+    <result column="course_ofweek" jdbcType="INTEGER" property="courseOfweek" />
+    <result column="course_total" jdbcType="INTEGER" property="courseTotal" />
+    <result column="coursestart" jdbcType="TIMESTAMP" property="coursestart" />
+    <result column="courseend" jdbcType="TIMESTAMP" property="courseend" />
+  </resultMap>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
+    delete from course
+    where course_id = #{courseId,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insert" parameterType="com.zx.lab_attendance.entity.Course">
+    insert into course (course_id, course_name, course_code, 
+      course_teacher, course_ofweek, course_total,coursestart,courseend
+      )
+    values (#{courseId,jdbcType=VARCHAR}, #{courseName,jdbcType=VARCHAR}, #{courseCode,jdbcType=VARCHAR}, 
+      #{courseTeacher,jdbcType=VARCHAR}, #{courseOfweek,jdbcType=INTEGER}, #{courseTotal,jdbcType=INTEGER},
+      #{coursestart,jdbcType=TIMESTAMP},#{courseend,jdbcType=TIMESTAMP}
+      )
+  </insert>
+  <update id="updateByPrimaryKey" parameterType="com.zx.lab_attendance.entity.Course">
+    update course
+    set course_name = #{courseName,jdbcType=VARCHAR},
+      course_code = #{courseCode,jdbcType=VARCHAR},
+      course_teacher = #{courseTeacher,jdbcType=VARCHAR},
+      course_ofweek = #{courseOfweek,jdbcType=INTEGER},
+      course_total = #{courseTotal,jdbcType=INTEGER},
+      coursestart = #{coursestart,jdbcType=TIMESTAMP},
+      courseend = #{courseend,jdbcType=TIMESTAMP}
+    where course_id = #{courseId,jdbcType=VARCHAR}
+  </update>
+  <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
+    select course_id, course_name, course_code, course_teacher, course_ofweek, course_total,coursestart,courseend
+    from course
+    where course_id = #{courseId,jdbcType=VARCHAR}
+  </select>
+  <select id="selectAll" resultMap="BaseResultMap">
+    select course_id, course_name, course_code, course_teacher, course_ofweek, course_total,coursestart,courseend
+    from course
+  </select>
+  <select id="selectByCourseCode" parameterType="java.lang.String" resultMap="BaseResultMap">
+    select course_id, course_name, course_code, course_teacher, course_ofweek, course_total,coursestart,courseend
+    from course
+    where course_code = #{courseCode,jdbcType=VARCHAR}
+  </select>
+</mapper>

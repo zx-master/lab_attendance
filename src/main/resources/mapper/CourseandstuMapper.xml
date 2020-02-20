@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.zx.lab_attendance.dao.CourseandstuMapper">
+  <resultMap id="BaseResultMap" type="com.zx.lab_attendance.entity.Courseandstu">
+    <result column="courseandstu_id" jdbcType="VARCHAR" property="courseandstuId" />
+    <result column="student_id" jdbcType="VARCHAR" property="studentId" />
+    <result column="course_id" jdbcType="VARCHAR" property="courseId" />
+    <result column="course_number" jdbcType="VARCHAR" property="courseNumber" />
+    <result column="fulltime" jdbcType="INTEGER" property="fulltime" />
+  </resultMap>
+  <insert id="insert" parameterType="com.zx.lab_attendance.entity.Courseandstu">
+    insert into courseandstu (courseandstu_id, student_id, course_id, 
+      course_number)
+    values (#{courseandstuId,jdbcType=VARCHAR}, #{studentId,jdbcType=VARCHAR}, #{courseId,jdbcType=VARCHAR}, 
+      #{courseNumber,jdbcType=VARCHAR})
+  </insert>
+  <select id="selectAll" resultMap="BaseResultMap">
+    select courseandstu_id, student_id, course_id, course_number,fulltime
+    from courseandstu
+  </select>
+  <select id="selectByStudentId" resultMap="BaseResultMap">
+    select courseandstu_id, student_id, course_id, course_number,fulltime
+    from courseandstu
+    where student_id = #{studentId,jdbcType=VARCHAR}
+    and course_id = #{courseCode,jdbcType=VARCHAR}
+  </select>
+
+
+</mapper>
