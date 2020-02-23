@@ -46,9 +46,20 @@ public class UserController {
         Map<String, Object> info = new HashMap<>();
         try{
             UsernamePasswordToken usernamePasswordToken = new UsernamePasswordToken(user.getUserNumber(),user.getPassword());
+            Users userInfo = userService.selectUserByUserNum(user.getUserNumber());
+            UserVO userVO = new UserVO();
+            userVO.setUserId(userInfo.getUserId());
+            userVO.setUserNumber(userInfo.getUserNumber());
+            userVO.setUsername(userInfo.getUsername());
+            userVO.setEmail(userInfo.getEmail());
+            userVO.setPhone(userInfo.getPhone());
+
+            //>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>需要将专业，班级，年级等信息封装<<<<<<<<<<<<<<<<<<<<<<<<<<<<
+
             subject.login(usernamePasswordToken);
             info.put("msg","登录成功");
             info.put("session_id",subject.getSession().getId());
+            info.put("user",userVO);
             return JsonData.buildSuccess(info);
         }catch (Exception e){
             e.printStackTrace();

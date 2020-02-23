@@ -38,8 +38,8 @@ public class DataContent implements Serializable {
         return chatmsg;
     }
 
-    public void setChatmsg(Chatmsg chatmsg) {
-        this.chatmsg = chatmsg;
+    public void setChatMsg(Chatmsg chatMsg) {
+        this.chatmsg = chatMsg;
     }
 
     public String getExtand() {

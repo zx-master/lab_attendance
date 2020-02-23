@@ -89,7 +89,7 @@ public class AttendanceController {
                                             @RequestParam("courseCode") String courseCode,
                                             @RequestParam("starttime") String starttime,
                                             @RequestParam("endtime") String endtime) throws ParseException {
-//        response.setHeader("Access-Control-Allow-Origin","*");
+        response.setHeader("Access-Control-Allow-Origin","*");
 //        String courseCode = "C01004";
 //        String starttime = "2020-02-09";
 //        String endtime = "2020-02-14";

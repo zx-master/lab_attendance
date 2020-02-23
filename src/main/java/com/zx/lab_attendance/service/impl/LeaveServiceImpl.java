@@ -9,6 +9,7 @@ import com.zx.lab_attendance.entity.Leave;
 import com.zx.lab_attendance.service.LeaveService;
 import com.zx.lab_attendance.utils.IdWorker;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import java.util.Date;
 import java.util.List;
@@ -19,6 +20,7 @@ import java.util.List;
  * @date 2020/2/19 20:24
  * @Description
  */
+@Service
 public class LeaveServiceImpl implements LeaveService {
 
     @Autowired

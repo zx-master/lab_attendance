@@ -69,7 +69,7 @@ public class ShiroConfig {
         filterChainDefinitionMap.put("/authc/**","roles[root]");
 
         //有编辑权限才可以访问
-        filterChainDefinitionMap.put("/user/getUser","perms[read_attendance]");
+        filterChainDefinitionMap.put("/authc/getAllUser","perms[read_attendance]");
 
         //坑二：过滤链是顺序执行，从上而下，一般讲/** 放到最下面
         //authc : url定义必须通过认证才可以访问

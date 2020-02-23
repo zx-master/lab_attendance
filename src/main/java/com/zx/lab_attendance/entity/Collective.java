@@ -11,7 +11,27 @@ public class Collective implements Serializable {
 
     private Department department;
 
+    private String tutoringUser;
+
+    private String mentorUser;
+
     private static final long serialVersionUID = 1L;
+
+    public String getTutoringUser() {
+        return tutoringUser;
+    }
+
+    public void setTutoringUser(String tutoringUser) {
+        this.tutoringUser = tutoringUser;
+    }
+
+    public String getMentorUser() {
+        return mentorUser;
+    }
+
+    public void setMentorUser(String mentorUser) {
+        this.mentorUser = mentorUser;
+    }
 
     public Department getDepartment() {
         return department;

@@ -10,6 +10,7 @@
     <result column="course_total" jdbcType="INTEGER" property="courseTotal" />
     <result column="coursestart" jdbcType="TIMESTAMP" property="coursestart" />
     <result column="courseend" jdbcType="TIMESTAMP" property="courseend" />
+    <association property="user" select="com.zx.lab_attendance.dao.UsersMapper.selectByPrimaryKey" column="course_teacher"></association>
   </resultMap>
   <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
     delete from course

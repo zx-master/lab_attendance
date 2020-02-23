@@ -46,4 +46,13 @@
     from labusing
     where labusing_date <![CDATA[<=]]> DATE_FORMAT(#{strattime},'%Y-%m-%d %H:%i:%s') and labusing_dateend DATE_FORMAT(#{endtime},'%Y-%m-%d %H:%i:%s')
   </select>
+
+  <select id="selectByCourseIdAndTime" resultMap="BaseResultMap">
+    select labusing_id, labusing_date, labusing_dateend, course_id, laboratory_number
+    from labusing
+    where
+    course_id = #{courseCode,jdbcType=VARCHAR}
+    and DATE_FORMAT(labusing_dateend,'%Y-%m-%d %H:%T:%s') <![CDATA[>]]> DATE_FORMAT(#{starttime}, '%Y-%m-%d %H:%T:%s')
+    and DATE_FORMAT(labusing_date,'%Y-%m-%d %H:%T:%s') <![CDATA[<]]> DATE_FORMAT(#{endtime},'%Y-%m-%d %H:%T:%s')
+  </select>
 </mapper>

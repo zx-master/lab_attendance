@@ -1,8 +1,12 @@
 package com.zx.lab_attendance.service.impl;
 
 import com.zx.lab_attendance.dao.CollectiveMapper;
+import com.zx.lab_attendance.dao.CourseandstuMapper;
+import com.zx.lab_attendance.dao.LabusingMapper;
 import com.zx.lab_attendance.dao.UsersMapper;
 import com.zx.lab_attendance.entity.Collective;
+import com.zx.lab_attendance.entity.Courseandstu;
+import com.zx.lab_attendance.entity.Labusing;
 import com.zx.lab_attendance.entity.Users;
 import com.zx.lab_attendance.service.UserService;
 import com.zx.lab_attendance.vo.UserVO;
@@ -27,6 +31,7 @@ public class UserServiceImpl implements UserService {
     @Autowired
     CollectiveMapper collectiveMapper;
 
+
     @Override
     public List<UserVO> allStudentUser() {
         List<Users> usersList = usersMapper.selectByAllStudent();
@@ -38,6 +43,7 @@ public class UserServiceImpl implements UserService {
             userVO.setUserNumber(users.getUserNumber());
             userVO.setEmail(users.getEmail());
             userVO.setMajorName(users.getMajor().getMajorName());
+            //<<<<<<<<<<<<<<<<<<<<<<<<<<<<判断是老师还是学生>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
             userVO.setCollective(collective.getDepartment().getDepartmentDescribe()+collective.getCollectiveNumber()+"班");
             userVOS.add(userVO);
         }
@@ -48,4 +54,6 @@ public class UserServiceImpl implements UserService {
     public Users selectUserByUserNum(String usernumber) {
         return usersMapper.selectUserByUserNum(usernumber);
     }
+
+
 }

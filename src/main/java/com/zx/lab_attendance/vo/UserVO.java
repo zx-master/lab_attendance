@@ -12,7 +12,7 @@ import java.util.List;
  */
 public class UserVO {
 
-
+    private String userId;
 
     private String userNumber;
 
@@ -30,6 +30,14 @@ public class UserVO {
     private String userName;
 
     private String role;
+
+    public String getUserId() {
+        return userId;
+    }
+
+    public void setUserId(String userId) {
+        this.userId = userId;
+    }
 
     public String getCollective() {
         return collective;

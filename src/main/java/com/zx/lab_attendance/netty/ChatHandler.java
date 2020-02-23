@@ -1,10 +1,11 @@
 package com.zx.lab_attendance.netty;
 
-import com.alibaba.druid.support.json.JSONUtils;
+
+import com.alibaba.fastjson.JSONArray;
+import com.alibaba.fastjson.JSONObject;
 import com.zx.lab_attendance.entity.Chatmsg;
 import com.zx.lab_attendance.enums.MsgActionEnum;
 import com.zx.lab_attendance.service.ChatmsgService;
-import com.zx.lab_attendance.service.UserService;
 import com.zx.lab_attendance.utils.JsonUtils;
 import com.zx.lab_attendance.utils.SpringUtil;
 import io.netty.channel.Channel;
@@ -14,10 +15,8 @@ import io.netty.channel.group.ChannelGroup;
 import io.netty.channel.group.DefaultChannelGroup;
 import io.netty.handler.codec.http.websocketx.TextWebSocketFrame;
 import io.netty.util.concurrent.GlobalEventExecutor;
-import io.netty.util.internal.StringUtil;
 import org.apache.commons.lang3.StringUtils;
 
-import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -44,7 +43,7 @@ public class ChatHandler extends SimpleChannelInboundHandler<TextWebSocketFrame>
         Channel currentChannel = ctx.channel();
 
         //1.获取客户端发来的消息
-        DataContent dataContent = JsonUtils.jsonToPoJo(content,DataContent.class);
+        DataContent dataContent = JSONArray.parseObject(content,DataContent.class);
         Integer action = dataContent.getAction();
         //2.判断消息类型，根据不同的类型来处理不同业务
         if (action.equals(MsgActionEnum.CONNECT.type)) {
@@ -52,14 +51,14 @@ public class ChatHandler extends SimpleChannelInboundHandler<TextWebSocketFrame>
             UserChannelRel.put(senderId,currentChannel);
         } else if (action.equals(MsgActionEnum.CHAT.type)) {
             Chatmsg chatmsg = dataContent.getChatmsg();
-            String msgText = chatmsg.getMsg();
+//            String msgText = chatmsg.getMsg();
             String receiverId = chatmsg.getReceiverId();
-            String senderId = chatmsg.getSenderId();
+//            String senderId = chatmsg.getSenderId();
 
             // 保存消息到数据库，并标记为 未签收
-            ChatmsgService chatmsgService = (ChatmsgService) SpringUtil.getBean("chatmsgServiceImpl");
-            String msgId = chatmsgService.insert(chatmsg);
-            chatmsg.setChatmsgId(msgId);
+//            ChatmsgService chatmsgService = (ChatmsgService) SpringUtil.getBean("chatmsgServiceImpl");
+//            String msgId = chatmsgService.insert(chatmsg);
+//            chatmsg.setChatmsgId(msgId);
             //发送消息
             //从全局用户Channel关系中获取接受方的channel
             Channel receiverChannel = UserChannelRel.get(receiverId);
@@ -72,7 +71,7 @@ public class ChatHandler extends SimpleChannelInboundHandler<TextWebSocketFrame>
                     //用户在线
                     receiverChannel.writeAndFlush(
                             new TextWebSocketFrame(
-                                    JsonUtils.objectToJson(chatmsg)
+                                    String.valueOf(JSONObject.toJSON(chatmsg))
                             )
                     );
                 } else {

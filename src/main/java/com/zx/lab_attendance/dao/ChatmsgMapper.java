@@ -1,8 +1,11 @@
 package com.zx.lab_attendance.dao;
 
 import com.zx.lab_attendance.entity.Chatmsg;
+import org.springframework.stereotype.Repository;
+
 import java.util.List;
 
+@Repository
 public interface ChatmsgMapper {
     int deleteByPrimaryKey(String chatmsgId);
 

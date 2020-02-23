@@ -20,6 +20,8 @@ public class Course implements Serializable {
 
     private Date courseend;
 
+    private Users user;
+
     @Override
     public boolean equals(Object obj) {
         Course c = (Course) obj;
@@ -29,6 +31,18 @@ public class Course implements Serializable {
     public int hashCode() {
         String in = courseCode;
         return in.hashCode();
+    }
+
+    public Users getUser() {
+        return user;
+    }
+
+    public void setUser(Users user) {
+        this.user = user;
+    }
+
+    public static long getSerialVersionUID() {
+        return serialVersionUID;
     }
 
     public Date getCoursestart() {

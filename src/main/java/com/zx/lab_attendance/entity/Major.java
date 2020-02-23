@@ -1,12 +1,14 @@
 package com.zx.lab_attendance.entity;
 
+import java.io.Serializable;
+
 /**
  * @author zx
  * @version 1.0
  * @date 2020/2/18 19:37
  * @Description
  */
-public class Major {
+public class Major implements Serializable {
     private Integer majorId;
     private String majorName;
 

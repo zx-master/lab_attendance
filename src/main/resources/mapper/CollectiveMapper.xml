@@ -5,6 +5,8 @@
     <id column="collective_id" jdbcType="VARCHAR" property="collectiveId" />
     <result column="department_id" jdbcType="VARCHAR" property="departmentId" />
     <result column="collective_number" jdbcType="INTEGER" property="collectiveNumber" />
+    <result column="tutoringUser" jdbcType="VARCHAR" property="tutoringUser" />
+    <result column="mentorUser" jdbcType="VARCHAR" property="mentorUser" />
     <association property="department" select="com.zx.lab_attendance.dao.DepartmentMapper.selectByPrimaryKey" column="department_id"></association>
   </resultMap>
   <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
@@ -12,24 +14,26 @@
     where collective_id = #{collectiveId,jdbcType=VARCHAR}
   </delete>
   <insert id="insert" parameterType="com.zx.lab_attendance.entity.Collective">
-    insert into collective (collective_id, department_id, collective_number
+    insert into collective (collective_id, department_id, collective_number,tutoringUser,mentorUser
       )
-    values (#{collectiveId,jdbcType=VARCHAR}, #{departmentId,jdbcType=VARCHAR}, #{collectiveNumber,jdbcType=INTEGER}
-      )
+    values (#{collectiveId,jdbcType=VARCHAR}, #{departmentId,jdbcType=VARCHAR}, #{collectiveNumber,jdbcType=INTEGER},#{tutoringUser,jdbcType=INTEGER}
+      ,#{mentorUser,jdbcType=INTEGER})
   </insert>
   <update id="updateByPrimaryKey" parameterType="com.zx.lab_attendance.entity.Collective">
     update collective
     set department_id = #{departmentId,jdbcType=VARCHAR},
-      collective_number = #{collectiveNumber,jdbcType=INTEGER}
+      collective_number = #{collectiveNumber,jdbcType=INTEGER},
+      tutoringUser = #{tutoringUser,jdbcType=INTEGER},
+      mentorUser =#{mentorUser,jdbcType=INTEGER}
     where collective_id = #{collectiveId,jdbcType=VARCHAR}
   </update>
   <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
-    select collective_id, department_id, collective_number
+    select collective_id, department_id, collective_number,tutoringUser,mentorUser
     from collective
     where collective_id = #{collectiveId,jdbcType=VARCHAR}
   </select>
   <select id="selectAll" resultMap="BaseResultMap">
-    select collective_id, department_id, collective_number
+    select collective_id, department_id, collective_number,tutoringUser,mentorUser
     from collective
   </select>
 </mapper>
