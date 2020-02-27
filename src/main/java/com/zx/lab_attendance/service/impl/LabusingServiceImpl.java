@@ -1,16 +1,19 @@
 package com.zx.lab_attendance.service.impl;
 
+import com.alibaba.druid.sql.ast.statement.SQLForeignKeyImpl;
+import com.zx.lab_attendance.dao.CourseMapper;
 import com.zx.lab_attendance.dao.CourseandstuMapper;
 import com.zx.lab_attendance.dao.LabusingMapper;
+import com.zx.lab_attendance.entity.Course;
 import com.zx.lab_attendance.entity.Courseandstu;
 import com.zx.lab_attendance.entity.Labusing;
 import com.zx.lab_attendance.entity.Users;
 import com.zx.lab_attendance.service.LabusingService;
+import org.apache.commons.collections.map.HashedMap;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.*;
 
 /**
  * @author zx
@@ -25,6 +28,8 @@ public class LabusingServiceImpl implements LabusingService {
     CourseandstuMapper courseandstuMapper;
     @Autowired
     LabusingMapper labusingMapper;
+    @Autowired
+    CourseMapper courseMapper;
 
     @Override
     public List<Labusing> selectLabusingByMyCourseForTime(String studentId, String starttime, String endtime) {

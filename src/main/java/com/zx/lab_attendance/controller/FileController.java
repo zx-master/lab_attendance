@@ -43,7 +43,7 @@ public class FileController {
 
     @PostMapping("/upload")
     @ResponseBody
-    public JsonData upload (@RequestParam("base") String base64Data, HttpServletResponse response, HttpServletRequest request) {
+    public JsonData upload (@RequestParam("base64Data") String base64Data, HttpServletResponse response, HttpServletRequest request) {
         response.setHeader("Access-Control-Allow-Origin","*");
         String dataPrix = ""; //base64格式前头
         String data = "";//实体部分数据
@@ -91,51 +91,13 @@ public class FileController {
             out.write(b);
             out.flush();
             out.close();
-            String imgurl="http://xxxxxxxx/"+tempFileName;
+            String imgurl="http://localhost:8080/"+tempFileName;
             //imageService.save(imgurl);
-            return JsonData.buildSuccess(imgurl,"200");
+            return JsonData.buildSuccess(imgurl,"上传成功");
         } catch (IOException e) {
             e.printStackTrace();
             return JsonData.buildError("上传图片失败");
         }
-//        List<String> urls = new ArrayList<>();
-//
-//        if (files.length == 0){
-//            return JsonData.buildError("接受不到图片");
-//        }
-//        try {
-//            for (MultipartFile file : files) {
-//                String fileName = UUID.randomUUID()+file.getOriginalFilename();
-//                Files.write(Paths.get("g:/Ideaspace/lab_attendance/src/main/resources/static/" + fileName),file.getBytes());
-//                urls.add(imgUrl + fileName);
-//            }
-//        }catch (Exception e){
-//            e.printStackTrace();
-//            return JsonData.buildError("上传失败");
-//        }
-//        return JsonData.buildSuccess(urls);
-//        // 获取原始名字
-//        String fileName = file.getOriginalFilename();
-//        // 获取后缀名
-//        // String suffixName = fileName.substring(fileName.lastIndexOf("."));
-//        // 文件保存路径
-//        String filePath = "d:/upload/";
-//        // 文件重命名，防止重复
-//        fileName = filePath + UUID.randomUUID() + fileName;
-//        // 文件对象
-//        File dest = new File(fileName);
-//        // 判断路径是否存在，如果不存在则创建
-//        if(!dest.getParentFile().exists()) {
-//            dest.getParentFile().mkdirs();
-//        }
-//        try {
-//            // 保存到服务器中
-//            file.transferTo(dest);
-//            return "上传成功";
-//        } catch (Exception e) {
-//            e.printStackTrace();
-//        }
-//        return "上传失败";
     }
 
     @RequestMapping("/download")

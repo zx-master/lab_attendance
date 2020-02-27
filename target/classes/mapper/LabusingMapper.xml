@@ -7,6 +7,7 @@
     <result column="labusing_dateend" jdbcType="TIMESTAMP" property="labusingDateend" />
     <result column="course_id" jdbcType="VARCHAR" property="courseId" />
     <result column="laboratory_number" jdbcType="VARCHAR" property="laboratoryNumber" />
+    <association property="course" select="com.zx.lab_attendance.dao.CourseMapper.selectByCourseCode" column="course_id"></association>
   </resultMap>
   <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
     delete from labusing
@@ -15,7 +16,7 @@
   <insert id="insert" parameterType="com.zx.lab_attendance.entity.Labusing">
     insert into labusing (labusing_id, labusing_date, labusing_dateend, 
       course_id, laboratory_number)
-    values (#{labusingId,jdbcType=VARCHAR}, #{labusingDate,jdbcType=TIMESTAMP}, #{labusingDateend,jdbcType=TIMESTAMP}, 
+    values (#{labusingId,jdbcType=VARCHAR}, #{labusingDate,jdbcType=VARCHAR}, #{labusingDateend,jdbcType=TIMESTAMP},
       #{courseId,jdbcType=VARCHAR}, #{laboratoryNumber,jdbcType=VARCHAR})
   </insert>
   <update id="updateByPrimaryKey" parameterType="com.zx.lab_attendance.entity.Labusing">

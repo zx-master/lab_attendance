@@ -1,5 +1,8 @@
 package com.zx.lab_attendance.entity;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
+import org.springframework.format.annotation.DateTimeFormat;
+
 import java.io.Serializable;
 import java.util.Date;
 
@@ -16,9 +19,17 @@ public class Leave implements Serializable {
 
     private String approver;
 
+    @JsonFormat(pattern="yyyy-MM-dd HH:mm:ss",timezone = "GMT+8")
+    @DateTimeFormat(pattern="yyyy-MM-dd HH:mm:ss")
     private Date leaveDatestart;
 
+    @JsonFormat(pattern="yyyy-MM-dd HH:mm:ss",timezone = "GMT+8")
+    @DateTimeFormat(pattern="yyyy-MM-dd HH:mm:ss")
     private Date leaveDateend;
+
+    @JsonFormat(pattern="yyyy-MM-dd HH:mm:ss",timezone = "GMT+8")
+    @DateTimeFormat(pattern="yyyy-MM-dd HH:mm:ss")
+    private Date leavedate;
 
     private Integer leaveStatus;
 
@@ -69,7 +80,7 @@ public class Leave implements Serializable {
     }
 
     public void setLeaveImg(String leaveImg) {
-        this.leaveImg = leaveImg == null ? null : leaveImg.trim();
+        this.leaveImg = leaveImg;
     }
 
     public String getApprover() {
@@ -94,6 +105,14 @@ public class Leave implements Serializable {
 
     public void setLeaveDateend(Date leaveDateend) {
         this.leaveDateend = leaveDateend;
+    }
+
+    public Date getLeavedate() {
+        return leavedate;
+    }
+
+    public void setLeavedate(Date leavedate) {
+        this.leavedate = leavedate;
     }
 
     @Override

@@ -20,6 +20,8 @@ public class Users implements Serializable {
 
     private String username;
 
+    private String userImg;
+
     private List<Role> roleList;
 
     private Integer majorId;
@@ -114,6 +116,14 @@ public class Users implements Serializable {
 
     public void setUsername(String username) {
         this.username = username == null ? null : username.trim();
+    }
+
+    public String getUserImg() {
+        return userImg;
+    }
+
+    public void setUserImg(String userImg) {
+        this.userImg = userImg;
     }
 
     @Override

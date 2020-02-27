@@ -10,6 +10,7 @@
     <result column="approver" jdbcType="VARCHAR" property="approver" />
     <result column="leave_datestart" jdbcType="TIMESTAMP" property="leaveDatestart" />
     <result column="leave_dateend" jdbcType="TIMESTAMP" property="leaveDateend" />
+    <result column="leavedate" jdbcType="TIMESTAMP" property="leavedate" />
     <result column="leaveStatus" jdbcType="INTEGER" property="leaveStatus" />
   </resultMap>
   <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
@@ -17,12 +18,12 @@
     where leave_id = #{leaveId,jdbcType=VARCHAR}
   </delete>
   <insert id="insert" parameterType="com.zx.lab_attendance.entity.Leave">
-    insert into leave (leave_id, student_id, leave_reason, 
-      leave_class, leave_img, approver, 
-      leave_datestart, leave_dateend,leaveStatus)
+    insert into `leave` (leave_id, student_id, leave_reason,
+      leave_class, leave_img, approver,
+      leave_datestart, leave_dateend,leaveStatus,leavedate)
     values (#{leaveId,jdbcType=VARCHAR}, #{studentId,jdbcType=VARCHAR}, #{leaveReason,jdbcType=VARCHAR}, 
       #{leaveClass,jdbcType=INTEGER}, #{leaveImg,jdbcType=VARCHAR}, #{approver,jdbcType=VARCHAR},
-      #{leaveDatestart,jdbcType=TIMESTAMP}, #{leaveDateend,jdbcType=TIMESTAMP},#{leaveStatus,jdbcType=INTEGER})
+      #{leaveDatestart,jdbcType=TIMESTAMP}, #{leaveDateend,jdbcType=TIMESTAMP},#{leaveStatus,jdbcType=INTEGER},#{leavedate,jdbcType=TIMESTAMP})
   </insert>
   <update id="updateByPrimaryKey" parameterType="com.zx.lab_attendance.entity.Leave">
     update leave

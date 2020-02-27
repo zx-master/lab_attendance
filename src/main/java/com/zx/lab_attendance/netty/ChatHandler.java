@@ -3,9 +3,11 @@ package com.zx.lab_attendance.netty;
 
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
+import com.sun.scenario.effect.impl.sw.sse.SSEBlend_SRC_OUTPeer;
 import com.zx.lab_attendance.entity.Chatmsg;
 import com.zx.lab_attendance.enums.MsgActionEnum;
 import com.zx.lab_attendance.service.ChatmsgService;
+import com.zx.lab_attendance.utils.IdWorker;
 import com.zx.lab_attendance.utils.JsonUtils;
 import com.zx.lab_attendance.utils.SpringUtil;
 import io.netty.channel.Channel;
@@ -34,6 +36,7 @@ public class ChatHandler extends SimpleChannelInboundHandler<TextWebSocketFrame>
     private static ChannelGroup users = new DefaultChannelGroup(GlobalEventExecutor.INSTANCE);
 
 
+
     @Override
     protected void channelRead0(ChannelHandlerContext ctx, TextWebSocketFrame msg) throws Exception {
         //获取客户端传输过来的数据
@@ -50,15 +53,24 @@ public class ChatHandler extends SimpleChannelInboundHandler<TextWebSocketFrame>
             String senderId = dataContent.getChatmsg().getSenderId();
             UserChannelRel.put(senderId,currentChannel);
         } else if (action.equals(MsgActionEnum.CHAT.type)) {
+            IdWorker idWorker = new IdWorker(0, 0);
             Chatmsg chatmsg = dataContent.getChatmsg();
-//            String msgText = chatmsg.getMsg();
-            String receiverId = chatmsg.getReceiverId();
-//            String senderId = chatmsg.getSenderId();
 
+
+            //插入请假数据
+
+
+            String receiverId = chatmsg.getReceiverId();
+            String senderId = chatmsg.getSenderId();
             // 保存消息到数据库，并标记为 未签收
-//            ChatmsgService chatmsgService = (ChatmsgService) SpringUtil.getBean("chatmsgServiceImpl");
-//            String msgId = chatmsgService.insert(chatmsg);
-//            chatmsg.setChatmsgId(msgId);
+
+            ChatmsgService chatmsgService = (ChatmsgService) SpringUtil.getBean("chatmsgServiceImpl");
+            Chatmsg chatmsgNew = new Chatmsg();
+            chatmsgNew.setSenderId(senderId);
+            chatmsgNew.setReceiverId(receiverId);
+
+            String msgId = chatmsgService.insert(chatmsg);
+            chatmsg.setChatmsgId(msgId);
             //发送消息
             //从全局用户Channel关系中获取接受方的channel
             Channel receiverChannel = UserChannelRel.get(receiverId);

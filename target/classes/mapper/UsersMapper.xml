@@ -11,6 +11,7 @@
     <result column="tssign" jdbcType="INTEGER" property="tssign" />
     <result column="username" jdbcType="VARCHAR" property="username" />
     <result column="majorId" jdbcType="INTEGER" property="majorId" />
+    <result column="userImg" jdbcType="VARCHAR" property="userImg"/>
     <association property="major" select="com.zx.lab_attendance.dao.MajorMapper.selectByPrimaryKey" column="majorId"></association>
 
     <collection property="roleList" ofType="com.zx.lab_attendance.entity.Role">
@@ -52,13 +53,13 @@
     where user_id = #{userId,jdbcType=VARCHAR}
   </update>
   <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
-    select user_id, user_number, email, `password`, classordepartment, phone, tssign ,username,majorId
+    select user_id, user_number, email, `password`, classordepartment, phone, tssign ,username,majorId,userImg
     from users
     where user_id = #{usernumber,jdbcType=VARCHAR}
   </select>
 
   <select id="selectUserByUserNum" parameterType="java.lang.String" resultMap="BaseResultMap">
-    select u.user_id, u.user_number, u.email, u.password, u.classordepartment, u.phone, u.tssign ,u.username,u.majorId ,r.role_name,r.role_id,p.permissions_id,p.permissions
+    select u.user_id, u.user_number, u.email, u.password, u.classordepartment, u.phone, u.tssign ,u.username,u.majorId,u.userImg ,r.role_name,r.role_id,p.permissions_id,p.permissions
     from users u
     left join userandrole ur on u.user_id = ur.user_id
     left join role r on r.role_id = ur.role_id
@@ -68,7 +69,7 @@
   </select>
 
   <select id="selectAll" resultMap="BaseResultMap">
-    select u.user_id, u.user_number, u.email, u.password, u.classordepartment, u.phone, u.tssign ,u.username ,u.majorId,r.role_name,r.role_id,p.permissions_id,p.permissions
+    select u.user_id, u.user_number, u.email, u.password, u.classordepartment, u.phone, u.tssign ,u.username ,u.majorId,u.userImg,r.role_name,r.role_id,p.permissions_id,p.permissions
     from users u
     left join userandrole ur on u.user_id = ur.user_id
     left join role r on r.role_id = ur.role_id
@@ -77,13 +78,13 @@
   </select>
 
   <select id="selectByCourseId" parameterType="java.lang.String" resultMap="BaseResultMap">
-    select user_id, user_number, email, `password`, classordepartment, phone, tssign ,username,u.majorId
+    select user_id, user_number, email, `password`, classordepartment, phone, tssign ,username,u.majorId,u.userImg
     from users
     where classordepartment = #{courseId,jdbcType=VARCHAR}
   </select>
 
   <select id="selectByAllStudent" resultMap="BaseResultMap">
-    select user_id, user_number, email, `password`, classordepartment, phone, tssign ,username,majorId
+    select user_id, user_number, email, `password`, classordepartment, phone, tssign ,username,majorId,userImg
     from users
     where tssign = 2
   </select>

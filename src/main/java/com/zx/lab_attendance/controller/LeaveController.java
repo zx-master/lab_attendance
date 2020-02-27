@@ -2,10 +2,13 @@ package com.zx.lab_attendance.controller;
 
 import com.zx.lab_attendance.entity.JsonData;
 import com.zx.lab_attendance.entity.Leave;
+import com.zx.lab_attendance.service.LeaveService;
 import io.swagger.annotations.Api;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.*;
+
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 
 /**
  * @author zx
@@ -13,14 +16,21 @@ import org.springframework.web.bind.annotation.RestController;
  * @date 2020/2/22 22:13
  * @Description
  */
+@CrossOrigin
 @RestController
 @RequestMapping("/leave")
 @Api(value = "请假信息控制器")
 public class LeaveController {
 
+    @Autowired
+    private LeaveService leaveService;
+
     @PostMapping("/insertLeave")
-    public JsonData insertLeave(Leave leave){
-        return null;
+    public JsonData insertLeave(HttpServletResponse response, HttpServletRequest request,
+                                @RequestBody Leave leave){
+        response.setHeader("Access-Control-Allow-Origin","*");
+        leaveService.insertLeave(leave);
+        return JsonData.buildSuccess("提交成功");
     }
 
 }

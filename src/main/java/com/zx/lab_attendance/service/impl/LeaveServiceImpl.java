@@ -1,16 +1,14 @@
 package com.zx.lab_attendance.service.impl;
 
-import com.zx.lab_attendance.dao.AttendanceMapper;
-import com.zx.lab_attendance.dao.LabusingMapper;
-import com.zx.lab_attendance.dao.LeaveMapper;
-import com.zx.lab_attendance.entity.Attendance;
-import com.zx.lab_attendance.entity.Labusing;
-import com.zx.lab_attendance.entity.Leave;
+import com.zx.lab_attendance.dao.*;
+import com.zx.lab_attendance.entity.*;
 import com.zx.lab_attendance.service.LeaveService;
 import com.zx.lab_attendance.utils.IdWorker;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -26,9 +24,11 @@ public class LeaveServiceImpl implements LeaveService {
     @Autowired
     private LeaveMapper leaveMapper;
     @Autowired
-    private LabusingMapper labusingMapper;
+    private LeaveclassmMapper leaveclassmMapper;
     @Autowired
-    private AttendanceMapper attendanceMapper;
+    private CourseandstuMapper courseandstuMapper;
+    @Autowired
+    private LabusingMapper labusingMapper;
     /**
      * @author: zx
      * @paramater:
@@ -38,20 +38,36 @@ public class LeaveServiceImpl implements LeaveService {
     @Override
     public void insertLeave(Leave leave) {
         IdWorker idWorker = new IdWorker(0, 0);
-        List<Labusing> labusings = labusingMapper.selectByDateForLeave(leave.getLeaveDatestart(),leave.getLeaveDateend());
-        for (Labusing labusing : labusings) {
-            Attendance attendance = new Attendance();
-            String attendanceID= "AD" + idWorker.nextId();
-            attendance.setAttendanceId(attendanceID);
-            attendance.setStudentId(leave.getStudentId());
-            attendance.setLabusingId(labusing.getLabusingId());
-            attendance.setAttendanceRecord(leave.getLeaveClass());
-            attendanceMapper.insert(attendance);
-        }
+        //获取当前系统时间
+//        SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        Leaveclassm leaveclassm = new Leaveclassm();
         String leaveID = "LE" + idWorker.nextId();
+        leave.setApprover("");
         leave.setLeaveId(leaveID);
         leave.setLeaveStatus(1);
+        leave.setLeavedate(new Date());
         leaveMapper.insert(leave);
+
+        List<Courseandstu> courseandstus = courseandstuMapper.selectByStudentIdNoCourse(leave.getStudentId());
+        List<Labusing> labusings = new ArrayList<>();
+        SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        for (Courseandstu courseandstu : courseandstus){
+            labusings.addAll(labusingMapper.selectByCourseIdAndTime(courseandstu.getCourseId(),formatter.format(leave.getLeaveDatestart()),formatter.format(leave.getLeaveDateend())));
+        }
+        for (Labusing labusing : labusings){
+            String leaveclassmID = "LCM" + idWorker.nextId();
+            leaveclassm.setApprover(labusing.getCourse().getCourseTeacher());
+            leaveclassm.setLabusing(labusing);
+            leaveclassm.setLabusingId(labusing.getLabusingId());
+            leaveclassm.setLeaveClass(leave.getLeaveClass());
+            leaveclassm.setLeavedate(leave.getLeavedate());
+            leaveclassm.setLeaveImg(leave.getLeaveImg());
+            leaveclassm.setLeaveclassmId(leaveclassmID);
+            leaveclassm.setLeaveReason(leave.getLeaveReason());
+            leaveclassm.setLeaveStatus(1);
+            leaveclassm.setStudentId(leave.getStudentId());
+            leaveclassmMapper.insertLeaveclass(leaveclassm);
+        }
 
     }
 }

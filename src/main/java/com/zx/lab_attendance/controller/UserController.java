@@ -40,6 +40,11 @@ public class UserController {
         return JsonData.buildSuccess(userService.allStudentUser());
     }
 
+    @PostMapping("/changeUserInfo")
+        public JsonData changeUserInfo(String userNum,String email,String phone){
+        return null;
+        }
+
     @PostMapping("/login")
     public JsonData login(@RequestBody Users user, HttpServletRequest request, HttpServletResponse response){
         Subject subject = SecurityUtils.getSubject();
