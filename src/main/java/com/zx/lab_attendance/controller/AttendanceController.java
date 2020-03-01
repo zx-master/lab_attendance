@@ -10,6 +10,7 @@ import io.swagger.annotations.ApiImplicitParam;
 import io.swagger.annotations.ApiImplicitParams;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Repository;
 import org.springframework.web.bind.annotation.*;
 import springfox.documentation.spring.web.json.Json;
 
@@ -71,9 +72,6 @@ public class AttendanceController {
                                           @RequestParam("starttime") String starttime,
                                           @RequestParam("endtime") String endtime) {
         response.setHeader("Access-Control-Allow-Origin","*");
-//        String studentNum = "1640129422";
-//        String starttime = "2020-02-09 00:00:00";
-//        String endtime = "2020-02-14 23:59:59";
         List<PersonalAttendance> personalAttendances = attendanceService.selectByUserNum(studentNum,starttime,endtime);
         return JsonData.buildSuccess(personalAttendances);
     }
@@ -118,6 +116,51 @@ public class AttendanceController {
 //        String endtime = "2020-02-14 23:59:59";
         List<Map> mapList = attendanceService.selectAbsenteeism(starttime,endtime);
         return JsonData.buildSuccess(mapList);
+    }
+
+    @GetMapping("/selectAttendanceByCourse")
+    public JsonData selectAttendanceByCourse() {
+        List<CourseAttendance> courseAttendances = attendanceService.selectAllAttendanceCourse();
+        return JsonData.buildSuccess(courseAttendances);
+    }
+
+    @GetMapping("/selectAllStuAttendance")
+    public JsonData selectAllStuAttendance(){
+        return JsonData.buildSuccess(attendanceService.selectAllStuAttendance());
+    }
+
+    @PostMapping("/selectStudentCourse")
+    @ApiOperation(value = "根据学生学号和时间段获取考勤数据", notes="List<Map<String,List<PersonalAttendance>>>")
+    @ApiImplicitParams({
+            @ApiImplicitParam(paramType = "query", name = "studentNum", value = "学生学号", required = true, dataType = "String"),
+            @ApiImplicitParam(paramType = "query", name = "starttime", value = "时间段开始时间", required = true, dataType = "String"),
+            @ApiImplicitParam(paramType = "query", name = "endtime", value = "时间段结束时间", required = true, dataType = "String")
+    })
+    public JsonData selectStudentCollect(HttpServletResponse response, HttpServletRequest request,
+                                          @RequestParam("courseCode") String courseCode,
+                                          @RequestParam("userid") String userid,
+                                          @RequestParam("starttime") String starttime,
+                                          @RequestParam("endtime") String endtime) {
+        response.setHeader("Access-Control-Allow-Origin","*");
+        List<PersonalAttendance> personalAttendances = attendanceService.selectStudentCollect(courseCode,userid,starttime,endtime);
+        return JsonData.buildSuccess(personalAttendances);
+    }
+
+    @PostMapping("/selectTeacherCourse")
+    @ApiOperation(value = "根据学生学号和时间段获取考勤数据", notes="List<Map<String,List<PersonalAttendance>>>")
+    @ApiImplicitParams({
+            @ApiImplicitParam(paramType = "query", name = "studentNum", value = "学生学号", required = true, dataType = "String"),
+            @ApiImplicitParam(paramType = "query", name = "starttime", value = "时间段开始时间", required = true, dataType = "String"),
+            @ApiImplicitParam(paramType = "query", name = "endtime", value = "时间段结束时间", required = true, dataType = "String")
+    })
+    public JsonData selectTeacherCollect(HttpServletResponse response, HttpServletRequest request,
+                                         @RequestParam("courseCode") String courseCode,
+                                         @RequestParam("userid") String userid,
+                                         @RequestParam("starttime") String starttime,
+                                         @RequestParam("endtime") String endtime) {
+        response.setHeader("Access-Control-Allow-Origin","*");
+        List<CourseAttendance> CourseAttendance = attendanceService.selectTeacherCollect(courseCode,userid,starttime,endtime);
+        return JsonData.buildSuccess(CourseAttendance);
     }
 
 }

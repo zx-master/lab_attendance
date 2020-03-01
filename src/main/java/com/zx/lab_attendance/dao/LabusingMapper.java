@@ -20,7 +20,11 @@ public interface LabusingMapper {
 
     List<Labusing> selectByCourseCode(String courseCode);
 
+    List<Labusing> selectByCourseCodeDate(String courseCode,String starttime,String endtime);
+
     List<Labusing> selectByDateForLeave(Date starttime, Date endtime);
 
     List<Labusing> selectByCourseIdAndTime(String courseCode,String starttime,String endtime);
+
+
 }

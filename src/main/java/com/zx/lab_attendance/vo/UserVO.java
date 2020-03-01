@@ -29,7 +29,17 @@ public class UserVO {
 
     private String userName;
 
-    private String role;
+    private String userImg;
+
+    private Integer role;
+
+    public String getUserImg() {
+        return userImg;
+    }
+
+    public void setUserImg(String userImg) {
+        this.userImg = userImg;
+    }
 
     public String getUserId() {
         return userId;
@@ -89,11 +99,11 @@ public class UserVO {
         this.userName = userName;
     }
 
-    public String getRole() {
+    public Integer getRole() {
         return role;
     }
 
-    public void setRole(String role) {
+    public void setRole(Integer role) {
         this.role = role;
     }
 }

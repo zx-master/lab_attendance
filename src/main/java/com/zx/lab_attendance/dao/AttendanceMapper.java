@@ -30,4 +30,8 @@ public interface AttendanceMapper {
     List<Attendance> selectByDate(String date);
 
     List<Attendance> selectByStaus(String starttime,String endtime);
+
+    Attendance selectByStudentIDAndLab(String labuing,String studentid, String starttime,String endtime);
+
+    List<Attendance> selectByTeacherIDAndLab(String labuing,String teacherid, String starttime,String endtime);
 }

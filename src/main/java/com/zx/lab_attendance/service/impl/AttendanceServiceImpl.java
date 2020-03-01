@@ -7,8 +7,8 @@ import com.zx.lab_attendance.service.AttendanceService;
 import com.zx.lab_attendance.utils.DateConversionWeek;
 import com.zx.lab_attendance.vo.CourseAttendance;
 import com.zx.lab_attendance.vo.PersonalAttendance;
+import com.zx.lab_attendance.vo.StudentAttendance;
 import org.apache.commons.collections.map.HashedMap;
-import org.apache.shiro.crypto.hash.Hash;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
@@ -192,10 +192,11 @@ public class AttendanceServiceImpl implements AttendanceService {
     public List<CourseAttendance> selectByCourseCode(String courseCode, String starttime, String endtime) {
         List<CourseAttendance> courseAttendances = new ArrayList<>();
 
-        List<Labusing> labusings = labusingMapper.selectByCourseCode(courseCode);
+        List<Labusing> labusings = labusingMapper.selectByCourseCodeDate(courseCode,starttime,endtime);
         for (Labusing labusing : labusings) {
             CourseAttendance courseAttendance = new CourseAttendance();
             List<Attendance> attendanceList = attendanceMapper.selectByCourseCode(labusing.getLabusingId(),starttime,endtime);
+            System.out.println(attendanceList.size());
             int collectiveNum = attendanceList.size();
             int lateNum = 0;
             int sickNum = 0;
@@ -221,7 +222,10 @@ public class AttendanceServiceImpl implements AttendanceService {
             Course course = courseMapper.selectByCourseCode(labusing.getCourseId());
             courseAttendance.setCourseName(course.getCourseName());
             courseAttendance.setCourseDate(labusing.getLabusingDate());
-            Courseandstu courseandstu = courseandstuMapper.selectByStudentId(attendanceList.get(0).getStudentId(),labusing.getCourseId());
+            Courseandstu courseandstu = new Courseandstu();
+            if (attendanceList.size() > 0) {
+                courseandstu = courseandstuMapper.selectByStudentId(attendanceList.get(0).getStudentId(), labusing.getCourseId());
+            }
             courseAttendance.setCourseClass(courseandstu.getCourseNumber());
             courseAttendances.add(courseAttendance);
         }
@@ -242,17 +246,6 @@ public class AttendanceServiceImpl implements AttendanceService {
         List<String> lastWeek = new ArrayList<>();
         List<String> thisWeek = new ArrayList<>();
         int weekDay = DateConversionWeek.DateConversionWeek(nowdayStr);
-//        if (weekDay == 6){
-//            Date date = new java.sql.Date(nowday.getTime());
-//            Date as = new Date(date.getTime()-24*60*60*1000);
-//            nowday = as;
-//            weekDay = 6;
-//        } else if(weekDay == 7){
-//            Date date = new java.sql.Date(nowday.getTime());
-//            Date as = new Date(date.getTime()-48*60*60*1000);
-//            nowday = as;
-//            weekDay = 7;
-//        }
         for (int i = 0;i < 7; i++) {
             Date date = new java.sql.Date(nowday.getTime());
             Date as = new Date(date.getTime()-(i+weekDay)*24*60*60*1000);
@@ -327,5 +320,198 @@ public class AttendanceServiceImpl implements AttendanceService {
         return mapList;
     }
 
+    /**
+     * @author: zx
+     * @paramater:
+     * @process:
+     * @describe: 查询所有的课程的考勤记录
+     */
+    @Override
+    public List<CourseAttendance> selectAllAttendanceCourse() {
+        List<Course> courses = courseMapper.selectAll();
+        List<CourseAttendance> courseAttendances = new ArrayList<>();
+        for (Course course : courses) {
+            List<Labusing> labusings = labusingMapper.selectByCourseCode(course.getCourseCode());
+            for (Labusing labusing : labusings){
+                CourseAttendance courseAttendance = new CourseAttendance();
+                List<Attendance> attendances = attendanceMapper.selectByCourseCode(labusing.getLabusingId(),null,null);
+                int collectiveNum = attendances.size();
+                int lateNum = 0;
+                int sickNum = 0;
+                int affirtNum = 0;
+                int absenteeism = 0;
+                for (Attendance attendance : attendances){
+                    if (attendance.getAttendanceRecord().equals(2)){
+                        lateNum += 1;
+                    } else if (attendance.getAttendanceRecord().equals(3)) {
+                        sickNum += 1;
+                    } else if (attendance.getAttendanceRecord().equals(4)) {
+                        affirtNum += 1;
+                    } else if (attendance.getAttendanceRecord().equals(5)) {
+                        absenteeism += 1;
+                    }
+                }
+                courseAttendance.setCourseManNum(collectiveNum);
+                courseAttendance.setLateNum(lateNum);
+                courseAttendance.setSickNum(sickNum);
+                courseAttendance.setAffairLeaveNum(affirtNum);
+                courseAttendance.setAbsenteeism(absenteeism);
+                courseAttendance.setCourseNum(labusing.getCourseId());
+                courseAttendance.setCourseName(course.getCourseName());
+                courseAttendance.setCourseDate(labusing.getLabusingDate());
+                courseAttendances.add(courseAttendance);
+            }
+        }
+        Map<String,CourseAttendance> attendanceMap = new HashedMap();
+        for (CourseAttendance courseAttendance : courseAttendances){
+            if (attendanceMap.size() == 0){
+                attendanceMap.put(courseAttendance.getCourseNum(),courseAttendance);
+            } else {
+                if (attendanceMap.containsKey(courseAttendance.getCourseNum())){
+                    CourseAttendance courseAttendance1 = attendanceMap.get(courseAttendance.getCourseNum());
+                    int lateNum = courseAttendance1.getLateNum() + courseAttendance.getLateNum();
+                    int sickNum = courseAttendance1.getSickNum() + courseAttendance.getSickNum();
+                    int afficeNum = courseAttendance1.getAffairLeaveNum() + courseAttendance.getAffairLeaveNum();
+                    int absenNum = courseAttendance1.getAbsenteeism() + courseAttendance.getAbsenteeism();
+                    courseAttendance1.setLateNum(lateNum);
+                    courseAttendance1.setSickNum(sickNum);
+                    courseAttendance1.setAffairLeaveNum(afficeNum);
+                    courseAttendance1.setAbsenteeism(absenNum);
+                    attendanceMap.put(courseAttendance.getCourseNum(),courseAttendance1);
+                }else{
+                    attendanceMap.put(courseAttendance.getCourseNum(),courseAttendance);
+                }
 
+            }
+        }
+        List<CourseAttendance> attendances = new ArrayList<>();
+        for(CourseAttendance value : attendanceMap.values()){
+            attendances.add(value);
+        }
+        return attendances;
+    }
+
+
+    /**
+     * @author: zx
+     * @paramater:
+     * @process:
+     * @describe: 查看所有学生的考勤统计
+     */
+    @Override
+    public List<StudentAttendance> selectAllStuAttendance() {
+        List<Users> users = usersMapper.selectByAllStudent();
+        List<StudentAttendance> studentAttendances = new ArrayList<>();
+        for (Users users1 : users){
+            List<Attendance> attendanceList = attendanceMapper.selectByStudentID(users1.getUserId(),null,null);
+            int lateNum = 0;
+            int sickNum = 0;
+            int affirtNum = 0;
+            int absenteeism = 0;
+            for (Attendance attendance : attendanceList) {
+                if (attendance.getAttendanceRecord().equals(2)){
+                    lateNum += 1;
+                } else if (attendance.getAttendanceRecord().equals(3)) {
+                    sickNum += 1;
+                } else if (attendance.getAttendanceRecord().equals(4)) {
+                    affirtNum += 1;
+                } else if (attendance.getAttendanceRecord().equals(5)) {
+                    absenteeism += 1;
+                }
+            }
+            StudentAttendance studentAttendance = new StudentAttendance();
+            studentAttendance.setUsername(users1.getUsername());
+            studentAttendance.setUserNumber(users1.getUserNumber());
+            studentAttendance.setUserId(users1.getUserId());
+            studentAttendance.setAbsenteeism(absenteeism);
+            studentAttendance.setAffairLeaveNum(affirtNum);
+            studentAttendance.setLateNum(lateNum);
+            studentAttendance.setSickNum(sickNum);
+            studentAttendance.setDepartment(users1.getMajor().getMajorName());
+            studentAttendances.add(studentAttendance);
+        }
+        return studentAttendances;
+    }
+
+    @Override
+    public List<PersonalAttendance> selectStudentCollect(String courseCode, String userid, String starttime, String endtime) {
+        Users users = usersMapper.selectByPrimaryKey(userid);
+            List<PersonalAttendance> personalAttendanceList = new ArrayList<>();
+            Course course = courseMapper.selectByCourseCode(courseCode);
+            List<Labusing> labusings = labusingMapper.selectByCourseCode(course.getCourseCode());
+            for (Labusing labusing : labusings){
+                Attendance attendance = attendanceMapper.selectByStudentIDAndLab(labusing.getLabusingId(),users.getUserId(),starttime,endtime);
+                if (!StringUtils.isEmpty(attendance)) {
+                    PersonalAttendance personalAttendance = new PersonalAttendance();
+                    personalAttendance.setAttendanceid(attendance.getAttendanceId());
+                    personalAttendance.setMajorName(users.getMajor().getMajorName());
+                    personalAttendance.setAttendancetime(attendance.getAttendanceDate());
+                    if (attendance.getAttendanceRecord().equals(AttendanceEnum.NORMAL.type)) {
+                        personalAttendance.setAttendanceState(AttendanceEnum.NORMAL.type);
+                    } else if (attendance.getAttendanceRecord() == 2) {
+                        personalAttendance.setAttendanceState(AttendanceEnum.LATE.type);
+                    } else if (attendance.getAttendanceRecord() == 3) {
+                        personalAttendance.setAttendanceState(AttendanceEnum.SICKLEAVE.type);
+                    } else if (attendance.getAttendanceRecord() == 4) {
+                        personalAttendance.setAttendanceState(AttendanceEnum.AFFAIRLEAVE.type);
+                    } else if (attendance.getAttendanceRecord() == 5) {
+                        personalAttendance.setAttendanceState(AttendanceEnum.ABSENTEEISM.type);
+                    }
+                    personalAttendance.setName(users.getUsername());
+                    personalAttendance.setStudentNum(users.getUserNumber());
+                    personalAttendance.setCourseList(course);
+                    personalAttendanceList.add(personalAttendance);
+                }
+
+            }
+
+            return personalAttendanceList;
+    }
+
+    @Override
+    public List<CourseAttendance> selectTeacherCollect(String courseCode, String userId, String starttime, String endtime) {
+        List<CourseAttendance> courseAttendances = new ArrayList<>();
+
+        List<Labusing> labusings = labusingMapper.selectByCourseCodeDate(courseCode, starttime, endtime);
+        for (Labusing labusing : labusings) {
+            CourseAttendance courseAttendance = new CourseAttendance();
+            List<Attendance> attendanceList = attendanceMapper.selectByTeacherIDAndLab(labusing.getLabusingId(), userId,starttime, endtime);
+            System.out.println(attendanceList.size());
+            int collectiveNum = attendanceList.size();
+            int lateNum = 0;
+            int sickNum = 0;
+            int affirtNum = 0;
+            int absenteeism = 0;
+            for (Attendance attendance1 : attendanceList) {
+                if (attendance1.getAttendanceRecord().equals(2)) {
+                    lateNum += 1;
+                } else if (attendance1.getAttendanceRecord().equals(3)) {
+                    sickNum += 1;
+                } else if (attendance1.getAttendanceRecord().equals(4)) {
+                    affirtNum += 1;
+                } else if (attendance1.getAttendanceRecord().equals(5)) {
+                    absenteeism += 1;
+                }
+            }
+            courseAttendance.setCourseManNum(collectiveNum);
+            courseAttendance.setLateNum(lateNum);
+            courseAttendance.setSickNum(sickNum);
+            courseAttendance.setAffairLeaveNum(affirtNum);
+            courseAttendance.setAbsenteeism(absenteeism);
+            courseAttendance.setCourseNum(labusing.getCourseId());
+            Course course = courseMapper.selectByCourseCode(labusing.getCourseId());
+            courseAttendance.setCourseName(course.getCourseName());
+            courseAttendance.setCourseDate(labusing.getLabusingDate());
+            Courseandstu courseandstu = new Courseandstu();
+            if (attendanceList.size() > 0) {
+                courseandstu = courseandstuMapper.selectByStudentId(attendanceList.get(0).getStudentId(), labusing.getCourseId());
+            }
+            courseAttendance.setCourseClass(courseandstu.getCourseNumber());
+            courseAttendances.add(courseAttendance);
+        }
+        return courseAttendances;
+    }
 }
+
+
+

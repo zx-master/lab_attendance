@@ -1,15 +1,10 @@
 package com.zx.lab_attendance.service.impl;
 
-import com.zx.lab_attendance.dao.CollectiveMapper;
-import com.zx.lab_attendance.dao.CourseandstuMapper;
-import com.zx.lab_attendance.dao.LabusingMapper;
-import com.zx.lab_attendance.dao.UsersMapper;
-import com.zx.lab_attendance.entity.Collective;
-import com.zx.lab_attendance.entity.Courseandstu;
-import com.zx.lab_attendance.entity.Labusing;
-import com.zx.lab_attendance.entity.Users;
+import com.zx.lab_attendance.dao.*;
+import com.zx.lab_attendance.entity.*;
 import com.zx.lab_attendance.service.UserService;
 import com.zx.lab_attendance.vo.UserVO;
+import org.apache.shiro.crypto.hash.SimpleHash;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -30,6 +25,8 @@ public class UserServiceImpl implements UserService {
     UsersMapper usersMapper;
     @Autowired
     CollectiveMapper collectiveMapper;
+    @Autowired
+    DepartmentMapper departmentMapper;
 
 
     @Override
@@ -37,14 +34,19 @@ public class UserServiceImpl implements UserService {
         List<Users> usersList = usersMapper.selectByAllStudent();
         List<UserVO> userVOS = new ArrayList<>();
         for (Users users : usersList){
-            Collective collective = collectiveMapper.selectByPrimaryKey(users.getClassordepartment());
             UserVO userVO = new UserVO();
             userVO.setUsername(users.getUsername());
             userVO.setUserNumber(users.getUserNumber());
             userVO.setEmail(users.getEmail());
             userVO.setMajorName(users.getMajor().getMajorName());
-            //<<<<<<<<<<<<<<<<<<<<<<<<<<<<判断是老师还是学生>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
-            userVO.setCollective(collective.getDepartment().getDepartmentDescribe()+collective.getCollectiveNumber()+"班");
+            //<<<<<<<<<<<<<<<<<<<<<<<<<<<<判断是老师还是学生>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+            if (users.getTssign() == 2) {
+                Collective collective = collectiveMapper.selectByPrimaryKey(users.getClassordepartment());
+                userVO.setCollective(collective.getDepartment().getDepartmentDescribe() + collective.getCollectiveNumber() + "班");
+            }else{
+                Department department = departmentMapper.selectByPrimaryKey(users.getClassordepartment());
+                userVO.setCollective(department.getDepartmentDescribe());
+            }
             userVOS.add(userVO);
         }
         return userVOS;
@@ -53,6 +55,40 @@ public class UserServiceImpl implements UserService {
     @Override
     public Users selectUserByUserNum(String usernumber) {
         return usersMapper.selectUserByUserNum(usernumber);
+    }
+
+    @Override
+    public void updateEmailPhoneByPrimaryKey(Users user) {
+        usersMapper.updateEmailPhoneByPrimaryKey(user);
+    }
+
+    @Override
+    public void updateUserImgByPrimaryKey(Users user){
+        usersMapper.updateUserImgByPrimaryKey(user);
+    }
+
+    @Override
+    public int checkPsw(Users user) {
+        Users userInfo = usersMapper.selectByPrimaryKey(user.getUserId());
+        Object result = new SimpleHash("md5",user.getPassword(),null,2);
+        if (userInfo.getPassword().equals(result.toString())){
+            System.out.println(userInfo.getPassword());
+            System.out.println(result.toString());
+            return 0;
+        }else{
+            return -1;
+        }
+    }
+
+    @Override
+    public int updateUserPwd(Users user) {
+        Object result = new SimpleHash("md5",user.getPassword(),null,2);
+        user.setPassword(result.toString());
+        if (usersMapper.updateUserPwd(user) == 1){
+            return 0;
+        }else{
+            return -1;
+        }
     }
 
 

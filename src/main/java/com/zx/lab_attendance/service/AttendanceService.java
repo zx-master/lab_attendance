@@ -3,6 +3,7 @@ package com.zx.lab_attendance.service;
 import com.zx.lab_attendance.entity.Attendance;
 import com.zx.lab_attendance.vo.CourseAttendance;
 import com.zx.lab_attendance.vo.PersonalAttendance;
+import com.zx.lab_attendance.vo.StudentAttendance;
 
 import java.text.ParseException;
 import java.util.List;
@@ -80,4 +81,36 @@ public interface AttendanceService {
      */
     List<Map> selectAbsenteeism(String starttime, String endtime);
 
+    /**
+     * @author: zx
+     * @return:
+     * @parameter:
+     * @describe: 查询所有课程的考勤
+     */
+    List<CourseAttendance> selectAllAttendanceCourse();
+
+
+    /**
+     * @author: zx
+     * @return:
+     * @parameter:
+     * @describe: 查看所有学生的考勤统计
+     */
+    List<StudentAttendance> selectAllStuAttendance();
+
+    /**
+     * @author: zx
+     * @return:
+     * @parameter:
+     * @describe: 查询学生的某课程的考勤记录
+     */
+    List<PersonalAttendance> selectStudentCollect(String courseCode,String userNum,String starttime,String endtime);
+
+    /**
+     * @author: zx
+     * @return:
+     * @parameter:
+     * @describe: 查询教师的某课程的考勤记录
+     */
+    List<CourseAttendance> selectTeacherCollect(String courseCode,String userNum,String starttime,String endtime);
 }

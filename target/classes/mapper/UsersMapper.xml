@@ -52,6 +52,23 @@
       majorId = #{majorId,jdbcType=INTEGER}
     where user_id = #{userId,jdbcType=VARCHAR}
   </update>
+  <update id="updateEmailPhoneByPrimaryKey" parameterType="com.zx.lab_attendance.entity.Users">
+    update users
+    set  email = #{email,jdbcType=VARCHAR},phone = #{phone,jdbcType=VARCHAR}
+    where user_id = #{userId,jdbcType=VARCHAR}
+  </update>
+  <update id="updateUserImgByPrimaryKey" parameterType="com.zx.lab_attendance.entity.Users">
+    update users
+    set  userImg = #{userImg,jdbcType=VARCHAR}
+    where user_id = #{userId,jdbcType=VARCHAR}
+  </update>
+  <update id="updateUserPwd" parameterType="com.zx.lab_attendance.entity.Users">
+    update users
+    set  `password` = #{password,jdbcType=VARCHAR}
+    where user_id = #{userId,jdbcType=VARCHAR}
+  </update>
+
+
   <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
     select user_id, user_number, email, `password`, classordepartment, phone, tssign ,username,majorId,userImg
     from users

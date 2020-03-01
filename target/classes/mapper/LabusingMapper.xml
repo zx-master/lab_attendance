@@ -41,7 +41,17 @@
     from labusing
     where course_id = #{courseCode,jdbcType=VARCHAR}
   </select>
-
+  <select id="selectByCourseCodeDate" resultMap="BaseResultMap">
+    select labusing_id, labusing_date, labusing_dateend, course_id, laboratory_number
+    from labusing
+    where course_id = #{courseCode,jdbcType=VARCHAR}
+    <if test="starttime != null and starttime != ''">
+      and DATE_FORMAT(labusing_date,'%Y-%m-%d') <![CDATA[>=]]> DATE_FORMAT(#{starttime}, '%Y-%m-%d')
+    </if>
+    <if test="endtime != null and endtime != ''">
+      and DATE_FORMAT(labusing_date,'%Y-%m-%d') <![CDATA[<=]]> DATE_FORMAT(#{endtime},'%Y-%m-%d')
+    </if>
+  </select>
   <select id="selectByDateForLeave" resultMap="BaseResultMap">
     select labusing_id, labusing_date, labusing_dateend, course_id, laboratory_number
     from labusing

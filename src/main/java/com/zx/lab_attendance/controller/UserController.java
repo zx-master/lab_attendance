@@ -1,7 +1,8 @@
 package com.zx.lab_attendance.controller;
 
-import com.zx.lab_attendance.entity.JsonData;
-import com.zx.lab_attendance.entity.Users;
+import com.zx.lab_attendance.dao.CollectiveMapper;
+import com.zx.lab_attendance.dao.DepartmentMapper;
+import com.zx.lab_attendance.entity.*;
 import com.zx.lab_attendance.service.MajorService;
 import com.zx.lab_attendance.service.UserService;
 import com.zx.lab_attendance.vo.UserVO;
@@ -12,6 +13,8 @@ import org.apache.shiro.authc.UsernamePasswordToken;
 import org.apache.shiro.subject.Subject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
+import springfox.documentation.spring.web.json.Json;
+
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.util.HashMap;
@@ -32,6 +35,10 @@ public class UserController {
 
     @Autowired
     UserService userService;
+    @Autowired
+    CollectiveMapper collectiveMapper;
+    @Autowired
+    DepartmentMapper departmentMapper;
 
     @GetMapping("/getStudentUser")
     @ApiOperation(value = "获取所有学生的数据", notes="返回List<UserVO>数据")
@@ -41,9 +48,28 @@ public class UserController {
     }
 
     @PostMapping("/changeUserInfo")
-        public JsonData changeUserInfo(String userNum,String email,String phone){
-        return null;
+        public JsonData changeUserInfo(HttpServletResponse response, HttpServletRequest request,Users user){
+        response.setHeader("Access-Control-Allow-Origin","*");
+        userService.updateEmailPhoneByPrimaryKey(user);
+        return JsonData.buildSuccess("更新成功");
         }
+
+    @PostMapping("/updateUserImgByPrimaryKey")
+    public JsonData updateUserImgByPrimaryKey(HttpServletResponse response, HttpServletRequest request,Users user){
+        response.setHeader("Access-Control-Allow-Origin","*");
+        userService.updateUserImgByPrimaryKey(user);
+        return JsonData.buildSuccess("更新成功");
+    }
+
+    @PostMapping("/checkPsw")
+    public JsonData checkPsw(Users user){
+        return JsonData.buildSuccess(userService.checkPsw(user));
+    }
+
+    @PostMapping("/changePsw")
+    public JsonData changePsw(Users user){
+        return JsonData.buildSuccess(userService.updateUserPwd(user));
+    }
 
     @PostMapping("/login")
     public JsonData login(@RequestBody Users user, HttpServletRequest request, HttpServletResponse response){
@@ -52,15 +78,34 @@ public class UserController {
         try{
             UsernamePasswordToken usernamePasswordToken = new UsernamePasswordToken(user.getUserNumber(),user.getPassword());
             Users userInfo = userService.selectUserByUserNum(user.getUserNumber());
+            System.out.println(userInfo);
             UserVO userVO = new UserVO();
             userVO.setUserId(userInfo.getUserId());
             userVO.setUserNumber(userInfo.getUserNumber());
             userVO.setUsername(userInfo.getUsername());
             userVO.setEmail(userInfo.getEmail());
             userVO.setPhone(userInfo.getPhone());
-
+            userVO.setMajorName(userInfo.getMajor().getMajorName());
+//            userVO.setRole(userInfo);
             //>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>需要将专业，班级，年级等信息封装<<<<<<<<<<<<<<<<<<<<<<<<<<<<
+            if (userInfo.getTssign() == 2) {
+                Collective collective = collectiveMapper.selectByPrimaryKey(userInfo.getClassordepartment());
+                userVO.setCollective(collective.getDepartment().getDepartmentDescribe() + collective.getCollectiveNumber() + "班");
+            }else if(userInfo.getTssign() == 3){
+//                Department department = departmentMapper.selectByPrimaryKey(userInfo.getClassordepartment());
+                userVO.setCollective("root");
+            }else{
+                Department department = departmentMapper.selectByPrimaryKey(userInfo.getClassordepartment());
+                userVO.setCollective(department.getDepartmentDescribe());
+            }
+            userVO.setUserImg(userInfo.getUserImg());
+            //>>>>>>>>>>>>>>>>>>>>>>>>>>>>>用户角色>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+            Integer roleString = userInfo.getTssign();
+//            for (Role role : userInfo.getRoleList()){
+//                roleString = roleString + role.getRoleName();
+//            }
 
+            userVO.setRole(roleString);
             subject.login(usernamePasswordToken);
             info.put("msg","登录成功");
             info.put("session_id",subject.getSession().getId());

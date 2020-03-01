@@ -18,5 +18,12 @@ public interface UserService {
 
     public Users selectUserByUserNum(String usernumber);
 
+    public void updateEmailPhoneByPrimaryKey(Users user);
+
+    void updateUserImgByPrimaryKey(Users users);
+
+    int checkPsw(Users user);
+
+    int updateUserPwd(Users user);
 
 }

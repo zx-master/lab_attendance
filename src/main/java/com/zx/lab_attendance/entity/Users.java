@@ -128,20 +128,19 @@ public class Users implements Serializable {
 
     @Override
     public String toString() {
-        StringBuilder sb = new StringBuilder();
-        sb.append(getClass().getSimpleName());
-        sb.append(" [");
-        sb.append("Hash = ").append(hashCode());
-        sb.append(", userId=").append(userId);
-        sb.append(", userNumber=").append(userNumber);
-        sb.append(", email=").append(email);
-        sb.append(", password=").append(password);
-        sb.append(", classordepartment=").append(classordepartment);
-        sb.append(", phone=").append(phone);
-        sb.append(", tssign=").append(tssign);
-        sb.append(", username=").append(username);
-        sb.append(", serialVersionUID=").append(serialVersionUID);
-        sb.append("]");
-        return sb.toString();
+        return "Users{" +
+                "userId='" + userId + '\'' +
+                ", userNumber='" + userNumber + '\'' +
+                ", email='" + email + '\'' +
+                ", password='" + password + '\'' +
+                ", classordepartment='" + classordepartment + '\'' +
+                ", phone='" + phone + '\'' +
+                ", tssign=" + tssign +
+                ", username='" + username + '\'' +
+                ", userImg='" + userImg + '\'' +
+                ", roleList=" + roleList +
+                ", majorId=" + majorId +
+                ", major=" + major +
+                '}';
     }
 }
