@@ -26,5 +26,7 @@ public interface LabusingMapper {
 
     List<Labusing> selectByCourseIdAndTime(String courseCode,String starttime,String endtime);
 
+    List<Labusing> selectByLabNum(String labnum);
+
 
 }

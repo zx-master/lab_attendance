@@ -16,6 +16,9 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import springfox.documentation.spring.web.json.Json;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
 /**
  * @author zx
  * @version 1.0
@@ -35,6 +38,12 @@ public class LeaveclassmController {
     @ApiOperation(value = "分页查询", notes="返回JsonData数据")
     public JsonData selectByApproverAndStu(@RequestParam("studentId") String studentId,@RequestParam("pageNum")Integer pageNum){
         return JsonData.buildSuccess(leaveclassmService.selectByApproverAndStu(studentId,pageNum,7));
+    }
+
+    @PostMapping("/insertLeaveclassm")
+    public JsonData insertLeaveclassm(HttpServletResponse response, HttpServletRequest request, @RequestBody Leaveclassm leaveclassm){
+        response.setHeader("Access-Control-Allow-Origin","*");
+        return JsonData.buildSuccess(leaveclassmService.insertReturnTea(leaveclassm));
     }
 
 }

@@ -122,4 +122,19 @@ public class CourseAttendance {
     public void setAffairLeaveNum(Integer affairLeaveNum) {
         this.affairLeaveNum = affairLeaveNum;
     }
+
+    @Override
+    public String toString() {
+        return "CourseAttendance{" +
+                "courseNum='" + courseNum + '\'' +
+                ", courseName='" + courseName + '\'' +
+                ", courseClass='" + courseClass + '\'' +
+                ", courseDate=" + courseDate +
+                ", courseManNum=" + courseManNum +
+                ", lateNum=" + lateNum +
+                ", sickNum=" + sickNum +
+                ", affairLeaveNum=" + affairLeaveNum +
+                ", absenteeism=" + absenteeism +
+                '}';
+    }
 }

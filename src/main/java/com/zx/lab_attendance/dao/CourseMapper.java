@@ -18,4 +18,6 @@ public interface CourseMapper {
     int updateByPrimaryKey(Course record);
 
     Course selectByCourseCode(String courseCode);
+
+    List<Course> selectByUserId(String userId);
 }

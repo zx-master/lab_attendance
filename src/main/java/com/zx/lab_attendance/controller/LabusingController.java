@@ -30,5 +30,23 @@ public class LabusingController {
         response.setHeader("Access-Control-Allow-Origin","*");
         return JsonData.buildSuccess(labusingService.selectLabusingByMyCourseForTime(studentId,starttime,endtime));
     }
+    @PostMapping("/selectLabByTeacher")
+    public JsonData selectLabByTeacher(HttpServletResponse response, HttpServletRequest request,String teacherId) {
+        response.setHeader("Access-Control-Allow-Origin","*");
+        return JsonData.buildSuccess(labusingService.selectLabByTeacher(teacherId));
+    }
+    @PostMapping("/selectLabByStudent")
+    public JsonData selectLabByStudent(HttpServletResponse response, HttpServletRequest request,String studentId) {
+        response.setHeader("Access-Control-Allow-Origin","*");
+        return JsonData.buildSuccess(labusingService.selectLabBystudent(studentId));
+    }
+
+    @PostMapping("/selectLabByLabNum")
+    public JsonData selectLabByLabNum(HttpServletResponse response, HttpServletRequest request,String labnum) {
+        response.setHeader("Access-Control-Allow-Origin","*");
+        return JsonData.buildSuccess(labusingService.selectLabByLabNum(labnum));
+    }
+
+
 
 }

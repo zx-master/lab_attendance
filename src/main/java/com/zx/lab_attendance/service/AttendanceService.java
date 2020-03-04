@@ -113,4 +113,20 @@ public interface AttendanceService {
      * @describe: 查询教师的某课程的考勤记录
      */
     List<CourseAttendance> selectTeacherCollect(String courseCode,String userNum,String starttime,String endtime);
+
+    /**
+     * @author: zx
+     * @paramater:
+     * @process:
+     * @describe: 统计老师的所有课的数据
+     */
+    List<CourseAttendance> selectTeacherAllCourse(String userId);
+
+    /**
+     * @author: zx
+     * @return:
+     * @parameter:
+     * @describe: 统计学生的所有课的数据
+     */
+    List<CourseAttendance> selectStudentAllCourse(String userId);
 }

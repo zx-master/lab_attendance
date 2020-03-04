@@ -149,7 +149,8 @@ public class AttendanceController {
     @PostMapping("/selectTeacherCourse")
     @ApiOperation(value = "根据学生学号和时间段获取考勤数据", notes="List<Map<String,List<PersonalAttendance>>>")
     @ApiImplicitParams({
-            @ApiImplicitParam(paramType = "query", name = "studentNum", value = "学生学号", required = true, dataType = "String"),
+            @ApiImplicitParam(paramType = "query", name = "userid", value = "教师工号", required = true, dataType = "String"),
+            @ApiImplicitParam(paramType = "query", name = "courseCode", value = "课程代号", required = true, dataType = "String"),
             @ApiImplicitParam(paramType = "query", name = "starttime", value = "时间段开始时间", required = true, dataType = "String"),
             @ApiImplicitParam(paramType = "query", name = "endtime", value = "时间段结束时间", required = true, dataType = "String")
     })
@@ -161,6 +162,16 @@ public class AttendanceController {
         response.setHeader("Access-Control-Allow-Origin","*");
         List<CourseAttendance> CourseAttendance = attendanceService.selectTeacherCollect(courseCode,userid,starttime,endtime);
         return JsonData.buildSuccess(CourseAttendance);
+    }
+
+    @PostMapping("/selectStudentAllCourse")
+    public JsonData selectStudentAllCourse( @RequestParam("userid") String userid){
+        return JsonData.buildSuccess(attendanceService.selectStudentAllCourse(userid));
+    }
+
+    @PostMapping("/selectTeacherAllCourse")
+    public JsonData selectTeacherAllCourse( @RequestParam("userid") String userid){
+        return JsonData.buildSuccess(attendanceService.selectTeacherAllCourse(userid));
     }
 
 }

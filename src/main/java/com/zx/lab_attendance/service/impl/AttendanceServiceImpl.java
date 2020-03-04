@@ -438,6 +438,7 @@ public class AttendanceServiceImpl implements AttendanceService {
         Users users = usersMapper.selectByPrimaryKey(userid);
             List<PersonalAttendance> personalAttendanceList = new ArrayList<>();
             Course course = courseMapper.selectByCourseCode(courseCode);
+
             List<Labusing> labusings = labusingMapper.selectByCourseCode(course.getCourseCode());
             for (Labusing labusing : labusings){
                 Attendance attendance = attendanceMapper.selectByStudentIDAndLab(labusing.getLabusingId(),users.getUserId(),starttime,endtime);
@@ -476,7 +477,7 @@ public class AttendanceServiceImpl implements AttendanceService {
         for (Labusing labusing : labusings) {
             CourseAttendance courseAttendance = new CourseAttendance();
             List<Attendance> attendanceList = attendanceMapper.selectByTeacherIDAndLab(labusing.getLabusingId(), userId,starttime, endtime);
-            System.out.println(attendanceList.size());
+//            System.out.println(attendanceList.size());
             int collectiveNum = attendanceList.size();
             int lateNum = 0;
             int sickNum = 0;
@@ -511,6 +512,124 @@ public class AttendanceServiceImpl implements AttendanceService {
         }
         return courseAttendances;
     }
+
+    @Override
+    public List<CourseAttendance> selectTeacherAllCourse(String userId) {
+        List<CourseAttendance> courseAttendances = new ArrayList<>();
+        List<Course> courses = courseMapper.selectByUserId(userId);
+        Map<String,CourseAttendance> courseAttendanceMap = new HashedMap();
+        for (Course course : courses) {
+            List<Labusing> labusings = labusingMapper.selectByCourseCodeDate(course.getCourseCode(), null, null);
+            for (Labusing labusing : labusings) {
+                CourseAttendance courseAttendance = new CourseAttendance();
+                List<Attendance> attendanceList = attendanceMapper.selectByTeacherIDAndLab(labusing.getLabusingId(), userId, null, null);
+//                System.out.println(attendanceList.size());
+                int collectiveNum = attendanceList.size();
+                int lateNum = 0;
+                int sickNum = 0;
+                int affirtNum = 0;
+                int absenteeism = 0;
+                for (Attendance attendance1 : attendanceList) {
+                    if (attendance1.getAttendanceRecord().equals(2)) {
+                        lateNum += 1;
+                    } else if (attendance1.getAttendanceRecord().equals(3)) {
+                        sickNum += 1;
+                    } else if (attendance1.getAttendanceRecord().equals(4)) {
+                        affirtNum += 1;
+                    } else if (attendance1.getAttendanceRecord().equals(5)) {
+                        absenteeism += 1;
+                    }
+                }
+                courseAttendance.setCourseManNum(collectiveNum);
+                courseAttendance.setLateNum(lateNum);
+                courseAttendance.setSickNum(sickNum);
+                courseAttendance.setAffairLeaveNum(affirtNum);
+                courseAttendance.setAbsenteeism(absenteeism);
+                courseAttendance.setCourseNum(labusing.getCourseId());
+//                Course course = courseMapper.selectByCourseCode(labusing.getCourseId());
+                courseAttendance.setCourseName(course.getCourseName());
+                courseAttendance.setCourseDate(labusing.getLabusingDate());
+                Courseandstu courseandstu = new Courseandstu();
+                if (attendanceList.size() > 0) {
+                    courseandstu = courseandstuMapper.selectByStudentId(attendanceList.get(0).getStudentId(), labusing.getCourseId());
+                }
+                courseAttendance.setCourseClass(courseandstu.getCourseNumber());
+                if (courseAttendanceMap.containsKey(courseAttendance.getCourseNum())){
+                    CourseAttendance courseAttendance1 = courseAttendanceMap.get(courseAttendance.getCourseNum());
+                    courseAttendance1.setAbsenteeism(courseAttendance1.getAbsenteeism() + courseAttendance.getAbsenteeism());
+                    courseAttendance1.setAffairLeaveNum(courseAttendance1.getAffairLeaveNum() + courseAttendance.getAffairLeaveNum());
+                    courseAttendance1.setSickNum(courseAttendance1.getSickNum() + courseAttendance.getSickNum());
+                    courseAttendance1.setLateNum(courseAttendance1.getLateNum() + courseAttendance.getLateNum());
+                    courseAttendanceMap.put(courseAttendance1.getCourseNum(),courseAttendance1);
+                }else{
+                    courseAttendanceMap.put(courseAttendance.getCourseNum(),courseAttendance);
+                }
+//                courseAttendances.add(courseAttendance);
+            }
+        }
+        for(CourseAttendance value : courseAttendanceMap.values()){
+            courseAttendances.add(value);
+        }
+
+        return courseAttendances;
+    }
+
+    @Override
+    public List<CourseAttendance> selectStudentAllCourse(String userId) {
+        List<CourseAttendance> courseAttendances = new ArrayList<>();
+        List<Courseandstu> courseandstu = courseandstuMapper.selectByStudentIdNoCourse(userId);
+        Map<String,CourseAttendance> courseAttendanceMap = new HashedMap();
+        for (Courseandstu coursestu : courseandstu) {
+            List<Labusing> labusings = labusingMapper.selectByCourseCodeDate(coursestu.getCourseId(), null, null);
+            for (Labusing labusing : labusings) {
+                CourseAttendance courseAttendance = new CourseAttendance();
+                Attendance attendance1 = attendanceMapper.selectByStudentIDAndLab(labusing.getLabusingId(), userId, null, null);
+//                int collectiveNum = attendanceList.size();
+                int lateNum = 0;
+                int sickNum = 0;
+                int affirtNum = 0;
+                int absenteeism = 0;
+//                for (Attendance attendance1 : attendanceList) {
+                    if (attendance1.getAttendanceRecord().equals(2)) {
+                        lateNum += 1;
+                    } else if (attendance1.getAttendanceRecord().equals(3)) {
+                        sickNum += 1;
+                    } else if (attendance1.getAttendanceRecord().equals(4)) {
+                        affirtNum += 1;
+                    } else if (attendance1.getAttendanceRecord().equals(5)) {
+                        absenteeism += 1;
+                    }
+//                }
+//                courseAttendance.setCourseManNum(collectiveNum);
+                courseAttendance.setLateNum(lateNum);
+                courseAttendance.setSickNum(sickNum);
+                courseAttendance.setAffairLeaveNum(affirtNum);
+                courseAttendance.setAbsenteeism(absenteeism);
+                courseAttendance.setCourseNum(labusing.getCourseId());
+                Course course = courseMapper.selectByCourseCode(labusing.getCourseId());
+                courseAttendance.setCourseName(course.getCourseName());
+                courseAttendance.setCourseDate(labusing.getLabusingDate());
+                if (courseAttendanceMap.containsKey(courseAttendance.getCourseNum())){
+                    CourseAttendance courseAttendance1 = courseAttendanceMap.get(courseAttendance.getCourseNum());
+                    courseAttendance1.setAbsenteeism(courseAttendance1.getAbsenteeism() + courseAttendance.getAbsenteeism());
+                    courseAttendance1.setAffairLeaveNum(courseAttendance1.getAffairLeaveNum() + courseAttendance.getAffairLeaveNum());
+                    courseAttendance1.setSickNum(courseAttendance1.getSickNum() + courseAttendance.getSickNum());
+                    courseAttendance1.setLateNum(courseAttendance1.getLateNum() + courseAttendance.getLateNum());
+                    courseAttendanceMap.put(courseAttendance1.getCourseNum(),courseAttendance1);
+                    System.out.println(courseAttendance1);
+                }else{
+                    courseAttendanceMap.put(courseAttendance.getCourseNum(),courseAttendance);
+                }
+                System.out.println(courseAttendanceMap);
+            }
+        }
+        for(CourseAttendance value : courseAttendanceMap.values()){
+            courseAttendances.add(value);
+        }
+        return courseAttendances;
+    }
+
+
 }
 
 

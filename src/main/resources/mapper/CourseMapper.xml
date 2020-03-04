@@ -50,4 +50,9 @@
     from course
     where course_code = #{courseCode,jdbcType=VARCHAR}
   </select>
+  <select id="selectByUserId" parameterType="java.lang.String" resultMap="BaseResultMap">
+    select course_id, course_name, course_code, course_teacher, course_ofweek, course_total,coursestart,courseend
+    from course
+    where course_teacher = #{userId,jdbcType=VARCHAR}
+  </select>
 </mapper>

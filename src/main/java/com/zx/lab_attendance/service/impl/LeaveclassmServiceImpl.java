@@ -7,12 +7,14 @@ import com.github.pagehelper.PageInfo;
 import com.zx.lab_attendance.dao.LeaveclassmMapper;
 import com.zx.lab_attendance.entity.Leaveclassm;
 import com.zx.lab_attendance.service.LeaveclassmService;
+import com.zx.lab_attendance.utils.IdWorker;
 import com.zx.lab_attendance.vo.LeaveclassmVO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -78,5 +80,16 @@ public class LeaveclassmServiceImpl implements LeaveclassmService {
 //        PageInfo<LeaveclassmVO> pageInfo = new PageInfo<LeaveclassmVO>(leaveclassmVOS);
 //        System.out.println(pageInfo.getPages());
         return info;
+    }
+
+    @Override
+    public String insertReturnTea(Leaveclassm leaveclassm) {
+        IdWorker idWorker = new IdWorker(0, 0);
+        String id = "LCM" + idWorker.nextId();
+        leaveclassm.setLeaveclassmId(id);
+        leaveclassm.setLeavedate(new Date());
+        leaveclassm.setLeaveStatus(1);
+        leaveclassmMapper.insertLeaveclass(leaveclassm);
+        return id;
     }
 }

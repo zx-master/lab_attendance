@@ -15,4 +15,7 @@ import java.util.List;
 public interface LeaveclassmService {
 
     PageInfo<LeaveclassmVO> selectByApproverAndStu(String studentId, int currentPage, int pageSize);
+
+    String insertReturnTea(Leaveclassm leaveclassm);
+
 }
