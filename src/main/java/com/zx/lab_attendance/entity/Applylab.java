@@ -18,7 +18,47 @@ public class Applylab implements Serializable {
 
     private Date usingEnd;
 
+    private Date applylabdate;
+
+    private Integer applylabStatus;
+
+    private Users user;
+
+    private Users approverUser;
+
     private static final long serialVersionUID = 1L;
+
+    public Date getApplylabdate() {
+        return applylabdate;
+    }
+
+    public void setApplylabdate(Date applylabdate) {
+        this.applylabdate = applylabdate;
+    }
+
+    public Users getApproverUser() {
+        return approverUser;
+    }
+
+    public void setApproverUser(Users approverUser) {
+        this.approverUser = approverUser;
+    }
+
+    public Integer getApplylabStatus() {
+        return applylabStatus;
+    }
+
+    public void setApplylabStatus(Integer applylabStatus) {
+        this.applylabStatus = applylabStatus;
+    }
+
+    public Users getUser() {
+        return user;
+    }
+
+    public void setUser(Users user) {
+        this.user = user;
+    }
 
     public String getApplylabId() {
         return applylabId;

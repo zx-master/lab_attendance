@@ -1,6 +1,9 @@
 package com.zx.lab_attendance.service;
 
 import com.zx.lab_attendance.entity.Leave;
+import com.zx.lab_attendance.vo.NewsVO;
+
+import java.util.List;
 
 /**
  * @author zx
@@ -15,6 +18,6 @@ public interface LeaveService {
      * @parameter:Leave
      * @describe: 向数据表插入数据
      */
-    public void insertLeave(Leave leave);
+    public List<NewsVO> insertLeave(Leave leave);
 
 }

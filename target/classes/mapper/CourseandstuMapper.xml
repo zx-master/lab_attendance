@@ -7,6 +7,8 @@
     <result column="course_id" jdbcType="VARCHAR" property="courseId" />
     <result column="course_number" jdbcType="VARCHAR" property="courseNumber" />
     <result column="fulltime" jdbcType="INTEGER" property="fulltime" />
+    <association property="studentUser" select="com.zx.lab_attendance.dao.UsersMapper.selectByPrimaryKey" column="student_id"></association>
+
   </resultMap>
   <insert id="insert" parameterType="com.zx.lab_attendance.entity.Courseandstu">
     insert into courseandstu (courseandstu_id, student_id, course_id, 
@@ -29,6 +31,10 @@
     from courseandstu
     where student_id = #{studentId,jdbcType=VARCHAR}
   </select>
-
+  <select id="selectByCourseCode" resultMap="BaseResultMap">
+    select courseandstu_id, student_id, course_id, course_number,fulltime
+    from courseandstu
+    where course_id = #{code,jdbcType=VARCHAR}
+  </select>
 
 </mapper>

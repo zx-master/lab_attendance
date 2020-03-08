@@ -28,8 +28,34 @@
     <select id="selectByApproverAndStu" resultMap="BaseResultMap" parameterType="java.lang.String">
         select leaveclassm_id, student_id, leave_reason,leave_class,
         leave_img, approver,labusing_id,leaveStatus,leavedate from leaveclassm
-        where student_id = #{studentId,jdbcType=VARCHAR}
-
+        where student_id = #{studentId,jdbcType=VARCHAR} or approver = #{studentId,jdbcType=VARCHAR}
     </select>
 
+    <select id="selectAllBylabusing" resultMap="BaseResultMap" parameterType="java.lang.String">
+        select leaveclassm_id, student_id, leave_reason,leave_class,
+        leave_img, approver,labusing_id,leaveStatus,leavedate from leaveclassm
+        where labusing_id = #{labusingid,jdbcType=VARCHAR}
+    </select>
+
+    <delete id="delectLabusing" parameterType="java.lang.String">
+        delete from leaveclassm where labusing_id =#{labusingId,jdbcType=VARCHAR} and leaveStatus=1
+    </delete>
+
+    <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String">
+        select leaveclassm_id, student_id, leave_reason,leave_class,
+        leave_img, approver,labusing_id,leaveStatus,leavedate from leaveclassm
+        where leaveclassm_id = #{LeaveclassmId,jdbcType=VARCHAR}
+    </select>
+
+    <select id="selectStudentAndLab" resultMap="BaseResultMap">
+        select leaveclassm_id, student_id, leave_reason,leave_class,
+        leave_img, approver,labusing_id,leaveStatus,leavedate from leaveclassm
+        where student_id = #{studentId,jdbcType=VARCHAR} and labusing_id = #{labusingId,jdbcType=VARCHAR}
+    </select>
+
+    <update id="updateLeaveclassm">
+    update leaveclassm
+    set leaveStatus = #{leaveStatus,jdbcType=TIMESTAMP}
+    where leaveclassm_id = #{leaveclassmId,jdbcType=VARCHAR}
+  </update>
 </mapper>

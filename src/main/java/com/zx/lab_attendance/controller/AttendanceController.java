@@ -5,6 +5,7 @@ import com.zx.lab_attendance.entity.JsonData;
 import com.zx.lab_attendance.service.AttendanceService;
 import com.zx.lab_attendance.vo.CourseAttendance;
 import com.zx.lab_attendance.vo.PersonalAttendance;
+import com.zx.lab_attendance.vo.UserAttendance;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiImplicitParam;
 import io.swagger.annotations.ApiImplicitParams;
@@ -172,6 +173,15 @@ public class AttendanceController {
     @PostMapping("/selectTeacherAllCourse")
     public JsonData selectTeacherAllCourse( @RequestParam("userid") String userid){
         return JsonData.buildSuccess(attendanceService.selectTeacherAllCourse(userid));
+    }
+
+    @PostMapping("/insertAttendanceList")
+    public JsonData insertAttendanceList(
+            HttpServletResponse response, HttpServletRequest request,
+            @RequestBody List<UserAttendance> studentData){
+        response.setHeader("Access-Control-Allow-Origin","*");
+        attendanceService.insertAttendanceList(studentData);
+        return JsonData.buildSuccess("插入成功");
     }
 
 }

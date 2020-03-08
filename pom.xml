@@ -52,6 +52,13 @@
 <!--            <scope>runtime</scope>-->
         </dependency>
 
+        <!--commons-collections-->
+        <dependency>
+            <groupId>commons-collections</groupId>
+            <artifactId>commons-collections</artifactId>
+            <version>3.2.2</version>
+        </dependency>
+
         <!-- json数据 -->
         <dependency>
             <groupId>com.alibaba</groupId>

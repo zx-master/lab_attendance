@@ -1,6 +1,10 @@
 package com.zx.lab_attendance.service;
 
+import com.alibaba.druid.sql.visitor.functions.Char;
 import com.zx.lab_attendance.entity.Chatmsg;
+import com.zx.lab_attendance.vo.ChatmsgInfo;
+
+import java.util.List;
 
 /**
  * @author zx
@@ -16,6 +20,12 @@ public interface ChatmsgService {
      * @parameter: chatmsg
      * @describe: 插入chatmsg
      */
-    public String insert(Chatmsg chatmsg);
+    public void insert(Chatmsg chatmsg);
+
+    public List<Chatmsg> selectNoReceive(String receiveId);
+
+    public List<ChatmsgInfo> selectChatmsgInfo(String receiveId);
+
+    public void updateChatmsg(String chatmsgId);
 
 }

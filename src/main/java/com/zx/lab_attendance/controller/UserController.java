@@ -40,6 +40,7 @@ public class UserController {
     @Autowired
     DepartmentMapper departmentMapper;
 
+
     @GetMapping("/getStudentUser")
     @ApiOperation(value = "获取所有学生的数据", notes="返回List<UserVO>数据")
     public JsonData getStudentUser(HttpServletResponse response, HttpServletRequest request){
@@ -48,11 +49,18 @@ public class UserController {
     }
 
     @PostMapping("/changeUserInfo")
-        public JsonData changeUserInfo(HttpServletResponse response, HttpServletRequest request,Users user){
+    public JsonData changeUserInfo(HttpServletResponse response, HttpServletRequest request,Users user){
         response.setHeader("Access-Control-Allow-Origin","*");
         userService.updateEmailPhoneByPrimaryKey(user);
         return JsonData.buildSuccess("更新成功");
-        }
+    }
+
+    @PostMapping("/selectUserByAttendance")
+    public JsonData selectUserByAttendance(HttpServletResponse response, HttpServletRequest request,@RequestParam("labusingId") String labusingId){
+        response.setHeader("Access-Control-Allow-Origin","*");
+        return JsonData.buildSuccess(userService.selectUserByAttendcane(labusingId));
+    }
+
 
     @PostMapping("/updateUserImgByPrimaryKey")
     public JsonData updateUserImgByPrimaryKey(HttpServletResponse response, HttpServletRequest request,Users user){

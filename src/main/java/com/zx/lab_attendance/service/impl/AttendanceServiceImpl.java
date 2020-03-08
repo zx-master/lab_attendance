@@ -5,9 +5,11 @@ import com.zx.lab_attendance.entity.*;
 import com.zx.lab_attendance.enums.AttendanceEnum;
 import com.zx.lab_attendance.service.AttendanceService;
 import com.zx.lab_attendance.utils.DateConversionWeek;
+import com.zx.lab_attendance.utils.IdWorker;
 import com.zx.lab_attendance.vo.CourseAttendance;
 import com.zx.lab_attendance.vo.PersonalAttendance;
 import com.zx.lab_attendance.vo.StudentAttendance;
+import com.zx.lab_attendance.vo.UserAttendance;
 import org.apache.commons.collections.map.HashedMap;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -38,6 +40,8 @@ public class AttendanceServiceImpl implements AttendanceService {
     private CourseandstuMapper courseandstuMapper;
     @Autowired
     private CollectiveMapper collectiveMapper;
+    @Autowired
+    private LeaveclassmMapper leaveclassmMapper;
 
 
     /**
@@ -49,6 +53,31 @@ public class AttendanceServiceImpl implements AttendanceService {
     @Override
     public int insertAttendance(Attendance attendance) {
         return attendanceMapper.insert(attendance);
+    }
+
+    /**
+     * @author: zx
+     * @paramater:
+     * @process:
+     * @describe: 批量插入数据
+     */
+    @Override
+    public void insertAttendanceList(List<UserAttendance> attendances) {
+        List<Attendance> attendanceList = new ArrayList<>();
+        IdWorker idWorker = new IdWorker(0, 0);
+        for (UserAttendance userAttendance : attendances) {
+            Attendance attendance = new Attendance();
+            attendance.setAttendanceId("AD" + idWorker.nextId());
+            attendance.setAttendanceRecord(userAttendance.getAttendanceRecord());
+            attendance.setAttendanceDate(new Date());
+            attendance.setStudentId(userAttendance.getStudentId());
+            attendance.setTeacherId(userAttendance.getTeacherId());
+            attendance.setLabusingId(userAttendance.getLabusingId());
+
+            attendanceList.add(attendance);
+        }
+        leaveclassmMapper.delectLabusing(attendances.get(0).getLabusingId());
+        attendanceMapper.insertAttendanceList(attendanceList);
     }
 
     /**
@@ -564,13 +593,11 @@ public class AttendanceServiceImpl implements AttendanceService {
                 }else{
                     courseAttendanceMap.put(courseAttendance.getCourseNum(),courseAttendance);
                 }
-//                courseAttendances.add(courseAttendance);
             }
         }
-        for(CourseAttendance value : courseAttendanceMap.values()){
+        for(CourseAttendance value : courseAttendanceMap.values()) {
             courseAttendances.add(value);
         }
-
         return courseAttendances;
     }
 
@@ -584,12 +611,11 @@ public class AttendanceServiceImpl implements AttendanceService {
             for (Labusing labusing : labusings) {
                 CourseAttendance courseAttendance = new CourseAttendance();
                 Attendance attendance1 = attendanceMapper.selectByStudentIDAndLab(labusing.getLabusingId(), userId, null, null);
-//                int collectiveNum = attendanceList.size();
-                int lateNum = 0;
-                int sickNum = 0;
-                int affirtNum = 0;
-                int absenteeism = 0;
-//                for (Attendance attendance1 : attendanceList) {
+                if(!StringUtils.isEmpty(attendance1)){
+                    int lateNum = 0;
+                    int sickNum = 0;
+                    int affirtNum = 0;
+                    int absenteeism = 0;
                     if (attendance1.getAttendanceRecord().equals(2)) {
                         lateNum += 1;
                     } else if (attendance1.getAttendanceRecord().equals(3)) {
@@ -599,28 +625,26 @@ public class AttendanceServiceImpl implements AttendanceService {
                     } else if (attendance1.getAttendanceRecord().equals(5)) {
                         absenteeism += 1;
                     }
-//                }
-//                courseAttendance.setCourseManNum(collectiveNum);
-                courseAttendance.setLateNum(lateNum);
-                courseAttendance.setSickNum(sickNum);
-                courseAttendance.setAffairLeaveNum(affirtNum);
-                courseAttendance.setAbsenteeism(absenteeism);
-                courseAttendance.setCourseNum(labusing.getCourseId());
-                Course course = courseMapper.selectByCourseCode(labusing.getCourseId());
-                courseAttendance.setCourseName(course.getCourseName());
-                courseAttendance.setCourseDate(labusing.getLabusingDate());
-                if (courseAttendanceMap.containsKey(courseAttendance.getCourseNum())){
-                    CourseAttendance courseAttendance1 = courseAttendanceMap.get(courseAttendance.getCourseNum());
-                    courseAttendance1.setAbsenteeism(courseAttendance1.getAbsenteeism() + courseAttendance.getAbsenteeism());
-                    courseAttendance1.setAffairLeaveNum(courseAttendance1.getAffairLeaveNum() + courseAttendance.getAffairLeaveNum());
-                    courseAttendance1.setSickNum(courseAttendance1.getSickNum() + courseAttendance.getSickNum());
-                    courseAttendance1.setLateNum(courseAttendance1.getLateNum() + courseAttendance.getLateNum());
-                    courseAttendanceMap.put(courseAttendance1.getCourseNum(),courseAttendance1);
-                    System.out.println(courseAttendance1);
-                }else{
-                    courseAttendanceMap.put(courseAttendance.getCourseNum(),courseAttendance);
+                    courseAttendance.setLateNum(lateNum);
+                    courseAttendance.setSickNum(sickNum);
+                    courseAttendance.setAffairLeaveNum(affirtNum);
+                    courseAttendance.setAbsenteeism(absenteeism);
+                    courseAttendance.setCourseNum(labusing.getCourseId());
+                    Course course = courseMapper.selectByCourseCode(labusing.getCourseId());
+                    courseAttendance.setCourseName(course.getCourseName());
+                    courseAttendance.setCourseDate(labusing.getLabusingDate());
+                    if (courseAttendanceMap.containsKey(courseAttendance.getCourseNum())){
+                        CourseAttendance courseAttendance1 = courseAttendanceMap.get(courseAttendance.getCourseNum());
+                        courseAttendance1.setAbsenteeism(courseAttendance1.getAbsenteeism() + courseAttendance.getAbsenteeism());
+                        courseAttendance1.setAffairLeaveNum(courseAttendance1.getAffairLeaveNum() + courseAttendance.getAffairLeaveNum());
+                        courseAttendance1.setSickNum(courseAttendance1.getSickNum() + courseAttendance.getSickNum());
+                        courseAttendance1.setLateNum(courseAttendance1.getLateNum() + courseAttendance.getLateNum());
+                        courseAttendanceMap.put(courseAttendance1.getCourseNum(),courseAttendance1);
+
+                    }else{
+                        courseAttendanceMap.put(courseAttendance.getCourseNum(),courseAttendance);
+                    }
                 }
-                System.out.println(courseAttendanceMap);
             }
         }
         for(CourseAttendance value : courseAttendanceMap.values()){

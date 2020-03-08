@@ -14,4 +14,6 @@ public interface CourseandstuMapper {
     Courseandstu selectByStudentId(String studentId,String courseCode);
 
     List<Courseandstu> selectByStudentIdNoCourse(String studentId);
+
+    List<Courseandstu> selectByCourseCode(String code);
 }

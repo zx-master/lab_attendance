@@ -44,7 +44,7 @@ public class Labusing implements Serializable {
     public Date getLabusingDate() {
         return labusingDate;
     }
-    @JsonFormat(shape=JsonFormat.Shape.STRING,pattern="yyyy-MM-dd HH:mm:ss",timezone="GMT+8")
+//    @JsonFormat(shape=JsonFormat.Shape.STRING,pattern="yyyy-MM-dd HH:mm:ss",timezone="GMT+8")
     public void setLabusingDate(Date labusingDate) {
         this.labusingDate = labusingDate;
     }
@@ -52,7 +52,7 @@ public class Labusing implements Serializable {
     public Date getLabusingDateend() {
         return labusingDateend;
     }
-    @JsonFormat(shape=JsonFormat.Shape.STRING,pattern="yyyy-MM-dd HH:mm:ss",timezone="GMT+8")
+//    @JsonFormat(shape=JsonFormat.Shape.STRING,pattern="yyyy-MM-dd HH:mm:ss",timezone="GMT+8")
     public void setLabusingDateend(Date labusingDateend) {
         this.labusingDateend = labusingDateend;
     }

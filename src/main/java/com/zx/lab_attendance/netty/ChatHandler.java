@@ -54,26 +54,17 @@ public class ChatHandler extends SimpleChannelInboundHandler<TextWebSocketFrame>
             UserChannelRel.put(senderId,currentChannel);
         } else if (action.equals(MsgActionEnum.CHAT.type)) {
             IdWorker idWorker = new IdWorker(0, 0);
+            String chatmsgId = "CM" + idWorker.nextId();
             Chatmsg chatmsg = dataContent.getChatmsg();
-
-
             //插入请假数据
-
-
-            String receiverId = chatmsg.getReceiverId();
-            String senderId = chatmsg.getSenderId();
+            chatmsg.setChatmsgId(chatmsgId);
             // 保存消息到数据库，并标记为 未签收
-
             ChatmsgService chatmsgService = (ChatmsgService) SpringUtil.getBean("chatmsgServiceImpl");
-            Chatmsg chatmsgNew = new Chatmsg();
-            chatmsgNew.setSenderId(senderId);
-            chatmsgNew.setReceiverId(receiverId);
-
-            String msgId = chatmsgService.insert(chatmsg);
-            chatmsg.setChatmsgId(msgId);
+            chatmsgService.insert(chatmsg);
+//            chatmsg.setChatmsgId(null);
             //发送消息
             //从全局用户Channel关系中获取接受方的channel
-            Channel receiverChannel = UserChannelRel.get(receiverId);
+            Channel receiverChannel = UserChannelRel.get(chatmsg.getReceiverId());
             if (receiverChannel == null) {
                 //channel为空代表用户离线，推送消息
             } else {
@@ -83,7 +74,7 @@ public class ChatHandler extends SimpleChannelInboundHandler<TextWebSocketFrame>
                     //用户在线
                     receiverChannel.writeAndFlush(
                             new TextWebSocketFrame(
-                                    String.valueOf(JSONObject.toJSON(chatmsg))
+                                    String.valueOf(JSONObject.toJSON(chatmsg.getMsg()))
                             )
                     );
                 } else {

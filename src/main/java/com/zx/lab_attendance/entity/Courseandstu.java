@@ -13,7 +13,17 @@ public class Courseandstu implements Serializable {
 
     private Integer fulltime;
 
+    private Users studentUser;
+
     private static final long serialVersionUID = 1L;
+
+    public Users getStudentUser() {
+        return studentUser;
+    }
+
+    public void setStudentUser(Users studentUser) {
+        this.studentUser = studentUser;
+    }
 
     public Integer getFulltime() {
         return fulltime;

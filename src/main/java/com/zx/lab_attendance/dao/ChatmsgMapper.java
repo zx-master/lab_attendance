@@ -16,4 +16,6 @@ public interface ChatmsgMapper {
     List<Chatmsg> selectAll();
 
     int updateByPrimaryKey(Chatmsg record);
+
+    List<Chatmsg> selectNoReceive(String receiveId);
 }

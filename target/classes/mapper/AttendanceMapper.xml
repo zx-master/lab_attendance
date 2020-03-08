@@ -21,6 +21,18 @@
       #{teacherId,jdbcType=VARCHAR}, #{attendanceDate,jdbcType=TIMESTAMP}, #{attendanceRecord,jdbcType=INTEGER}
       )
   </insert>
+  <insert id="insertAttendanceList" parameterType="java.util.List">
+    insert into attendance (attendance_id, student_id, labusing_id,
+      teacher_id, attendance_date, attendance_record
+      )
+    values
+    <foreach collection="attendances" item="item" separator=",">
+      (#{item.attendanceId,jdbcType=VARCHAR}, #{item.studentId,jdbcType=VARCHAR}, #{item.labusingId,jdbcType=VARCHAR},
+      #{item.teacherId,jdbcType=VARCHAR}, #{item.attendanceDate,jdbcType=TIMESTAMP}, #{item.attendanceRecord,jdbcType=INTEGER}
+      )
+    </foreach>
+
+  </insert>
   <update id="updateByPrimaryKey" parameterType="com.zx.lab_attendance.entity.Attendance">
     update attendance
     set student_id = #{studentId,jdbcType=VARCHAR},

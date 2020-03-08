@@ -1,6 +1,8 @@
 package com.zx.lab_attendance.dao;
 
 import com.zx.lab_attendance.entity.Attendance;
+import com.zx.lab_attendance.vo.UserAttendance;
+import org.apache.ibatis.annotations.Param;
 import org.springframework.stereotype.Repository;
 
 import java.util.Date;
@@ -34,4 +36,7 @@ public interface AttendanceMapper {
     Attendance selectByStudentIDAndLab(String labuing,String studentid, String starttime,String endtime);
 
     List<Attendance> selectByTeacherIDAndLab(String labuing,String teacherid, String starttime,String endtime);
+
+    void insertAttendanceList(@Param("attendances") List<Attendance> attendances);
+
 }

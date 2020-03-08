@@ -28,5 +28,7 @@ public interface LabusingMapper {
 
     List<Labusing> selectByLabNum(String labnum);
 
+    void updateCourseId(String courseId,Date starttime,Date endtime,String laboratoryNumber);
+
 
 }

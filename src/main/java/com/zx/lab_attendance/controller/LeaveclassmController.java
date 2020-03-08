@@ -4,6 +4,7 @@ import com.zx.lab_attendance.dao.LeaveclassmMapper;
 import com.zx.lab_attendance.entity.JsonData;
 import com.zx.lab_attendance.entity.Leaveclassm;
 import com.zx.lab_attendance.service.LeaveclassmService;
+import com.zx.lab_attendance.vo.ChatmsgInfo;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiImplicitParam;
 import io.swagger.annotations.ApiImplicitParams;
@@ -36,7 +37,7 @@ public class LeaveclassmController {
 
     @PostMapping("/selectByApproverAndStu")
     @ApiOperation(value = "分页查询", notes="返回JsonData数据")
-    public JsonData selectByApproverAndStu(@RequestParam("studentId") String studentId,@RequestParam("pageNum")Integer pageNum){
+    public JsonData selectByApproverAndStu(@RequestParam("studentId") String studentId,@RequestParam("pageNum") Integer pageNum){
         return JsonData.buildSuccess(leaveclassmService.selectByApproverAndStu(studentId,pageNum,7));
     }
 
@@ -44,6 +45,13 @@ public class LeaveclassmController {
     public JsonData insertLeaveclassm(HttpServletResponse response, HttpServletRequest request, @RequestBody Leaveclassm leaveclassm){
         response.setHeader("Access-Control-Allow-Origin","*");
         return JsonData.buildSuccess(leaveclassmService.insertReturnTea(leaveclassm));
+    }
+
+    @PostMapping("/updateLeaveclassm")
+    public JsonData updateLeaveclassm(HttpServletResponse response, HttpServletRequest request,@RequestBody ChatmsgInfo chatmsgInfo){
+        response.setHeader("Access-Control-Allow-Origin","*");
+        leaveclassmService.updateLeaveclassm(chatmsgInfo);
+        return JsonData.buildSuccess("审核成功");
     }
 
 }

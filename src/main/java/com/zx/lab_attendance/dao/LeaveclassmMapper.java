@@ -2,6 +2,8 @@ package com.zx.lab_attendance.dao;
 
 
 
+import com.zx.lab_attendance.entity.Chatmsg;
+import com.zx.lab_attendance.entity.Labusing;
 import com.zx.lab_attendance.entity.Leaveclassm;
 import org.springframework.stereotype.Repository;
 
@@ -22,4 +24,15 @@ public interface LeaveclassmMapper  {
     //分页查询根据接收人查询数据
     List<Leaveclassm> selectByApproverAndStu(String studentId);
 
+    //查询根据labusingid
+    List<Leaveclassm> selectAllBylabusing(String labusingid);
+
+    //删除未处理的请假
+    void delectLabusing(String labusingId);
+
+    Leaveclassm selectByPrimaryKey(String LeaveclassmId);
+
+    void updateLeaveclassm(Leaveclassm leaveclassm);
+
+    Leaveclassm selectStudentAndLab(String studentId, String labusingId);
 }

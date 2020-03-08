@@ -4,6 +4,7 @@ import com.zx.lab_attendance.dao.*;
 import com.zx.lab_attendance.entity.*;
 import com.zx.lab_attendance.service.LeaveService;
 import com.zx.lab_attendance.utils.IdWorker;
+import com.zx.lab_attendance.vo.NewsVO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -33,13 +34,15 @@ public class LeaveServiceImpl implements LeaveService {
      * @author: zx
      * @paramater:
      * @process:
-     * @describe:
+     * @describe:  插入请假，并且将涉及的课程一并添加
      */
     @Override
-    public void insertLeave(Leave leave) {
+    public List<NewsVO> insertLeave(Leave leave) {
         IdWorker idWorker = new IdWorker(0, 0);
         //获取当前系统时间
 //        SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        List<String> lists = new ArrayList<>();
+        List<NewsVO> newsVOS = new ArrayList<>();
         Leaveclassm leaveclassm = new Leaveclassm();
         String leaveID = "LE" + idWorker.nextId();
         leave.setApprover("");
@@ -55,6 +58,7 @@ public class LeaveServiceImpl implements LeaveService {
             labusings.addAll(labusingMapper.selectByCourseIdAndTime(courseandstu.getCourseId(),formatter.format(leave.getLeaveDatestart()),formatter.format(leave.getLeaveDateend())));
         }
         for (Labusing labusing : labusings){
+            NewsVO newsVO = new NewsVO();
             String leaveclassmID = "LCM" + idWorker.nextId();
             leaveclassm.setApprover(labusing.getCourse().getCourseTeacher());
             leaveclassm.setLabusing(labusing);
@@ -67,7 +71,10 @@ public class LeaveServiceImpl implements LeaveService {
             leaveclassm.setLeaveStatus(1);
             leaveclassm.setStudentId(leave.getStudentId());
             leaveclassmMapper.insertLeaveclass(leaveclassm);
+            newsVO.setContentId(leaveclassmID);
+            newsVO.setReceiverId(labusing.getCourse().getCourseTeacher());
+            newsVOS.add(newsVO);
         }
-
+        return newsVOS;
     }
 }

@@ -16,14 +16,11 @@
     insert into chatmsg (chatmsg_id, receiver_id, sender_id, 
       msg, receive_sign)
     values (#{chatmsgId,jdbcType=VARCHAR}, #{receiverId,jdbcType=VARCHAR}, #{senderId,jdbcType=VARCHAR}, 
-      #{msg,jdbcType=VARCHAR}, #{receiveSign,jdbcType=INTEGER})
+      #{msg,jdbcType=VARCHAR}, 0)
   </insert>
   <update id="updateByPrimaryKey" parameterType="com.zx.lab_attendance.entity.Chatmsg">
     update chatmsg
-    set receiver_id = #{receiverId,jdbcType=VARCHAR},
-      sender_id = #{senderId,jdbcType=VARCHAR},
-      msg = #{msg,jdbcType=VARCHAR},
-      receive_sign = #{receiveSign,jdbcType=INTEGER}
+    set receive_sign = 1
     where chatmsg_id = #{chatmsgId,jdbcType=VARCHAR}
   </update>
   <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
@@ -35,4 +32,10 @@
     select chatmsg_id, receiver_id, sender_id, msg, receive_sign
     from chatmsg
   </select>
+  <select id="selectNoReceive" resultMap="BaseResultMap">
+    select chatmsg_id, receiver_id, sender_id, msg, receive_sign
+    from chatmsg
+    where receiver_id = #{receiverId,jdbcType=VARCHAR} and receive_sign = 0
+  </select>
+
 </mapper>

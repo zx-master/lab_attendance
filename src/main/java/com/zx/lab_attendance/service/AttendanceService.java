@@ -4,6 +4,7 @@ import com.zx.lab_attendance.entity.Attendance;
 import com.zx.lab_attendance.vo.CourseAttendance;
 import com.zx.lab_attendance.vo.PersonalAttendance;
 import com.zx.lab_attendance.vo.StudentAttendance;
+import com.zx.lab_attendance.vo.UserAttendance;
 
 import java.text.ParseException;
 import java.util.List;
@@ -24,6 +25,14 @@ public interface AttendanceService {
      * @describe:新增插入信息
      */
     int insertAttendance(Attendance attendance);
+
+    /**
+     * @author: zx
+     * @return:
+     * @parameter:
+     * @describe: 新增考勤信息
+     */
+    void insertAttendanceList(List<UserAttendance> attendances);
 
     /**
      * @author: zx

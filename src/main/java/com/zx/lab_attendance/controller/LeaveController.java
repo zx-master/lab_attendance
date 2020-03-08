@@ -29,8 +29,7 @@ public class LeaveController {
     public JsonData insertLeave(HttpServletResponse response, HttpServletRequest request,
                                 @RequestBody Leave leave){
         response.setHeader("Access-Control-Allow-Origin","*");
-        leaveService.insertLeave(leave);
-        return JsonData.buildSuccess("提交成功");
+        return JsonData.buildSuccess(leaveService.insertLeave(leave));
     }
 
 }

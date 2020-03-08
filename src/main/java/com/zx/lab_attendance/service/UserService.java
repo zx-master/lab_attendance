@@ -1,6 +1,7 @@
 package com.zx.lab_attendance.service;
 
 import com.zx.lab_attendance.entity.Users;
+import com.zx.lab_attendance.vo.UserAttendance;
 import com.zx.lab_attendance.vo.UserVO;
 
 import java.util.List;
@@ -25,5 +26,7 @@ public interface UserService {
     int checkPsw(Users user);
 
     int updateUserPwd(Users user);
+
+    List<UserAttendance> selectUserByAttendcane(String labusing);
 
 }

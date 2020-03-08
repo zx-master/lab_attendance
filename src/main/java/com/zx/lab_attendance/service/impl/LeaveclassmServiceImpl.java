@@ -4,13 +4,22 @@ package com.zx.lab_attendance.service.impl;
 import com.github.pagehelper.Page;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
+import com.zx.lab_attendance.dao.ChatmsgMapper;
+import com.zx.lab_attendance.dao.LabusingMapper;
 import com.zx.lab_attendance.dao.LeaveclassmMapper;
+import com.zx.lab_attendance.entity.Chatmsg;
+import com.zx.lab_attendance.entity.Labusing;
 import com.zx.lab_attendance.entity.Leaveclassm;
+import com.zx.lab_attendance.service.ChatmsgService;
 import com.zx.lab_attendance.service.LeaveclassmService;
 import com.zx.lab_attendance.utils.IdWorker;
+import com.zx.lab_attendance.vo.ChatmsgInfo;
+import com.zx.lab_attendance.vo.LeaveInfoVO;
 import com.zx.lab_attendance.vo.LeaveclassmVO;
+import com.zx.lab_attendance.vo.NewsVO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -24,10 +33,15 @@ import java.util.List;
  * @Description
  */
 @Service
+@Transactional
 public class LeaveclassmServiceImpl implements LeaveclassmService {
 
     @Autowired
     private LeaveclassmMapper leaveclassmMapper;
+    @Autowired
+    private ChatmsgMapper chatmsgMapper;
+    @Autowired
+    private LabusingMapper labusingMapper;
 
     @Override
     public PageInfo<LeaveclassmVO> selectByApproverAndStu(String studentId,int currentPage,int pageSize) {
@@ -38,14 +52,14 @@ public class LeaveclassmServiceImpl implements LeaveclassmService {
         List<LeaveclassmVO> leaveclassmVOS = new ArrayList<>();
 
         for(Leaveclassm leaveclassm : leaveclassms) {
-
             LeaveclassmVO leaveclassmVo = new LeaveclassmVO();
             leaveclassmVo.setLeaveclassmId(leaveclassm.getLeaveclassmId());
             leaveclassmVo.setCourseCode(leaveclassm.getLabusing().getCourse().getCourseName());
             leaveclassmVo.setStudentName(leaveclassm.getStudentUser().getUsername());
             leaveclassmVo.setStudentNum(leaveclassm.getStudentUser().getUserNumber());
-            String starttime = sdf.format(leaveclassm.getLabusing().getLabusingDate());
-            String endtime = sdf.format(leaveclassm.getLabusing().getLabusingDateend());
+            leaveclassmVo.setApprover(leaveclassm.getTeacherUser().getUsername());
+            String starttime = sdf.format(leaveclassm.getLabusing().getLabusingDate()) + " ";
+            String endtime = sdf.format(leaveclassm.getLabusing().getLabusingDateend()) + " ";
             leaveclassmVo.setCourseDate(starttime + "-" + endtime);
             leaveclassmVo.setLeaveReason(leaveclassm.getLeaveReason());
             leaveclassmVo.setLeaveImg(leaveclassm.getLeaveImg());
@@ -57,15 +71,18 @@ public class LeaveclassmServiceImpl implements LeaveclassmService {
         }
         PageInfo info = new PageInfo<LeaveclassmVO>(page.getResult());
 
-//        System.out.println(info.getList().get(0).getClass());
+
         for (int i =0;i<info.getList().size();i++){
             LeaveclassmVO leaveclassmVo = new LeaveclassmVO();
             Leaveclassm leaveclassm  = (Leaveclassm) info.getList().get(i);
             leaveclassmVo.setLeaveclassmId(leaveclassm.getLeaveclassmId());
             leaveclassmVo.setCourseCode(leaveclassm.getLabusing().getCourse().getCourseName());
+            leaveclassmVo.setApprover(leaveclassm.getTeacherUser().getUsername());
             leaveclassmVo.setStudentName(leaveclassm.getStudentUser().getUsername());
             leaveclassmVo.setStudentNum(leaveclassm.getStudentUser().getUserNumber());
-            leaveclassmVo.setCourseDate(leaveclassm.getLabusing().getCourse().getCoursestart() + "至" + leaveclassm.getLabusing().getCourse().getCourseend());
+            String starttime = sdf.format(leaveclassm.getLabusing().getLabusingDate()) + " ";
+            String endtime = sdf.format(leaveclassm.getLabusing().getLabusingDateend()) + " ";
+            leaveclassmVo.setCourseDate(starttime + "-" + endtime);
             leaveclassmVo.setLeaveReason(leaveclassm.getLeaveReason());
             leaveclassmVo.setLeaveImg(leaveclassm.getLeaveImg());
             leaveclassmVo.setLeavedate(leaveclassm.getLeavedate());
@@ -77,19 +94,54 @@ public class LeaveclassmServiceImpl implements LeaveclassmService {
         }
         int pages = info.getPages() * 10;
         info.setPages(pages);
-//        PageInfo<LeaveclassmVO> pageInfo = new PageInfo<LeaveclassmVO>(leaveclassmVOS);
-//        System.out.println(pageInfo.getPages());
         return info;
     }
 
+    /**
+     * @author: zx
+     * @paramater:
+     * @process:
+     * @describe: 插入数据，返回接收者老师的id和内容id
+     */
     @Override
-    public String insertReturnTea(Leaveclassm leaveclassm) {
+    public NewsVO insertReturnTea(Leaveclassm leaveclassm) {
         IdWorker idWorker = new IdWorker(0, 0);
+        NewsVO newsVO = new NewsVO();
         String id = "LCM" + idWorker.nextId();
         leaveclassm.setLeaveclassmId(id);
         leaveclassm.setLeavedate(new Date());
         leaveclassm.setLeaveStatus(1);
-        leaveclassmMapper.insertLeaveclass(leaveclassm);
-        return id;
+        Leaveclassm exitLeave = leaveclassmMapper.selectStudentAndLab(leaveclassm.getStudentId(),leaveclassm.getLabusingId());
+        if ( exitLeave == null) {
+            Labusing labusing = labusingMapper.selectByPrimaryKey(leaveclassm.getLabusingId());
+            leaveclassm.setApprover(labusing.getCourse().getCourseTeacher());
+            leaveclassmMapper.insertLeaveclass(leaveclassm);
+            newsVO.setContentId(id);
+            newsVO.setReceiverId(labusing.getCourse().getCourseTeacher());
+            return newsVO;
+        }else{
+            return null;
+        }
+
     }
+
+    @Override
+    public List<LeaveInfoVO> selectLeaveInfo(String userId) {
+        List<Chatmsg> chatmsgs = chatmsgMapper.selectNoReceive(userId);
+        return null;
+    }
+
+    @Override
+    public void updateLeaveclassm(ChatmsgInfo chatmsgInfo) {
+        Leaveclassm leaveclassm = new Leaveclassm();
+        leaveclassm.setLeaveclassmId(chatmsgInfo.getId());
+        leaveclassm.setLeaveStatus(chatmsgInfo.getStatus());
+        leaveclassmMapper.updateLeaveclassm(leaveclassm);
+        Chatmsg chatmsg = new Chatmsg();
+        chatmsg.setChatmsgId(chatmsgInfo.getChatmsgId());
+        chatmsgMapper.updateByPrimaryKey(chatmsg);
+
+    }
+
+
 }

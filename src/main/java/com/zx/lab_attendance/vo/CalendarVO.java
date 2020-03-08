@@ -22,6 +22,15 @@ public class CalendarVO {
     @DateTimeFormat(pattern="yyyy-MM-dd HH:mm:ss")
     private Date end;
     private String color;
+    private Integer groupId;
+
+    public Integer getGroupId() {
+        return groupId;
+    }
+
+    public void setGroupId(Integer groupId) {
+        this.groupId = groupId;
+    }
 
     public String getId() {
         return id;

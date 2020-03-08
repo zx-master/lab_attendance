@@ -27,6 +27,14 @@
       laboratory_number = #{laboratoryNumber,jdbcType=VARCHAR}
     where labusing_id = #{labusingId,jdbcType=VARCHAR}
   </update>
+  <update id="updateCourseId">
+    update labusing
+    set course_id = #{courseId,jdbcType=VARCHAR}
+    where
+    labusing_date = #{starttime,jdbcType=TIMESTAMP}
+    and labusing_dateend = #{endtime,jdbcType=TIMESTAMP}
+    and laboratory_number = #{laboratoryNumber,jdbcType=VARCHAR}
+  </update>
   <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
     select labusing_id, labusing_date, labusing_dateend, course_id, laboratory_number
     from labusing

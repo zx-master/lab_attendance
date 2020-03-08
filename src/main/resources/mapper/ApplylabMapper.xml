@@ -9,6 +9,10 @@
     <result column="approver" jdbcType="VARCHAR" property="approver" />
     <result column="using_start" jdbcType="TIMESTAMP" property="usingStart" />
     <result column="using_end" jdbcType="TIMESTAMP" property="usingEnd" />
+    <result column="applylab_status" jdbcType="INTEGER" property="applylabStatus"/>
+    <result column="applylabdate" jdbcType="TIMESTAMP" property="applylabdate" />
+    <association property="user" select="com.zx.lab_attendance.dao.UsersMapper.selectByPrimaryKey" column="apply_userid"></association>
+    <association property="approverUser" select="com.zx.lab_attendance.dao.UsersMapper.selectByPrimaryKey" column="approver"></association>
   </resultMap>
   <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
     delete from applylab
@@ -17,30 +21,31 @@
   <insert id="insert" parameterType="com.zx.lab_attendance.entity.Applylab">
     insert into applylab (applylab_id, apply_userid, laboratory_number, 
       `using`, approver, using_start, 
-      using_end)
+      using_end,applylab_status,applylabdate)
     values (#{applylabId,jdbcType=VARCHAR}, #{applyUserid,jdbcType=VARCHAR}, #{laboratoryNumber,jdbcType=VARCHAR}, 
       #{using,jdbcType=VARCHAR}, #{approver,jdbcType=VARCHAR}, #{usingStart,jdbcType=TIMESTAMP}, 
-      #{usingEnd,jdbcType=TIMESTAMP})
+      #{usingEnd,jdbcType=TIMESTAMP}, 1 ,#{applylabdate,jdbcType=TIMESTAMP})
   </insert>
   <update id="updateByPrimaryKey" parameterType="com.zx.lab_attendance.entity.Applylab">
     update applylab
-    set apply_userid = #{applyUserid,jdbcType=VARCHAR},
-      laboratory_number = #{laboratoryNumber,jdbcType=VARCHAR},
-      `using` = #{using,jdbcType=VARCHAR},
-      approver = #{approver,jdbcType=VARCHAR},
-      using_start = #{usingStart,jdbcType=TIMESTAMP},
-      using_end = #{usingEnd,jdbcType=TIMESTAMP}
+    set applylab_status = #{applylabStatus,jdbcType=INTEGER}
     where applylab_id = #{applylabId,jdbcType=VARCHAR}
   </update>
   <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
     select applylab_id, apply_userid, laboratory_number, `using`, approver, using_start, 
-    using_end
+    using_end,applylab_status,applylabdate
     from applylab
     where applylab_id = #{applylabId,jdbcType=VARCHAR}
   </select>
   <select id="selectAll" resultMap="BaseResultMap">
     select applylab_id, apply_userid, laboratory_number, `using`, approver, using_start, 
-    using_end
+    using_end,applylab_status,applylabdate
     from applylab
+  </select>
+  <select id="selectAllByUserId" resultMap="BaseResultMap">
+    select applylab_id, apply_userid, laboratory_number, `using`, approver, using_start,
+    using_end,applylab_status,applylabdate
+    from applylab
+    where apply_userid = #{userid,jdbcType=VARCHAR} or approver = #{userid,jdbcType=VARCHAR}
   </select>
 </mapper>

@@ -1,18 +1,14 @@
 package com.zx.lab_attendance.service.impl;
 
 import com.alibaba.druid.sql.ast.statement.SQLForeignKeyImpl;
-import com.zx.lab_attendance.dao.CourseMapper;
-import com.zx.lab_attendance.dao.CourseandstuMapper;
-import com.zx.lab_attendance.dao.LabusingMapper;
-import com.zx.lab_attendance.entity.Course;
-import com.zx.lab_attendance.entity.Courseandstu;
-import com.zx.lab_attendance.entity.Labusing;
-import com.zx.lab_attendance.entity.Users;
+import com.zx.lab_attendance.dao.*;
+import com.zx.lab_attendance.entity.*;
 import com.zx.lab_attendance.service.LabusingService;
 import com.zx.lab_attendance.vo.CalendarVO;
 import org.apache.commons.collections.map.HashedMap;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.util.StringUtils;
 
 import java.util.*;
 
@@ -31,6 +27,8 @@ public class LabusingServiceImpl implements LabusingService {
     LabusingMapper labusingMapper;
     @Autowired
     CourseMapper courseMapper;
+    @Autowired
+    LeaveclassmMapper leaveclassmMapper;
 
     @Override
     public List<Labusing> selectLabusingByMyCourseForTime(String studentId, String starttime, String endtime) {
@@ -66,9 +64,16 @@ public class LabusingServiceImpl implements LabusingService {
             for (int i =0; i<labusings.size(); i++) {
                 CalendarVO calendarVO = new CalendarVO();
                 calendarVO.setId(labusings.get(i).getLabusingId());
-                calendarVO.setTitle(course.getCourseName() + course.getCourseCode() +"[" + course.getUser().getUsername() + "]" + labusings.get(i).getLaboratoryNumber());
                 calendarVO.setStart(labusings.get(i).getLabusingDate());
                 calendarVO.setEnd(labusings.get(i).getLabusingDateend());
+                Leaveclassm leaveclassm = leaveclassmMapper.selectStudentAndLab(studentId,labusings.get(i).getLabusingId());
+                if (leaveclassm != null){
+                     calendarVO.setGroupId(2);
+                    calendarVO.setTitle(course.getCourseName() + course.getCourseCode() +"[" + course.getUser().getUsername() + "]" + labusings.get(i).getLaboratoryNumber() + "(已请假)");
+                }else{
+                    calendarVO.setGroupId(1);
+                    calendarVO.setTitle(course.getCourseName() + course.getCourseCode() +"[" + course.getUser().getUsername() + "]" + labusings.get(i).getLaboratoryNumber());
+                }
                 switch ((i+7) % 7) {
                     case 0:
                         calendarVO.setColor(color[0]);
@@ -177,7 +182,14 @@ public class LabusingServiceImpl implements LabusingService {
             calendarVO.setId(labusings.get(i).getLabusingId());
             calendarVO.setStart(labusings.get(i).getLabusingDate());
             calendarVO.setEnd(labusings.get(i).getLabusingDateend());
-            calendarVO.setTitle(labusings.get(i).getCourse().getCourseName() + labusings.get(i).getCourse().getCourseCode() + "[" +labusings.get(i).getCourse().getUser().getUsername()+ "]" + labusings.get(i).getLaboratoryNumber());
+            if (labusings.get(i).getCourse() != null){
+                calendarVO.setTitle(labusings.get(i).getCourse().getCourseName() + labusings.get(i).getCourse().getCourseCode()
+                        + "[" +labusings.get(i).getCourse().getUser().getUsername()+ "]"
+                        + labusings.get(i).getLaboratoryNumber());
+            } else {
+                calendarVO.setTitle(labusings.get(i).getCourseId());
+            }
+
             switch ((i+7) % 7) {
                 case 0:
                     calendarVO.setColor(color[0]);
