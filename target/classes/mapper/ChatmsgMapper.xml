@@ -37,5 +37,9 @@
     from chatmsg
     where receiver_id = #{receiverId,jdbcType=VARCHAR} and receive_sign = 0
   </select>
-
+  <select id="selectByChatMsg" resultMap="BaseResultMap">
+    select chatmsg_id, receiver_id, sender_id, msg, receive_sign
+    from chatmsg
+    where msg = #{msg,jdbcType=VARCHAR}
+  </select>
 </mapper>

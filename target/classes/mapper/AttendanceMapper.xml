@@ -13,6 +13,10 @@
     delete from attendance
     where attendance_id = #{attendanceId,jdbcType=VARCHAR}
   </delete>
+  <delete id="deleteByLabusingAndUser" parameterType="java.lang.String">
+    delete from attendance
+    where labusing_id = #{labId,jdbcType=VARCHAR} and student_id = #{userId,jdbcType=VARCHAR}
+  </delete>
   <insert id="insert" parameterType="com.zx.lab_attendance.entity.Attendance">
     insert into attendance (attendance_id, student_id, labusing_id, 
       teacher_id, attendance_date, attendance_record

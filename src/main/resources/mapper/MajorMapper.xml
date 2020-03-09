@@ -16,5 +16,9 @@
   select majorId, majorName
   from major
 </select>
+  <select id="selectByMajorName" resultMap="BaseResultMap">
+  select majorId, majorName
+  from major where majorName = #{majorName,jdbcType=VARCHAR}
+</select>
 
 </mapper>

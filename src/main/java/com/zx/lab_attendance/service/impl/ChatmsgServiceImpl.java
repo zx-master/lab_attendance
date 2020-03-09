@@ -57,6 +57,7 @@ public class ChatmsgServiceImpl implements ChatmsgService {
                 chatmsgInfo.setUserId(leaveclassm.getStudentId());
                 chatmsgInfo.setUserName(leaveclassm.getStudentUser().getUsername());
                 chatmsgInfo.setUserNum(leaveclassm.getStudentUser().getUserNumber());
+                chatmsgInfo.setApproverId(leaveclassm.getTeacherUser().getUserId());
                 chatmsgInfo.setChatReason(leaveclassm.getLeaveReason());
                 chatmsgInfo.setUserImg(leaveclassm.getStudentUser().getUserImg());
                 chatmsgInfo.setCode(leaveclassm.getLabusing().getCourseId());
@@ -77,6 +78,7 @@ public class ChatmsgServiceImpl implements ChatmsgService {
                 Applylab applylab = applylabMapper.selectByPrimaryKey(chatId);
                 chatmsgInfo.setUserId(applylab.getApplyUserid());
                 chatmsgInfo.setId(applylab.getApplylabId());
+                chatmsgInfo.setApproverId(applylab.getApprover());
                 chatmsgInfo.setUserNum(applylab.getUser().getUserNumber());
                 chatmsgInfo.setUserName(applylab.getUser().getUsername());
                 chatmsgInfo.setUserImg(applylab.getUser().getUserImg());
@@ -91,6 +93,7 @@ public class ChatmsgServiceImpl implements ChatmsgService {
                 chatmsgInfo.setUserId(leaveclassm.getStudentId());
                 chatmsgInfo.setUserName(leaveclassm.getStudentUser().getUsername());
                 chatmsgInfo.setUserNum(leaveclassm.getStudentUser().getUserNumber());
+                chatmsgInfo.setApproverId(leaveclassm.getTeacherUser().getUserId());
                 chatmsgInfo.setChatReason(leaveclassm.getLeaveReason());
                 chatmsgInfo.setUserImg(leaveclassm.getStudentUser().getUserImg());
                 chatmsgInfo.setCode(leaveclassm.getLabusing().getCourseId());
@@ -110,6 +113,7 @@ public class ChatmsgServiceImpl implements ChatmsgService {
                 chatmsgInfo.setUserId(applylab.getApplyUserid());
                 chatmsgInfo.setId(applylab.getApplylabId());
                 chatmsgInfo.setUserNum(applylab.getUser().getUserNumber());
+                chatmsgInfo.setApproverId(applylab.getApprover());
                 chatmsgInfo.setUserName(applylab.getUser().getUsername());
                 chatmsgInfo.setUserImg(applylab.getUser().getUserImg());
                 chatmsgInfo.setDate(sdf.format(applylab.getUsingStart()) + "-" + sdf.format(applylab.getUsingEnd()));
@@ -120,6 +124,45 @@ public class ChatmsgServiceImpl implements ChatmsgService {
                 chatmsgInfo.setApproverName(applylab.getApproverUser().getUsername());
                 chatmsgInfo.setApproverImg(applylab.getApproverUser().getUserImg());
                 chatmsgInfo.setSign(2);
+                chatmsgInfos.add(chatmsgInfo);
+            }else if (chatClass.equals("请撤")) {
+                Leaveclassm leaveclassm = leaveclassmMapper.selectByPrimaryKey(chatId);
+                chatmsgInfo.setUserId(leaveclassm.getStudentId());
+                chatmsgInfo.setUserName(leaveclassm.getStudentUser().getUsername());
+                chatmsgInfo.setUserNum(leaveclassm.getStudentUser().getUserNumber());
+                chatmsgInfo.setApproverId(leaveclassm.getTeacherUser().getUserId());
+                chatmsgInfo.setChatReason(leaveclassm.getLeaveReason());
+                chatmsgInfo.setUserImg(leaveclassm.getStudentUser().getUserImg());
+                chatmsgInfo.setCode(leaveclassm.getLabusing().getCourseId());
+                chatmsgInfo.setCourseName(leaveclassm.getLabusing().getCourse().getCourseName());
+                chatmsgInfo.setDate(
+                        sdf.format(leaveclassm.getLabusing().getLabusingDate())
+                                + "-" +
+                                sdf.format(leaveclassm.getLabusing().getLabusingDateend())
+                );
+                chatmsgInfo.setId(leaveclassm.getLeaveclassmId());
+                chatmsgInfo.setLeaveImg(leaveclassm.getLeaveImg());
+                chatmsgInfo.setLeaveClass(leaveclassm.getLeaveClass());
+                chatmsgInfo.setChatmsgId(chatmsg.getChatmsgId());
+                chatmsgInfo.setStatus(leaveclassm.getLeaveStatus());
+                chatmsgInfo.setSign(4);
+                chatmsgInfos.add(chatmsgInfo);
+            }else if (chatClass.equals("申撤")){
+                Applylab applylab = applylabMapper.selectByPrimaryKey(chatId);
+                chatmsgInfo.setUserId(applylab.getApplyUserid());
+                chatmsgInfo.setId(applylab.getApplylabId());
+                chatmsgInfo.setUserNum(applylab.getUser().getUserNumber());
+                chatmsgInfo.setApproverId(applylab.getApprover());
+                chatmsgInfo.setUserName(applylab.getUser().getUsername());
+                chatmsgInfo.setUserImg(applylab.getUser().getUserImg());
+                chatmsgInfo.setDate(sdf.format(applylab.getUsingStart()) + "-" + sdf.format(applylab.getUsingEnd()));
+                chatmsgInfo.setCode(applylab.getLaboratoryNumber());
+                chatmsgInfo.setChatmsgId(chatmsg.getChatmsgId());
+                chatmsgInfo.setChatReason(applylab.getUsing());
+                chatmsgInfo.setStatus(applylab.getApplylabStatus());
+                chatmsgInfo.setApproverName(applylab.getApproverUser().getUsername());
+                chatmsgInfo.setApproverImg(applylab.getApproverUser().getUserImg());
+                chatmsgInfo.setSign(4);
                 chatmsgInfos.add(chatmsgInfo);
             }
         }

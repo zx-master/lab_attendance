@@ -16,4 +16,6 @@ public interface CollectiveMapper {
     List<Collective> selectAll();
 
     int updateByPrimaryKey(Collective record);
+
+    Collective selectNumber(Integer number,String departmentId);
 }

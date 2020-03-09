@@ -46,6 +46,8 @@
     select applylab_id, apply_userid, laboratory_number, `using`, approver, using_start,
     using_end,applylab_status,applylabdate
     from applylab
-    where apply_userid = #{userid,jdbcType=VARCHAR} or approver = #{userid,jdbcType=VARCHAR}
+    where
+    applylab_status != 4 and
+    (apply_userid = #{userid,jdbcType=VARCHAR} or approver = #{userid,jdbcType=VARCHAR})
   </select>
 </mapper>

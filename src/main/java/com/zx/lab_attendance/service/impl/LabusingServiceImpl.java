@@ -67,7 +67,7 @@ public class LabusingServiceImpl implements LabusingService {
                 calendarVO.setStart(labusings.get(i).getLabusingDate());
                 calendarVO.setEnd(labusings.get(i).getLabusingDateend());
                 Leaveclassm leaveclassm = leaveclassmMapper.selectStudentAndLab(studentId,labusings.get(i).getLabusingId());
-                if (leaveclassm != null){
+                if (leaveclassm != null && leaveclassm.getLeaveStatus() != 4){
                      calendarVO.setGroupId(2);
                     calendarVO.setTitle(course.getCourseName() + course.getCourseCode() +"[" + course.getUser().getUsername() + "]" + labusings.get(i).getLaboratoryNumber() + "(已请假)");
                 }else{

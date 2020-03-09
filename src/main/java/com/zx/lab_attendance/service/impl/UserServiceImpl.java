@@ -1,11 +1,13 @@
 package com.zx.lab_attendance.service.impl;
 
+import com.sun.org.apache.bcel.internal.generic.NEW;
 import com.zx.lab_attendance.dao.*;
 import com.zx.lab_attendance.entity.*;
 import com.zx.lab_attendance.service.LeaveclassmService;
 import com.zx.lab_attendance.service.UserService;
 import com.zx.lab_attendance.vo.UserAttendance;
 import com.zx.lab_attendance.vo.UserVO;
+import jdk.nashorn.internal.runtime.regexp.JoniRegExp;
 import org.apache.catalina.User;
 import org.apache.commons.collections.map.HashedMap;
 import org.apache.shiro.crypto.hash.SimpleHash;
@@ -38,6 +40,9 @@ public class UserServiceImpl implements UserService {
     CourseandstuMapper courseandstuMapper;
     @Autowired
     LabusingMapper labusingMapper;
+    @Autowired
+    MajorMapper majorMapper;
+
 
 
     @Override
@@ -46,6 +51,7 @@ public class UserServiceImpl implements UserService {
         List<UserVO> userVOS = new ArrayList<>();
         for (Users users : usersList){
             UserVO userVO = new UserVO();
+            userVO.setUserId(users.getUserId());
             userVO.setUsername(users.getUsername());
             userVO.setUserNumber(users.getUserNumber());
             userVO.setEmail(users.getEmail());
@@ -62,6 +68,29 @@ public class UserServiceImpl implements UserService {
         }
         return userVOS;
     }
+
+    @Override
+    public List<UserVO> allStudentTeacher() {
+        List<UserVO> userVOS = new ArrayList<>();
+        List<Users> usersList = usersMapper.selectByAllTeacher();
+        for (Users users : usersList) {
+            UserVO userVO = new UserVO();
+            userVO.setUserId(users.getUserId());
+            userVO.setUsername(users.getUsername());
+            userVO.setUserNumber(users.getUserNumber());
+            userVO.setMajorName(users.getMajor().getMajorName());
+            userVO.setPhone(users.getPhone());
+            userVO.setEmail(users.getEmail());
+            userVO.setCollective(departmentMapper.selectByPrimaryKey(users.getClassordepartment()).getDepartmentDescribe());
+            userVOS.add(userVO);
+        }
+        return userVOS;
+    }
+
+    public void delectUser(String userId){
+      usersMapper.deleteByPrimaryKey(userId);
+    }
+
 
     @Override
     public Users selectUserByUserNum(String usernumber) {
@@ -146,5 +175,48 @@ public class UserServiceImpl implements UserService {
         return userAttendances;
     }
 
+    @Override
+    public String updateUser(UserVO user) {
+        Users newuser = new Users();
+        newuser.setUserId(user.getUserId());
+        newuser.setEmail(user.getEmail());
+        newuser.setUserNumber(user.getUserNumber());
+        newuser.setUsername(user.getUsername());
+        String department = user.getCollective().substring(0,3);              //年级
+        String collective = user.getCollective().substring(3,4);              //班级
+        Department department1 = departmentMapper.selectByDescribe(department);
+        Major major = majorMapper.selectByMajorName(user.getMajorName());
+        newuser.setMajorId(major.getMajorId());
+        if (department1==null){
+            return "请检查系别和班别是否正确";
+        }else{
+            Collective collective1 = collectiveMapper.selectNumber(Integer.parseInt(collective),department1.getDepartmentId());
+            newuser.setClassordepartment(collective1.getCollectiveId());
+            usersMapper.updateUser(newuser);
+            return "更新成功";
+        }
+    }
+
+    @Override
+    public String updateTeacher(UserVO user) {
+        Users newuser = new Users();
+        newuser.setUserId(user.getUserId());
+        newuser.setEmail(user.getEmail());
+        newuser.setUserNumber(user.getUserNumber());
+        newuser.setUsername(user.getUsername());
+        String department = user.getCollective();              //年级
+
+        Department department1 = departmentMapper.selectByDescribe(department);
+        Major major = majorMapper.selectByMajorName(user.getMajorName());
+        newuser.setMajorId(major.getMajorId());
+        if (department1==null){
+            return "请检查系别和班别是否正确";
+        }else{
+//            Collective collective1 = collectiveMapper.selectNumber(Integer.parseInt(collective),department1.getDepartmentId());
+            newuser.setClassordepartment(department1.getDepartmentId());
+            usersMapper.updateUser(newuser);
+            return "更新成功";
+        }
+    }
 
 }

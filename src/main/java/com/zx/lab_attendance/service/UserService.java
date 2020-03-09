@@ -17,6 +17,8 @@ public interface UserService {
 
     public List<UserVO> allStudentUser();
 
+    public List<UserVO> allStudentTeacher();
+
     public Users selectUserByUserNum(String usernumber);
 
     public void updateEmailPhoneByPrimaryKey(Users user);
@@ -29,4 +31,9 @@ public interface UserService {
 
     List<UserAttendance> selectUserByAttendcane(String labusing);
 
+    String updateUser(UserVO user);
+
+    void delectUser(String userId);
+
+    String updateTeacher(UserVO user);
 }

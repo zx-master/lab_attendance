@@ -13,6 +13,8 @@ public interface AttendanceMapper {
 
     int deleteByPrimaryKey(String attendanceId);
 
+    int deleteByLabusingAndUser(String labId,String userId);
+
     int insert(Attendance record);
 
     Attendance selectByPrimaryKey(String attendanceId);
@@ -36,6 +38,8 @@ public interface AttendanceMapper {
     Attendance selectByStudentIDAndLab(String labuing,String studentid, String starttime,String endtime);
 
     List<Attendance> selectByTeacherIDAndLab(String labuing,String teacherid, String starttime,String endtime);
+
+//    List<Attendance> selectBy
 
     void insertAttendanceList(@Param("attendances") List<Attendance> attendances);
 

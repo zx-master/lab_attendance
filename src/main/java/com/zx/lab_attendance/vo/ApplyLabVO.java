@@ -13,15 +13,42 @@ import java.util.Date;
  */
 public class ApplyLabVO {
     private String studentName;
+    private String studentId;
+    private String approverId;
     private String approver;
     private String studentNum;
     private String labReason;
     private String labCode;
     private String labDate;
-    private Integer status;
+    private Integer status;            //处理状态status
+    private String id;                //applyid
     @JsonFormat(pattern="yyyy-MM-dd HH:mm:ss",timezone = "GMT+8")
     @DateTimeFormat(pattern="yyyy-MM-dd HH:mm:ss")
     private Date applylabdate;
+
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
+    }
+
+    public String getStudentId() {
+        return studentId;
+    }
+
+    public void setStudentId(String studentId) {
+        this.studentId = studentId;
+    }
+
+    public String getApproverId() {
+        return approverId;
+    }
+
+    public void setApproverId(String approverId) {
+        this.approverId = approverId;
+    }
 
     public Date getApplylabdate() {
         return applylabdate;

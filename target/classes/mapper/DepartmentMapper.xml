@@ -27,4 +27,7 @@
     select department_id, department_describe
     from department
   </select>
+  <select id="selectByDescribe" resultMap="BaseResultMap">
+    select department_id, department_describe from department where department_describe = #{describe,jdbcType=VARCHAR}
+  </select>
 </mapper>

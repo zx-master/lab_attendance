@@ -68,6 +68,15 @@
     where user_id = #{userId,jdbcType=VARCHAR}
   </update>
 
+  <update id="updateUser" parameterType="com.zx.lab_attendance.entity.Users">
+    update users
+    set user_number = #{userNumber,jdbcType=VARCHAR},
+      email = #{email,jdbcType=VARCHAR},
+      classordepartment = #{classordepartment,jdbcType=VARCHAR},
+      username =  #{username,jdbcType=VARCHAR},
+      majorId = #{majorId,jdbcType=INTEGER}
+    where user_id = #{userId,jdbcType=VARCHAR}
+  </update>
 
   <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
     select user_id, user_number, email, `password`, classordepartment, phone, tssign ,username,majorId,userImg
@@ -104,6 +113,12 @@
     select user_id, user_number, email, `password`, classordepartment, phone, tssign ,username,majorId,userImg
     from users
     where tssign = 2
+  </select>
+
+  <select id="selectByAllTeacher" resultMap="BaseResultMap">
+    select user_id, user_number, email, `password`, classordepartment, phone, tssign ,username,majorId,userImg
+    from users
+    where tssign = 1
   </select>
 
 </mapper>

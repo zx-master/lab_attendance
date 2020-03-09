@@ -24,9 +24,13 @@ public interface UsersMapper {
 
     List<Users> selectByAllStudent();
 
+    List<Users> selectByAllTeacher();
+
     int updateEmailPhoneByPrimaryKey(Users user);
 
     int updateUserImgByPrimaryKey(Users user);
 
     int updateUserPwd(Users user);
+
+    void updateUser(Users user);
 }

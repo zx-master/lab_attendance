@@ -16,6 +16,8 @@ public interface MajorMapper {
 
     Major selectByPrimaryKey(Integer majorId);
 
+    Major selectByMajorName(String majorName);
+
     List<Major> selectAll();
 
 }

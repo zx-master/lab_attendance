@@ -61,27 +61,35 @@ public class ApplylabServiceImpl implements ApplylabService {
     }
 
     @Override
-    public void updateApplyLab(ChatmsgInfo applylab) {
+    public void updateApplyLab(ChatmsgInfo chatmsgInfo) {
         Applylab applylab1 = new Applylab();
-        applylab1.setApplylabId(applylab.getId());
-        applylab1.setApplylabStatus(applylab.getStatus());
+        applylab1.setApplylabId(chatmsgInfo.getId());
+        Applylab applylab = applylabMapper.selectByPrimaryKey(chatmsgInfo.getId());
+        applylab1.setApplylabStatus(chatmsgInfo.getStatus());
         Chatmsg chatmsg = new Chatmsg();
-        chatmsg.setChatmsgId(applylab.getChatmsgId());
+        chatmsg.setChatmsgId(chatmsgInfo.getChatmsgId());
         chatmsg.setReceiveSign(1);
-        chatmsgMapper.updateByPrimaryKey(chatmsg);
-        applylabMapper.updateByPrimaryKey(applylab1);
-        if (applylab.getStatus() == 2) {             //批准，修改labusing
-            Applylab timeapply = applylabMapper.selectByPrimaryKey(applylab.getId());
+        Applylab applylab2 = applylabMapper.selectByPrimaryKey(chatmsgInfo.getId());
+        Labusing labusing = labusingMapper.selectByChatMsg(applylab2.getUsingStart(),applylab2.getUsingEnd());
+
+        if (chatmsgInfo.getStatus() == 2) {             //批准，修改labusing
+            chatmsgMapper.updateByPrimaryKey(chatmsg);
+            applylabMapper.updateByPrimaryKey(applylab1);
+            Applylab timeapply = applylabMapper.selectByPrimaryKey(chatmsgInfo.getId());
             Date starttime = timeapply.getUsingStart();
             Date endtime = timeapply.getUsingEnd();
             String labnum = timeapply.getLaboratoryNumber();
-//            Labusing labusing = new Labusing();
-//            labusing.setLabusingId(applylab.getId());
-//            labusing.setCourseId(applylab.getChatReason());
-            labusingMapper.updateCourseId(applylab.getChatReason(),starttime,endtime,labnum);
-        }else if(applylab.getStatus() == 3){           //未批准，删除labusing
-            labusingMapper.deleteByPrimaryKey(applylab.getId());
+            labusingMapper.updateCourseId(chatmsgInfo.getChatReason(),starttime,endtime,labnum);
+        }else if(chatmsgInfo.getStatus() == 3){           //未批准，删除labusing
+            chatmsgMapper.updateByPrimaryKey(chatmsg);
+            applylabMapper.updateByPrimaryKey(applylab1);
+            labusingMapper.deleteByPrimaryKey(labusing.getLabusingId());
         }
+//        else if(chatmsgInfo.getStatus() == 4){           //撤销，删除labusing
+//            chatmsgMapper.deleteByPrimaryKey(chatmsg1.getChatmsgId());
+//            applylabMapper.updateByPrimaryKey(applylab1);
+//            labusingMapper.deleteByPrimaryKey(labusing.getLabusingId());
+//        }
     }
 
     @Override
@@ -96,6 +104,9 @@ public class ApplylabServiceImpl implements ApplylabService {
             ApplyLabVO applyLabVO = new ApplyLabVO();
             applyLabVO.setApprover(applylab.getApproverUser().getUsername());
             applyLabVO.setLabCode(applylab.getLaboratoryNumber());
+            applyLabVO.setStudentId(applylab.getApplyUserid());
+            applyLabVO.setApproverId(applylab.getApprover());
+            applyLabVO.setId(applylab.getApplylabId());
             applyLabVO.setLabReason(applylab.getUsing());
             applyLabVO.setStudentName(applylab.getUser().getUsername());
             applyLabVO.setStudentNum(applylab.getUser().getUserNumber());
@@ -114,6 +125,7 @@ public class ApplylabServiceImpl implements ApplylabService {
             applyLabVO.setLabCode(applylab.getLaboratoryNumber());
             applyLabVO.setLabReason(applylab.getUsing());
             applyLabVO.setApplylabdate(applylab.getApplylabdate());
+            applyLabVO.setId(applylab.getApplylabId());
             applyLabVO.setStudentName(applylab.getUser().getUsername());
             applyLabVO.setStudentNum(applylab.getUser().getUserNumber());
             applyLabVO.setStatus(applylab.getApplylabStatus());

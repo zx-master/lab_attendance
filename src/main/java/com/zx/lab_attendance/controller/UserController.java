@@ -40,6 +40,28 @@ public class UserController {
     @Autowired
     DepartmentMapper departmentMapper;
 
+    @PostMapping("/updateUser")
+    public JsonData updateUser(@RequestBody UserVO user){
+        return JsonData.buildSuccess(userService.updateUser(user));
+    }
+
+    @PostMapping("/updateTeacherUser")
+    public JsonData updateTeacherUser(@RequestBody UserVO user){
+        return JsonData.buildSuccess(userService.updateTeacher(user));
+    }
+
+    @GetMapping("/getTeaherUser")
+    @ApiOperation(value = "获取所有老师的数据", notes="返回List<UserVO>数据")
+    public JsonData getTeaherUser(HttpServletResponse response, HttpServletRequest request){
+        response.setHeader("Access-Control-Allow-Origin","*");
+        return JsonData.buildSuccess(userService.allStudentTeacher());
+    }
+
+    @PostMapping("/delectUser")
+    public JsonData delectUser(@RequestParam("userId") String userId) {
+        userService.delectUser(userId);
+        return JsonData.buildSuccess("删除成功!");
+    }
 
     @GetMapping("/getStudentUser")
     @ApiOperation(value = "获取所有学生的数据", notes="返回List<UserVO>数据")

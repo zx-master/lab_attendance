@@ -63,7 +63,7 @@
   <select id="selectByDateForLeave" resultMap="BaseResultMap">
     select labusing_id, labusing_date, labusing_dateend, course_id, laboratory_number
     from labusing
-    where labusing_date <![CDATA[<=]]> DATE_FORMAT(#{strattime},'%Y-%m-%d %H:%i:%s') and labusing_dateend DATE_FORMAT(#{endtime},'%Y-%m-%d %H:%i:%s')
+    where labusing_date <![CDATA[<=]]> DATE_FORMAT(#{strattime},'%Y-%m-%d %H:%i:%s') and labusing_dateend <![CDATA[<=]]> DATE_FORMAT(#{endtime},'%Y-%m-%d %H:%i:%s')
   </select>
 
   <select id="selectByCourseIdAndTime" resultMap="BaseResultMap">
@@ -79,5 +79,11 @@
     select labusing_id, labusing_date, labusing_dateend, course_id, laboratory_number
     from labusing
     where laboratory_number = #{labnum,jdbcType=VARCHAR}
+  </select>
+
+  <select id="selectByChatMsg" resultMap="BaseResultMap">
+    select labusing_id, labusing_date, labusing_dateend, course_id, laboratory_number
+    from labusing
+    where labusing_date = #{strattime,jdbcType=TIMESTAMP} and labusing_dateend = #{endtime,jdbcType=TIMESTAMP}
   </select>
 </mapper>

@@ -59,22 +59,27 @@ public class AttendanceServiceImpl implements AttendanceService {
      * @author: zx
      * @paramater:
      * @process:
-     * @describe: 批量插入数据
+     * @describe: 批量插入考勤数据
      */
     @Override
     public void insertAttendanceList(List<UserAttendance> attendances) {
         List<Attendance> attendanceList = new ArrayList<>();
         IdWorker idWorker = new IdWorker(0, 0);
+        List<Attendance> attendanceListExit = attendanceMapper.selectByCourseCode(attendances.get(1).getLabusingId(),null,null);
         for (UserAttendance userAttendance : attendances) {
-            Attendance attendance = new Attendance();
-            attendance.setAttendanceId("AD" + idWorker.nextId());
-            attendance.setAttendanceRecord(userAttendance.getAttendanceRecord());
-            attendance.setAttendanceDate(new Date());
-            attendance.setStudentId(userAttendance.getStudentId());
-            attendance.setTeacherId(userAttendance.getTeacherId());
-            attendance.setLabusingId(userAttendance.getLabusingId());
+            for (Attendance attendance : attendanceListExit) {
+                if (attendance.getStudentId() != userAttendance.getStudentId()){
+                    Attendance attendanceIn = new Attendance();
+                    attendanceIn.setAttendanceId("AD" + idWorker.nextId());
+                    attendanceIn.setAttendanceRecord(userAttendance.getAttendanceRecord());
+                    attendanceIn.setAttendanceDate(new Date());
+                    attendanceIn.setStudentId(userAttendance.getStudentId());
+                    attendanceIn.setTeacherId(userAttendance.getTeacherId());
+                    attendanceIn.setLabusingId(userAttendance.getLabusingId());
+                    attendanceList.add(attendanceIn);
+                }
+            }
 
-            attendanceList.add(attendance);
         }
         leaveclassmMapper.delectLabusing(attendances.get(0).getLabusingId());
         attendanceMapper.insertAttendanceList(attendanceList);

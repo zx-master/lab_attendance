@@ -17,6 +17,7 @@ public class LeaveclassmVO {
     private String studentName;
     private String studentNum;
     private String approver;
+    private String approverId;
     private String leaveReason;
     private Integer leaveClass;
     private String courseName;
@@ -27,6 +28,14 @@ public class LeaveclassmVO {
     @DateTimeFormat(pattern="yyyy-MM-dd HH:mm:ss")
     private Date leavedate;
     private Integer leaveStatus;
+
+    public String getApproverId() {
+        return approverId;
+    }
+
+    public void setApproverId(String approverId) {
+        this.approverId = approverId;
+    }
 
     public String getApprover() {
         return approver;

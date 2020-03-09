@@ -21,8 +21,17 @@ public class ChatmsgInfo {
     private String userImg;                      //用户头像
     private Integer status;                      //处理状态
     private Integer sign;                        //回复/请求标识
+    private String approverId;                   //审核人Id
     private String approverName;                     //审核人姓名
     private String approverImg;                      //审核人头像
+
+    public String getApproverId() {
+        return approverId;
+    }
+
+    public void setApproverId(String approverId) {
+        this.approverId = approverId;
+    }
 
     public String getApproverName() {
         return approverName;

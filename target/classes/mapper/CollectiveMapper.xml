@@ -36,4 +36,10 @@
     select collective_id, department_id, collective_number,tutoringUser,mentorUser
     from collective
   </select>
+  <select id="selectNumber" resultMap="BaseResultMap">
+    select collective_id, department_id, collective_number,tutoringUser,mentorUser
+    from collective
+    where
+    collective_number = #{number,jdbcType=INTEGER} and department_id = #{departmentId,jdbcType=VARCHAR}
+  </select>
 </mapper>

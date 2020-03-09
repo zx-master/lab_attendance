@@ -28,7 +28,9 @@
     <select id="selectByApproverAndStu" resultMap="BaseResultMap" parameterType="java.lang.String">
         select leaveclassm_id, student_id, leave_reason,leave_class,
         leave_img, approver,labusing_id,leaveStatus,leavedate from leaveclassm
-        where student_id = #{studentId,jdbcType=VARCHAR} or approver = #{studentId,jdbcType=VARCHAR}
+        where
+        leaveStatus != 4 and
+        (student_id = #{studentId,jdbcType=VARCHAR} or approver = #{studentId,jdbcType=VARCHAR})
     </select>
 
     <select id="selectAllBylabusing" resultMap="BaseResultMap" parameterType="java.lang.String">
