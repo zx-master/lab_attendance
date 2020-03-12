@@ -58,22 +58,25 @@ public class LeaveServiceImpl implements LeaveService {
             labusings.addAll(labusingMapper.selectByCourseIdAndTime(courseandstu.getCourseId(),formatter.format(leave.getLeaveDatestart()),formatter.format(leave.getLeaveDateend())));
         }
         for (Labusing labusing : labusings){
-            NewsVO newsVO = new NewsVO();
-            String leaveclassmID = "LCM" + idWorker.nextId();
-            leaveclassm.setApprover(labusing.getCourse().getCourseTeacher());
-            leaveclassm.setLabusing(labusing);
-            leaveclassm.setLabusingId(labusing.getLabusingId());
-            leaveclassm.setLeaveClass(leave.getLeaveClass());
-            leaveclassm.setLeavedate(leave.getLeavedate());
-            leaveclassm.setLeaveImg(leave.getLeaveImg());
-            leaveclassm.setLeaveclassmId(leaveclassmID);
-            leaveclassm.setLeaveReason(leave.getLeaveReason());
-            leaveclassm.setLeaveStatus(1);
-            leaveclassm.setStudentId(leave.getStudentId());
-            leaveclassmMapper.insertLeaveclass(leaveclassm);
-            newsVO.setContentId(leaveclassmID);
-            newsVO.setReceiverId(labusing.getCourse().getCourseTeacher());
-            newsVOS.add(newsVO);
+            Leaveclassm exitLeave = leaveclassmMapper.selectStudentAndLab(leave.getStudentId(),labusing.getLabusingId());
+            if (exitLeave == null) {
+                NewsVO newsVO = new NewsVO();
+                String leaveclassmID = "LCM" + idWorker.nextId();
+                leaveclassm.setApprover(labusing.getCourse().getCourseTeacher());
+                leaveclassm.setLabusing(labusing);
+                leaveclassm.setLabusingId(labusing.getLabusingId());
+                leaveclassm.setLeaveClass(leave.getLeaveClass());
+                leaveclassm.setLeavedate(leave.getLeavedate());
+                leaveclassm.setLeaveImg(leave.getLeaveImg());
+                leaveclassm.setLeaveclassmId(leaveclassmID);
+                leaveclassm.setLeaveReason(leave.getLeaveReason());
+                leaveclassm.setLeaveStatus(1);
+                leaveclassm.setStudentId(leave.getStudentId());
+                leaveclassmMapper.insertLeaveclass(leaveclassm);
+                newsVO.setContentId(leaveclassmID);
+                newsVO.setReceiverId(labusing.getCourse().getCourseTeacher());
+                newsVOS.add(newsVO);
+            }
         }
         return newsVOS;
     }

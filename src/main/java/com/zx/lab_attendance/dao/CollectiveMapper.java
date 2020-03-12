@@ -7,6 +7,7 @@ import java.util.List;
 
 @Repository
 public interface CollectiveMapper {
+
     int deleteByPrimaryKey(String collectiveId);
 
     int insert(Collective record);
@@ -18,4 +19,6 @@ public interface CollectiveMapper {
     int updateByPrimaryKey(Collective record);
 
     Collective selectNumber(Integer number,String departmentId);
+
+
 }

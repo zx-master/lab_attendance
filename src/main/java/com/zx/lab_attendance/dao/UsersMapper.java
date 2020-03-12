@@ -33,4 +33,6 @@ public interface UsersMapper {
     int updateUserPwd(Users user);
 
     void updateUser(Users user);
+
+    List<Users> selectByCollective(String collective);
 }

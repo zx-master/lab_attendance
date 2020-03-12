@@ -121,4 +121,10 @@
     where tssign = 1
   </select>
 
+  <select id="selectByCollective" resultMap="BaseResultMap">
+    select user_id, user_number, email, `password`, classordepartment, phone, tssign ,username,majorId,userImg
+    from users
+    where classordepartment = #{collective,jdbcType=VARCHAR}
+  </select>
+
 </mapper>

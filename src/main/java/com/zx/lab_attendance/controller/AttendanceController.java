@@ -181,7 +181,7 @@ public class AttendanceController {
             @RequestBody List<UserAttendance> studentData){
         response.setHeader("Access-Control-Allow-Origin","*");
         attendanceService.insertAttendanceList(studentData);
-        return JsonData.buildSuccess("插入成功");
+        return JsonData.buildSuccess("考勤成功");
     }
 
 }

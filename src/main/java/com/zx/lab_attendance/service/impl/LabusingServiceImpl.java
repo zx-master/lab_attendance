@@ -189,7 +189,6 @@ public class LabusingServiceImpl implements LabusingService {
             } else {
                 calendarVO.setTitle(labusings.get(i).getCourseId());
             }
-
             switch ((i+7) % 7) {
                 case 0:
                     calendarVO.setColor(color[0]);

@@ -122,7 +122,7 @@ public class LeaveclassmServiceImpl implements LeaveclassmService {
         leaveclassm.setLeavedate(new Date());
         leaveclassm.setLeaveStatus(1);
         Leaveclassm exitLeave = leaveclassmMapper.selectStudentAndLab(leaveclassm.getStudentId(),leaveclassm.getLabusingId());
-        if ( exitLeave.getLeaveclassmId() != "") {
+        if ( exitLeave == null) {
             Labusing labusing = labusingMapper.selectByPrimaryKey(leaveclassm.getLabusingId());
             leaveclassm.setApprover(labusing.getCourse().getCourseTeacher());
             leaveclassmMapper.insertLeaveclass(leaveclassm);
@@ -152,17 +152,20 @@ public class LeaveclassmServiceImpl implements LeaveclassmService {
         chatmsg.setChatmsgId(chatmsgInfo.getChatmsgId());
         chatmsgMapper.updateByPrimaryKey(chatmsg);
         if (chatmsgInfo.getStatus() == 2) {
-            IdWorker idWorker = new IdWorker(0, 0);
-            String id = "AD" + idWorker.nextId();
-            Attendance attendance = new Attendance();
-            attendance.setAttendanceId(id);
-            attendance.setLabusingId(leaveclassmInfo.getLabusingId());
-            attendance.setTeacherId(chatmsgInfo.getApproverId());
-            attendance.setStudentId(chatmsgInfo.getUserId());
-            attendance.setAttendanceRecord(leaveclassmInfo.getLeaveStatus());
-            attendance.setAttendanceDate(new Date());
-            attendanceMapper.insert(attendance);
-        }else if(chatmsgInfo.getStatus() == 4) {
+            Attendance attendance1 = attendanceMapper.selectByStudentIDAndLab(leaveclassmInfo.getLabusingId(),leaveclassmInfo.getStudentId(),null,null);
+            if (attendance1 == null) {
+                IdWorker idWorker = new IdWorker(0, 0);
+                String id = "AD" + idWorker.nextId();
+                Attendance attendance = new Attendance();
+                attendance.setAttendanceId(id);
+                attendance.setLabusingId(leaveclassmInfo.getLabusingId());
+                attendance.setTeacherId(chatmsgInfo.getApproverId());
+                attendance.setStudentId(chatmsgInfo.getUserId());
+                attendance.setAttendanceRecord(leaveclassmInfo.getLeaveStatus());
+                attendance.setAttendanceDate(new Date());
+                attendanceMapper.insert(attendance);
+            }
+        }else if(chatmsgInfo.getStatus() == 4) {    //撤销操作
             Leaveclassm leaveclassm1 = leaveclassmMapper.selectByPrimaryKey(chatmsgInfo.getId());
             attendanceMapper.deleteByLabusingAndUser(leaveclassm1.getLabusingId(),chatmsgInfo.getUserId());
         }

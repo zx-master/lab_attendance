@@ -51,7 +51,7 @@ public class LeaveclassmController {
     public JsonData updateLeaveclassm(HttpServletResponse response, HttpServletRequest request,@RequestBody ChatmsgInfo chatmsgInfo){
         response.setHeader("Access-Control-Allow-Origin","*");
         leaveclassmService.updateLeaveclassm(chatmsgInfo);
-        return JsonData.buildSuccess("审核成功");
+        return JsonData.buildSuccess("成功");
     }
 
 }

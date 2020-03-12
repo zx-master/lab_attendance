@@ -52,7 +52,7 @@
     <select id="selectStudentAndLab" resultMap="BaseResultMap">
         select leaveclassm_id, student_id, leave_reason,leave_class,
         leave_img, approver,labusing_id,leaveStatus,leavedate from leaveclassm
-        where student_id = #{studentId,jdbcType=VARCHAR} and labusing_id = #{labusingId,jdbcType=VARCHAR}
+        where student_id = #{studentId,jdbcType=VARCHAR} and labusing_id = #{labusingId,jdbcType=VARCHAR} and leaveStatus != 4
     </select>
 
     <update id="updateLeaveclassm">

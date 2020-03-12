@@ -65,24 +65,52 @@ public class AttendanceServiceImpl implements AttendanceService {
     public void insertAttendanceList(List<UserAttendance> attendances) {
         List<Attendance> attendanceList = new ArrayList<>();
         IdWorker idWorker = new IdWorker(0, 0);
-        List<Attendance> attendanceListExit = attendanceMapper.selectByCourseCode(attendances.get(1).getLabusingId(),null,null);
+//        List<Attendance> attendanceListExit = attendanceMapper.selectByCourseCode(attendances.get(1).getLabusingId(),null,null);
         for (UserAttendance userAttendance : attendances) {
-            for (Attendance attendance : attendanceListExit) {
-                if (attendance.getStudentId() != userAttendance.getStudentId()){
-                    Attendance attendanceIn = new Attendance();
-                    attendanceIn.setAttendanceId("AD" + idWorker.nextId());
-                    attendanceIn.setAttendanceRecord(userAttendance.getAttendanceRecord());
-                    attendanceIn.setAttendanceDate(new Date());
-                    attendanceIn.setStudentId(userAttendance.getStudentId());
-                    attendanceIn.setTeacherId(userAttendance.getTeacherId());
-                    attendanceIn.setLabusingId(userAttendance.getLabusingId());
-                    attendanceList.add(attendanceIn);
-                }
-            }
+//            if(attendanceListExit.size() > 0){
+//                for (Attendance attendance : attendanceListExit) {
+//                    if (attendance.getStudentId() != userAttendance.getStudentId()){
+                        Attendance attendance1 = attendanceMapper.selectByStudentIDAndLab(userAttendance.getLabusingId(),
+                                userAttendance.getStudentId(),null,null);
+                        if (attendance1 == null) {
+                            Attendance attendanceIn = new Attendance();
+                            attendanceIn.setAttendanceId("AD" + idWorker.nextId());
+                            attendanceIn.setAttendanceRecord(userAttendance.getAttendanceRecord());
+                            attendanceIn.setAttendanceDate(new Date());
+                            attendanceIn.setStudentId(userAttendance.getStudentId());
+                            attendanceIn.setTeacherId(userAttendance.getTeacherId());
+                            attendanceIn.setLabusingId(userAttendance.getLabusingId());
+                            attendanceList.add(attendanceIn);
+                        }else{
+                            Attendance attendanceIn = new Attendance();
+                            attendanceIn.setAttendanceId(attendance1.getAttendanceId());
+                            attendanceIn.setAttendanceRecord(userAttendance.getAttendanceRecord());
+                            attendanceIn.setAttendanceDate(new Date());
+                            attendanceIn.setStudentId(userAttendance.getStudentId());
+                            attendanceIn.setTeacherId(userAttendance.getTeacherId());
+                            attendanceIn.setLabusingId(userAttendance.getLabusingId());
+//                            attendanceList.add(attendanceIn);
+                            attendanceMapper.updateByPrimaryKey(attendanceIn);
+                        }
+//                    }
+//                }
+//            } else {
+//                Attendance attendanceIn = new Attendance();
+//                attendanceIn.setAttendanceId("AD" + idWorker.nextId());
+//                attendanceIn.setAttendanceRecord(userAttendance.getAttendanceRecord());
+//                attendanceIn.setAttendanceDate(new Date());
+//                attendanceIn.setStudentId(userAttendance.getStudentId());
+//                attendanceIn.setTeacherId(userAttendance.getTeacherId());
+//                attendanceIn.setLabusingId(userAttendance.getLabusingId());
+//                attendanceList.add(attendanceIn);
+//            }
+
 
         }
-        leaveclassmMapper.delectLabusing(attendances.get(0).getLabusingId());
-        attendanceMapper.insertAttendanceList(attendanceList);
+        if (attendances.size() > 0 && attendanceList.size() > 0) {
+            leaveclassmMapper.delectLabusing(attendances.get(0).getLabusingId());
+            attendanceMapper.insertAttendanceList(attendanceList);
+        }
     }
 
     /**
