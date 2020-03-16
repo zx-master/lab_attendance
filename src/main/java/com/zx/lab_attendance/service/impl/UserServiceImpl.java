@@ -8,7 +8,6 @@ import com.zx.lab_attendance.service.UserService;
 import com.zx.lab_attendance.vo.UserAttendance;
 import com.zx.lab_attendance.vo.UserVO;
 import jdk.nashorn.internal.runtime.regexp.JoniRegExp;
-import org.apache.catalina.User;
 import org.apache.commons.collections.map.HashedMap;
 import org.apache.shiro.crypto.hash.SimpleHash;
 import org.springframework.beans.factory.annotation.Autowired;

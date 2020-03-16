@@ -6,30 +6,151 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="2ebd9d82-12a2-468b-b73b-c97cca475969" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/zx/lab_attendance/controller/CollectiveController.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/zx/lab_attendance/service/CollectiveService.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/zx/lab_attendance/service/impl/CollectiveServiceImpl.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/zx/lab_attendance/vo/CollectiveVO.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/zx/lab_attendance/FastdfsImporter.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/zx/lab_attendance/WarStartApplication.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/zx/lab_attendance/utils/FastDFSClient.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/zx/lab_attendance/utils/FileUtils.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__commons_beanutils_commons_beanutils_1_9_3.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__commons_logging_commons_logging_1_2.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__org_apache_tomcat_embed_tomcat_embed_core_9_0_30.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__org_apache_tomcat_embed_tomcat_embed_el_9_0_30.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__org_apache_tomcat_embed_tomcat_embed_websocket_9_0_30.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__org_springframework_boot_spring_boot_starter_tomcat_2_2_4_RELEASE.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/zx/lab_attendance/controller/AttendanceController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/zx/lab_attendance/controller/AttendanceController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/zx/lab_attendance/controller/LeaveclassmController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/zx/lab_attendance/controller/LeaveclassmController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/zx/lab_attendance/dao/CollectiveMapper.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/zx/lab_attendance/dao/CollectiveMapper.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lab_attendance.iml" beforeDir="false" afterPath="$PROJECT_DIR$/lab_attendance.iml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/pom.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/zx/lab_attendance/controller/FileController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/zx/lab_attendance/controller/FileController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/zx/lab_attendance/dao/LabusingMapper.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/zx/lab_attendance/dao/LabusingMapper.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/zx/lab_attendance/dao/UsersMapper.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/zx/lab_attendance/dao/UsersMapper.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/zx/lab_attendance/service/impl/AttendanceServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/zx/lab_attendance/service/impl/AttendanceServiceImpl.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/zx/lab_attendance/service/impl/LabusingServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/zx/lab_attendance/service/impl/LabusingServiceImpl.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/zx/lab_attendance/service/impl/LeaveServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/zx/lab_attendance/service/impl/LeaveServiceImpl.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/zx/lab_attendance/service/impl/LeaveclassmServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/zx/lab_attendance/service/impl/LeaveclassmServiceImpl.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/mapper/LeaveclassmMapper.xml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/mapper/LeaveclassmMapper.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/mapper/UsersMapper.xml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/mapper/UsersMapper.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/zx/lab_attendance/controller/AttendanceController.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/zx/lab_attendance/controller/AttendanceController.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/zx/lab_attendance/controller/LeaveclassmController.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/zx/lab_attendance/controller/LeaveclassmController.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/zx/lab_attendance/dao/UsersMapper.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/zx/lab_attendance/dao/UsersMapper.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/zx/lab_attendance/service/impl/AttendanceServiceImpl.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/zx/lab_attendance/service/impl/AttendanceServiceImpl.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/zx/lab_attendance/service/impl/LabusingServiceImpl.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/zx/lab_attendance/service/impl/LabusingServiceImpl.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/zx/lab_attendance/service/impl/LeaveServiceImpl.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/zx/lab_attendance/service/impl/LeaveServiceImpl.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/zx/lab_attendance/service/impl/LeaveclassmServiceImpl.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/zx/lab_attendance/service/impl/LeaveclassmServiceImpl.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/mapper/LeaveclassmMapper.xml" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/mapper/LeaveclassmMapper.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/mapper/UsersMapper.xml" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/mapper/UsersMapper.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/zx/lab_attendance/service/impl/ApplylabServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/zx/lab_attendance/service/impl/ApplylabServiceImpl.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/zx/lab_attendance/service/impl/UserServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/zx/lab_attendance/service/impl/UserServiceImpl.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/zx/lab_attendance/shiroConfig/ShiroConfig.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/zx/lab_attendance/shiroConfig/ShiroConfig.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/application.properties" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/application.properties" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/mapper/LabusingMapper.xml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/mapper/LabusingMapper.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/META-INF/lab_attendance.kotlin_module" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/application.properties" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/zx/lab_attendance/LabAttendanceApplication.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/zx/lab_attendance/NettyBoot.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/zx/lab_attendance/controller/ApplylabController.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/zx/lab_attendance/controller/AttendanceController.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/zx/lab_attendance/controller/ChatmsgController.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/zx/lab_attendance/controller/FileController.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/zx/lab_attendance/controller/KaptchaController.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/zx/lab_attendance/controller/LaboratoryController.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/zx/lab_attendance/controller/LabusingController.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/zx/lab_attendance/controller/LeaveController.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/zx/lab_attendance/controller/LeaveclassmController.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/zx/lab_attendance/controller/PublicController.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/zx/lab_attendance/controller/UserController.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/zx/lab_attendance/dao/ApplylabMapper.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/zx/lab_attendance/dao/AttendanceMapper.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/zx/lab_attendance/dao/ChatmsgMapper.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/zx/lab_attendance/dao/CollectiveMapper.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/zx/lab_attendance/dao/CourseMapper.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/zx/lab_attendance/dao/CourseandstuMapper.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/zx/lab_attendance/dao/DepartmentMapper.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/zx/lab_attendance/dao/LaboratoryMapper.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/zx/lab_attendance/dao/LabusingMapper.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/zx/lab_attendance/dao/LeaveMapper.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/zx/lab_attendance/dao/LeaveclassmMapper.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/zx/lab_attendance/dao/MajorMapper.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/zx/lab_attendance/dao/PerandrolesMapper.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/zx/lab_attendance/dao/PermissionsMapper.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/zx/lab_attendance/dao/RoleMapper.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/zx/lab_attendance/dao/UserandroleMapper.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/zx/lab_attendance/dao/UsersMapper.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/zx/lab_attendance/entity/Applylab.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/zx/lab_attendance/entity/Attendance.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/zx/lab_attendance/entity/Chatmsg.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/zx/lab_attendance/entity/Collective.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/zx/lab_attendance/entity/Course.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/zx/lab_attendance/entity/Courseandstu.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/zx/lab_attendance/entity/Department.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/zx/lab_attendance/entity/JsonData.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/zx/lab_attendance/entity/Laboratory.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/zx/lab_attendance/entity/Labusing.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/zx/lab_attendance/entity/Leave.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/zx/lab_attendance/entity/Leaveclassm.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/zx/lab_attendance/entity/Major.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/zx/lab_attendance/entity/Perandroles.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/zx/lab_attendance/entity/Permissions.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/zx/lab_attendance/entity/Role.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/zx/lab_attendance/entity/Userandrole.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/zx/lab_attendance/entity/Users.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/zx/lab_attendance/enums/AttendanceEnum.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/zx/lab_attendance/enums/MsgActionEnum.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/zx/lab_attendance/enums/MsgSignFlagEnum.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/zx/lab_attendance/netty/ChatHandler.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/zx/lab_attendance/netty/DataContent.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/zx/lab_attendance/netty/UserChannelRel.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/zx/lab_attendance/netty/WSServer$SingletionWSServer.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/zx/lab_attendance/netty/WSServer.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/zx/lab_attendance/netty/WSServerInitialzer.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/zx/lab_attendance/service/ApplylabService.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/zx/lab_attendance/service/AttendanceService.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/zx/lab_attendance/service/ChatmsgService.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/zx/lab_attendance/service/LaboratoryService.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/zx/lab_attendance/service/LabusingService.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/zx/lab_attendance/service/LeaveService.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/zx/lab_attendance/service/LeaveclassmService.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/zx/lab_attendance/service/MajorService.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/zx/lab_attendance/service/UserService.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/zx/lab_attendance/service/impl/ApplylabServiceImpl.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/zx/lab_attendance/service/impl/AttendanceServiceImpl.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/zx/lab_attendance/service/impl/ChatmsgServiceImpl.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/zx/lab_attendance/service/impl/LaboratoryServiceImpl.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/zx/lab_attendance/service/impl/LabusingServiceImpl.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/zx/lab_attendance/service/impl/LeaveServiceImpl.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/zx/lab_attendance/service/impl/LeaveclassmServiceImpl.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/zx/lab_attendance/service/impl/MajorServiceImpl.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/zx/lab_attendance/service/impl/UserServiceImpl.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/zx/lab_attendance/shiroConfig/CustomRealm.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/zx/lab_attendance/shiroConfig/CustomSessionManager.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/zx/lab_attendance/shiroConfig/ShiroConfig.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/zx/lab_attendance/utils/DateConversionWeek$1.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/zx/lab_attendance/utils/DateConversionWeek.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/zx/lab_attendance/utils/IdWorker.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/zx/lab_attendance/utils/InterceptorConfig.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/zx/lab_attendance/utils/JsonUtils.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/zx/lab_attendance/utils/KaptchaConfig.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/zx/lab_attendance/utils/SpringUtil.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/zx/lab_attendance/utils/SwaggerApp.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/zx/lab_attendance/vo/ApplyLabVO.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/zx/lab_attendance/vo/CalendarVO.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/zx/lab_attendance/vo/ChatmsgInfo.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/zx/lab_attendance/vo/CourseAttendance.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/zx/lab_attendance/vo/LeaveInfoVO.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/zx/lab_attendance/vo/LeaveclassmVO.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/zx/lab_attendance/vo/NewsVO.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/zx/lab_attendance/vo/OnlyAttendance.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/zx/lab_attendance/vo/PersonalAttendance.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/zx/lab_attendance/vo/StudentAttendance.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/zx/lab_attendance/vo/UserAttendance.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/zx/lab_attendance/vo/UserVO.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/mapper/ApplylabMapper.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/mapper/AttendanceMapper.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/mapper/ChatmsgMapper.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/mapper/CollectiveMapper.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/mapper/CourseMapper.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/mapper/CourseandstuMapper.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/mapper/DepartmentMapper.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/mapper/LaboratoryMapper.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/mapper/LabusingMapper.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/mapper/LeaveMapper.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/mapper/LeaveclassmMapper.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/mapper/MajorMapper.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/mapper/PerandrolesMapper.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/mapper/PermissionsMapper.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/mapper/RoleMapper.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/mapper/UserandroleMapper.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/mapper/UsersMapper.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/test-classes/com/zx/lab_attendance/AttendanceTest$1.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/test-classes/com/zx/lab_attendance/AttendanceTest.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/test-classes/com/zx/lab_attendance/CalendarTest.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/test-classes/com/zx/lab_attendance/LabAttendanceApplicationTests.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/test-classes/com/zx/lab_attendance/MD5Test.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/test-classes/com/zx/lab_attendance/UidTest.class" beforeDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -334,7 +455,11 @@
       <workItem from="1583808550136" duration="17703000" />
       <workItem from="1583851455964" duration="2204000" />
       <workItem from="1583894093819" duration="13837000" />
-      <workItem from="1583981542709" duration="15985000" />
+      <workItem from="1583981542709" duration="16688000" />
+      <workItem from="1584152297207" duration="8490000" />
+      <workItem from="1584236036028" duration="12122000" />
+      <workItem from="1584323357094" duration="28466000" />
+      <workItem from="1584372049164" duration="663000" />
     </task>
     <task id="LOCAL-00001" summary="考勤管理系统">
       <created>1582212418984</created>
@@ -392,7 +517,14 @@
       <option name="project" value="LOCAL" />
       <updated>1583767808681</updated>
     </task>
-    <option name="localTasksCounter" value="9" />
+    <task id="LOCAL-00009" summary="20200309finally">
+      <created>1584003590813</created>
+      <option name="number" value="00009" />
+      <option name="presentableId" value="LOCAL-00009" />
+      <option name="project" value="LOCAL" />
+      <updated>1584003590813</updated>
+    </task>
+    <option name="localTasksCounter" value="10" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -410,7 +542,8 @@
     <MESSAGE value="20200304课表实验室使用" />
     <MESSAGE value="20200308LabUsing" />
     <MESSAGE value="20200309InfoChange" />
-    <option name="LAST_COMMIT_MESSAGE" value="20200309InfoChange" />
+    <MESSAGE value="20200309finally" />
+    <option name="LAST_COMMIT_MESSAGE" value="20200309finally" />
   </component>
   <component name="WindowStateProjectService">
     <state x="361" y="71" key="#Custom_Plugin_Repositories" timestamp="1581396023885">
@@ -437,10 +570,10 @@
       <screen x="0" y="0" width="1536" height="824" />
     </state>
     <state x="477" y="215" key="#com.intellij.fileTypes.FileTypeChooser/0.0.1536.824@0.0.1536.824" timestamp="1582303862835" />
-    <state x="1041" y="142" key="#com.intellij.ide.util.MemberChooser" timestamp="1583841177923">
+    <state x="684" y="134" width="675" height="579" key="#com.intellij.ide.util.MemberChooser" timestamp="1584263225126">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
-    <state x="1041" y="142" key="#com.intellij.ide.util.MemberChooser/0.0.1536.824@0.0.1536.824" timestamp="1583841177923" />
+    <state x="684" y="134" width="675" height="579" key="#com.intellij.ide.util.MemberChooser/0.0.1536.824@0.0.1536.824" timestamp="1584263225126" />
     <state x="548" y="271" width="439" height="291" key="#com.intellij.refactoring.move.moveClassesOrPackages.MoveClassesOrPackagesDialog.classes" timestamp="1582733831064">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
@@ -453,10 +586,10 @@
       <screen x="0" y="0" width="1536" height="824" />
     </state>
     <state x="499" y="159" key="#com.intellij.refactoring.safeDelete.UnsafeUsagesDialog/0.0.1536.824@0.0.1536.824" timestamp="1581437309972" />
-    <state x="372" y="0" key="CommitChangelistDialog2" timestamp="1583767805239">
+    <state x="372" y="0" key="CommitChangelistDialog2" timestamp="1584003583602">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
-    <state x="372" y="0" key="CommitChangelistDialog2/0.0.1536.824@0.0.1536.824" timestamp="1583767805239" />
+    <state x="372" y="0" key="CommitChangelistDialog2/0.0.1536.824@0.0.1536.824" timestamp="1584003583602" />
     <state x="549" y="168" key="FileChooserDialogImpl" timestamp="1582212179135">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
@@ -465,58 +598,58 @@
       <screen x="0" y="0" width="1536" height="824" />
     </state>
     <state x="589" y="326" width="382" height="172" key="Github.CreateGistDialog/0.0.1536.824@0.0.1536.824" timestamp="1582212133498" />
-    <state width="1493" height="188" key="GridCell.Tab.0.bottom" timestamp="1584003535419">
+    <state width="1493" height="226" key="GridCell.Tab.0.bottom" timestamp="1584369277858">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
-    <state width="1493" height="188" key="GridCell.Tab.0.bottom/0.0.1536.824@0.0.1536.824" timestamp="1584003535419" />
-    <state width="1493" height="188" key="GridCell.Tab.0.center" timestamp="1584003535418">
+    <state width="1493" height="226" key="GridCell.Tab.0.bottom/0.0.1536.824@0.0.1536.824" timestamp="1584369277858" />
+    <state width="1493" height="226" key="GridCell.Tab.0.center" timestamp="1584369277858">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
-    <state width="1493" height="188" key="GridCell.Tab.0.center/0.0.1536.824@0.0.1536.824" timestamp="1584003535418" />
-    <state width="1493" height="188" key="GridCell.Tab.0.left" timestamp="1584003535418">
+    <state width="1493" height="226" key="GridCell.Tab.0.center/0.0.1536.824@0.0.1536.824" timestamp="1584369277858" />
+    <state width="1493" height="226" key="GridCell.Tab.0.left" timestamp="1584369277858">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
-    <state width="1493" height="188" key="GridCell.Tab.0.left/0.0.1536.824@0.0.1536.824" timestamp="1584003535418" />
-    <state width="1493" height="188" key="GridCell.Tab.0.right" timestamp="1584003535419">
+    <state width="1493" height="226" key="GridCell.Tab.0.left/0.0.1536.824@0.0.1536.824" timestamp="1584369277858" />
+    <state width="1493" height="226" key="GridCell.Tab.0.right" timestamp="1584369277858">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
-    <state width="1493" height="188" key="GridCell.Tab.0.right/0.0.1536.824@0.0.1536.824" timestamp="1584003535419" />
-    <state width="1493" height="188" key="GridCell.Tab.1.bottom" timestamp="1584003535420">
+    <state width="1493" height="226" key="GridCell.Tab.0.right/0.0.1536.824@0.0.1536.824" timestamp="1584369277858" />
+    <state width="1493" height="226" key="GridCell.Tab.1.bottom" timestamp="1584369277853">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
-    <state width="1493" height="188" key="GridCell.Tab.1.bottom/0.0.1536.824@0.0.1536.824" timestamp="1584003535420" />
-    <state width="1493" height="188" key="GridCell.Tab.1.center" timestamp="1584003535419">
+    <state width="1493" height="226" key="GridCell.Tab.1.bottom/0.0.1536.824@0.0.1536.824" timestamp="1584369277853" />
+    <state width="1493" height="226" key="GridCell.Tab.1.center" timestamp="1584369277853">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
-    <state width="1493" height="188" key="GridCell.Tab.1.center/0.0.1536.824@0.0.1536.824" timestamp="1584003535419" />
-    <state width="1493" height="188" key="GridCell.Tab.1.left" timestamp="1584003535419">
+    <state width="1493" height="226" key="GridCell.Tab.1.center/0.0.1536.824@0.0.1536.824" timestamp="1584369277853" />
+    <state width="1493" height="226" key="GridCell.Tab.1.left" timestamp="1584369277853">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
-    <state width="1493" height="188" key="GridCell.Tab.1.left/0.0.1536.824@0.0.1536.824" timestamp="1584003535419" />
-    <state width="1493" height="188" key="GridCell.Tab.1.right" timestamp="1584003535420">
+    <state width="1493" height="226" key="GridCell.Tab.1.left/0.0.1536.824@0.0.1536.824" timestamp="1584369277853" />
+    <state width="1493" height="226" key="GridCell.Tab.1.right" timestamp="1584369277853">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
-    <state width="1493" height="188" key="GridCell.Tab.1.right/0.0.1536.824@0.0.1536.824" timestamp="1584003535420" />
-    <state width="1493" height="249" key="GridCell.Tab.2.bottom" timestamp="1584000272800">
+    <state width="1493" height="226" key="GridCell.Tab.1.right/0.0.1536.824@0.0.1536.824" timestamp="1584369277853" />
+    <state width="1493" height="249" key="GridCell.Tab.2.bottom" timestamp="1584006657665">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
-    <state width="1493" height="249" key="GridCell.Tab.2.bottom/0.0.1536.824@0.0.1536.824" timestamp="1584000272800" />
-    <state width="1493" height="249" key="GridCell.Tab.2.center" timestamp="1584000272800">
+    <state width="1493" height="249" key="GridCell.Tab.2.bottom/0.0.1536.824@0.0.1536.824" timestamp="1584006657665" />
+    <state width="1493" height="249" key="GridCell.Tab.2.center" timestamp="1584006657665">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
-    <state width="1493" height="249" key="GridCell.Tab.2.center/0.0.1536.824@0.0.1536.824" timestamp="1584000272800" />
-    <state width="1493" height="249" key="GridCell.Tab.2.left" timestamp="1584000272800">
+    <state width="1493" height="249" key="GridCell.Tab.2.center/0.0.1536.824@0.0.1536.824" timestamp="1584006657665" />
+    <state width="1493" height="249" key="GridCell.Tab.2.left" timestamp="1584006657664">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
-    <state width="1493" height="249" key="GridCell.Tab.2.left/0.0.1536.824@0.0.1536.824" timestamp="1584000272800" />
-    <state width="1493" height="249" key="GridCell.Tab.2.right" timestamp="1584000272800">
+    <state width="1493" height="249" key="GridCell.Tab.2.left/0.0.1536.824@0.0.1536.824" timestamp="1584006657664" />
+    <state width="1493" height="249" key="GridCell.Tab.2.right" timestamp="1584006657665">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
-    <state width="1493" height="249" key="GridCell.Tab.2.right/0.0.1536.824@0.0.1536.824" timestamp="1584000272800" />
-    <state x="162" y="78" key="Maven.ArtifactSearchDialog" timestamp="1582814147317">
+    <state width="1493" height="249" key="GridCell.Tab.2.right/0.0.1536.824@0.0.1536.824" timestamp="1584006657665" />
+    <state x="162" y="78" key="Maven.ArtifactSearchDialog" timestamp="1584155567362">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
-    <state x="162" y="78" key="Maven.ArtifactSearchDialog/0.0.1536.824@0.0.1536.824" timestamp="1582814147317" />
+    <state x="162" y="78" key="Maven.ArtifactSearchDialog/0.0.1536.824@0.0.1536.824" timestamp="1584155567362" />
     <state x="349" y="75" key="Registry" timestamp="1582101576800">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
@@ -529,10 +662,10 @@
       <screen x="0" y="0" width="1536" height="824" />
     </state>
     <state x="270" y="55" width="1212" height="714" key="SettingsEditor/0.0.1536.824@0.0.1536.824" timestamp="1582330941361" />
-    <state x="361" y="146" key="Vcs.Push.Dialog.v2" timestamp="1583768202131">
+    <state x="361" y="146" key="Vcs.Push.Dialog.v2" timestamp="1584003600855">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
-    <state x="361" y="146" key="Vcs.Push.Dialog.v2/0.0.1536.824@0.0.1536.824" timestamp="1583768202131" />
+    <state x="361" y="146" key="Vcs.Push.Dialog.v2/0.0.1536.824@0.0.1536.824" timestamp="1584003600855" />
     <state x="321" y="149" width="894" height="604" key="com.intellij.xdebugger.impl.breakpoints.ui.BreakpointsDialogFactory$2" timestamp="1580286441793">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
@@ -557,26 +690,6 @@
   <component name="XDebuggerManager">
     <breakpoint-manager>
       <breakpoints>
-        <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/src/main/java/com/zx/lab_attendance/service/impl/ApplylabServiceImpl.java</url>
-          <line>64</line>
-          <option name="timeStamp" value="37" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/src/main/java/com/zx/lab_attendance/service/impl/ApplylabServiceImpl.java</url>
-          <line>67</line>
-          <option name="timeStamp" value="38" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/src/main/java/com/zx/lab_attendance/service/impl/LeaveclassmServiceImpl.java</url>
-          <line>126</line>
-          <option name="timeStamp" value="43" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/src/main/java/com/zx/lab_attendance/service/impl/LeaveclassmServiceImpl.java</url>
-          <line>121</line>
-          <option name="timeStamp" value="44" />
-        </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/src/main/java/com/zx/lab_attendance/service/impl/ChatmsgServiceImpl.java</url>
           <line>50</line>

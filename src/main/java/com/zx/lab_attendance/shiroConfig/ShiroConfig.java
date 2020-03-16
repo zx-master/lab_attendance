@@ -65,11 +65,26 @@ public class ShiroConfig {
         //登录用户才可以访问
         filterChainDefinitionMap.put("/authc/**","authc");
 
-        //管理员角色才访问
-        filterChainDefinitionMap.put("/authc/**","roles[root]");
+        //教师角色才能访问--考勤
+//        filterChainDefinitionMap.put("/attendance/insertAttendanceList","roles[teacher]");
+
+        //教师角色才能访问--申请教室
+//        filterChainDefinitionMap.put("/applylab/insertApplylab","roles[teacher]");
+
+        //教师角色才能访问--审核请假
+//        filterChainDefinitionMap.put("/leaveclassm/updateLeaveclassm","roles[teacher]");
+
+        //管理员角色才访问--修改学生信息
+//        filterChainDefinitionMap.put("/user/updateUser","roles[root]");
+
+        //管理员角色才访问--修改教室信息
+//        filterChainDefinitionMap.put("/user/updateTeacherUser","roles[root]");
+
+        //管理员角色才访问--审核申请实验室
+//        filterChainDefinitionMap.put("/applylab/updateApplylab","roles[root]");
 
         //有编辑权限才可以访问
-        filterChainDefinitionMap.put("/authc/getAllUser","perms[read_attendance]");
+//        filterChainDefinitionMap.put("/authc/getAllUser","perms[read_attendance]");
 
         //坑二：过滤链是顺序执行，从上而下，一般讲/** 放到最下面
         //authc : url定义必须通过认证才可以访问

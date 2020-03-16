@@ -30,7 +30,7 @@ public interface LabusingMapper {
 
     void updateCourseId(String courseId,Date starttime,Date endtime,String laboratoryNumber);
 
-    Labusing selectByChatMsg(Date strattime,Date endtime);
+    Labusing selectByChatMsg(Date strattime,Date endtime,String code);
 
 
 }

@@ -70,7 +70,7 @@ public class ApplylabServiceImpl implements ApplylabService {
         chatmsg.setChatmsgId(chatmsgInfo.getChatmsgId());
         chatmsg.setReceiveSign(1);
         Applylab applylab2 = applylabMapper.selectByPrimaryKey(chatmsgInfo.getId());
-        Labusing labusing = labusingMapper.selectByChatMsg(applylab2.getUsingStart(),applylab2.getUsingEnd());
+        Labusing labusing = labusingMapper.selectByChatMsg(applylab2.getUsingStart(),applylab2.getUsingEnd(),chatmsgInfo.getCode());
 
         if (chatmsgInfo.getStatus() == 2) {             //批准，修改labusing
             chatmsgMapper.updateByPrimaryKey(chatmsg);

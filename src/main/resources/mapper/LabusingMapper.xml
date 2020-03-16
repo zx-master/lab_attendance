@@ -84,6 +84,6 @@
   <select id="selectByChatMsg" resultMap="BaseResultMap">
     select labusing_id, labusing_date, labusing_dateend, course_id, laboratory_number
     from labusing
-    where labusing_date = #{strattime,jdbcType=TIMESTAMP} and labusing_dateend = #{endtime,jdbcType=TIMESTAMP}
+    where labusing_date = #{strattime,jdbcType=TIMESTAMP} and labusing_dateend = #{endtime,jdbcType=TIMESTAMP} and laboratory_number =#{code,jdbcType=VARCHAR}
   </select>
 </mapper>
